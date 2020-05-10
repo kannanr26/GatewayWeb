@@ -1,31 +1,31 @@
 <template>
   <div class="col-md-12">
     <div class="card card-container">
-      <img
+     <!-- <img
         id="profile-img"
         src=""
         class="profile-img-card"
-      />
+      /> -->
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="mobilenumber">Operator Mobile Number</label>
           <input
-            v-model="user.username"
+            v-model="operator.mobileNumber"
             v-validate="'required'"
             type="text"
             class="form-control"
-            name="username"
+            name="mobilenumber"
           />
           <div
-            v-if="errors.has('username')"
+            v-if="errors.has('mobilenumber')"
             class="alert alert-danger"
             role="alert"
-          >Username is required!</div>
+          >Mobile Number is required!</div>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
           <input
-            v-model="user.password"
+            v-model="operator.password"
             v-validate="'required'"
             type="password"
             class="form-control"
@@ -52,13 +52,13 @@
 </template>
 
 <script>
-import User from '../models/user';
+import Operator from '../models/operator';
 
 export default {
   name: 'Login',
   data() {
     return {
-      user: new User('', ''),
+      operator: new Operator('', ''),
       loading: false,
       message: ''
     };
@@ -70,7 +70,7 @@ export default {
   },
   created() {
     if (this.loggedIn) {
-      this.$router.push('/profile');
+     // this.$router.push('/profile');
     }
   },
   methods: {
@@ -82,20 +82,18 @@ export default {
           return;
         }
 
-        if (this.user.username && this.user.password) {
-          this.$store.dispatch('auth/login', this.user).then(
+       // if (this.operator.mobileNumber && this.operator.password) {
+          this.$store.dispatch('auth/login', this.operator).then(
             () => {
-              this.$router.push('/profile');
-            },
-            error => {
+              this.message ="Login successfully"
+              this.$router.push('/addoperator');
+            }).catch(   error => {
               this.loading = false;
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
+              this.message =error.response.data.message;
+              
             }
           );
-        }
+       // }
       });
     }
   }

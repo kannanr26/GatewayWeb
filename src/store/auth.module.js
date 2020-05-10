@@ -9,17 +9,16 @@ export const auth = {
   namespaced: true,
   state: initialState,
   actions: {
-    login({ commit }, user) {
-      return AuthService.login(user).then(
+    login({ commit }, operator) {
+      return AuthService.login(operator).then(
         user => {
           commit('loginSuccess', user);
           return Promise.resolve(user);
-        },
-        error => {
-          commit('loginFailure');
-          return Promise.reject(error);
         }
-      );
+      ).catch(err => {
+        commit('loginFailure');
+        return Promise.reject(err);
+      });
     },
     logout({ commit }) {
       AuthService.logout();
