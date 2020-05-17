@@ -52,27 +52,30 @@
 </template>
 
 <script>
-import User from '../models/user';
+
+import Operator from '../models/operator';
+import { mapGetters} from 'vuex';
+import { LOGIN } from "@/store/common/actions.type";
 
 export default {
   name: 'Login',
   data() {
     return {
-      user: new User('', ''),
+      operator: {},
+
       loading: false,
       message: ''
     };
   },
   computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    }
+    ...mapGetters(["currentUser"]),
   },
   created() {
     if (this.loggedIn) {
       this.$router.push('/profile');
     }
   },
+
   methods: {
     handleLogin() {
       this.loading = true;
@@ -83,9 +86,11 @@ export default {
         }
 
         if (this.user.username && this.user.password) {
-          this.$store.dispatch('auth/login', this.user).then(
+          // if (this.operator.mobileNumber && this.operator.password) {
+           // this.$store.dispatch('auth/login', this.operator).then(
+          this.$store.dispatch(LOGIN,operator).then(  
             () => {
-              this.$router.push('/profile');
+              this.$router.push('/addoperator');
             },
             error => {
               this.loading = false;

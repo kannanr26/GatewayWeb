@@ -64,7 +64,9 @@
 export default {
   computed: {
     currentUser() {
+      if (this.$store.state.auth) {
       return this.$store.state.auth.user;
+      }
     },
     showAdminBoard() {
       if (this.currentUser && this.currentUser.roles) {

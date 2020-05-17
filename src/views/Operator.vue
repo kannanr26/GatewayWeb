@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import OperatorService from '../services/operator.service';
 
 export default {
   name: 'Operator',
