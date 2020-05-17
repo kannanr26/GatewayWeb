@@ -6,15 +6,15 @@ import {
 } from "./common/actions.type";
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./common/mutations.type";
 
-const operator = JSON.parse(localStorage.getItem('user'));
+/*const operator = JSON.parse(localStorage.getItem('user'));
 const initialState = operator
   ? { status: { loggedIn: true }, user }
-  : { status: { loggedIn: false }, user: null };
+  : { status: { loggedIn: false }, user: null };*/
   
   const state = {
     errors: null,
     //auth: {},
-    initialState,
+    //initialState,
     operator: {},
     isAuthenticated: !!JwtService.getToken()
   };

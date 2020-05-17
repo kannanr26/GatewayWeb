@@ -17,10 +17,10 @@
         <li class="nav-item">
           <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
         </li>
-         <li class="nav-item">
+         <li v-if="showAdminBoard" class="nav-item">
           <router-link to="/addOperator" class="nav-link">Add Operator</router-link>
         </li>
-        <li  class="nav-item">
+        <li v-if="showAdminBoard" class="nav-item">
           <router-link to="/addUtil" class="nav-link">Add Util</router-link>
         </li>
       </div>
@@ -43,7 +43,7 @@
         <li class="nav-item">
           <router-link to="/profile" class="nav-link">
             <font-awesome-icon icon="user" />
-            {{ currentUser.username }}
+            {{ currentUser.operatorName }}
           </router-link>
         </li>
         <li class="nav-item">
