@@ -53,7 +53,6 @@
 
 <script>
 import Operator from '../models/operator';
-
 export default {
   name: 'Login',
   data() {
@@ -65,7 +64,7 @@ export default {
   },
   computed: {
     loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
+      return this.$store.state.isAuthenticated;
     }
   },
   created() {
@@ -75,27 +74,25 @@ export default {
   },
   methods: {
     handleLogin() {
+      //console.log('login method');
       this.loading = true;
       this.$validator.validateAll().then(isValid => {
         if (!isValid) {
           this.loading = false;
           return;
         }
-
-       // if (this.operator.mobileNumber && this.operator.password) {
-          this.$store.dispatch('auth/login', this.operator).then(
-            () => {
-              this.message ="Login successfully"
-              this.$router.push('/addoperator');
-            }).catch(   error => {
-              this.loading = false;
-              this.message =error.response.data.message;
-              
-            }
-          );
-       // }
+        
+  this.$store.dispatch('login', this.operator)
+        .then(() => {
+       //   console.log('SUCCESS');
+          this.$router.push({ name: "/kulam" })
+        
+        
       });
-    }
+
+
+      });
+      }
   }
 };
 </script>
