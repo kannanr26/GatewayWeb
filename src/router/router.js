@@ -5,7 +5,7 @@ import Title from '@/views/Title.vue';
 import Kulam from '@/views/UKulam.vue';
 Vue.use(Router);
 
-export const router = new Router({
+export default new Router({
   mode: 'history',
   routes: [
     {
@@ -23,7 +23,8 @@ export const router = new Router({
     },
     {
       path: '/Kulam',
-      component: Kulam
+      component: Kulam,
+      name: "Kulam"
     }
   ]
 });

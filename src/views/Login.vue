@@ -1,11 +1,12 @@
+ /* eslint-disable */
 <template>
   <div class="col-md-12">
     <div class="card card-container">
-     <!-- <img
+      <!-- <img
         id="profile-img"
         src=""
         class="profile-img-card"
-      /> -->
+      />-->
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
           <label for="mobilenumber">Operator Mobile Number</label>
@@ -43,8 +44,8 @@
             <span>Login</span>
           </button>
         </div>
-        <div class="form-group">
-          <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
+        <div v-if="message">
+          <span class="alert alert-danger" role="alert">{{message}}</span>
         </div>
       </form>
     </div>
@@ -52,7 +53,9 @@
 </template>
 
 <script>
+ /* eslint-disable */
 import Operator from '../models/operator';
+import { mapGetters } from 'vuex';
 export default {
   name: 'Login',
   data() {
@@ -63,13 +66,11 @@ export default {
     };
   },
   computed: {
-    loggedIn() {
-      return this.$store.state.isAuthenticated;
-    }
+    ...mapGetters(['getMessage', 'isSuccess' ])
   },
   created() {
     if (this.loggedIn) {
-     // this.$router.push('/profile');
+      this.$router.push('/title');
     }
   },
   methods: {
@@ -81,18 +82,19 @@ export default {
           this.loading = false;
           return;
         }
-        
-  this.$store.dispatch('login', this.operator)
-        .then(() => {
-       //   console.log('SUCCESS');
-          this.$router.push({ name: "/kulam" })
-        
-        
-      });
 
+        this.$store.dispatch('login', this.operator).then((res) => {
+            console.log('SUCCESS');
+            this.$router.push({ name: 'Kulam' });
+        }).catch((err) =>{
+            
+          this.loading = false;
 
+          this.message = err.response.data.message;
+          // this.$router.push({ name: '/kulam' });
+        });
       });
-      }
+    }
   }
 };
 </script>
