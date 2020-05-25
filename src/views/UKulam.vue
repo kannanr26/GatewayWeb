@@ -27,7 +27,7 @@ export default {
     };
   },
   computed: {
-    ...mapActions(['addKumal']),
+    ...mapActions(['addKulam']),
     ...mapGetters(['getMessage', 'isSuccess'])
   },
   methods: {
@@ -35,7 +35,7 @@ export default {
       this.loading = true;
       e.preventDefault();
       this.$store
-        .dispatch('addKumal', this.kulamName)
+        .dispatch('addKulam', this.kulamName)
         .then(() => {
           console.log('SUCCESS');
           this.loading = false;

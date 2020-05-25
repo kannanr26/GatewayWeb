@@ -1,4 +1,4 @@
 export const API_URL = "http://localhost:8081/gateway/";
 export default API_URL;
-
-export const ADDKULAM="addKumal";
+export const ID_TOKEN_KEY = "web_gateway_token";
+export const ADDKULAM="addKulam";
