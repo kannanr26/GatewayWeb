@@ -1,5 +1,4 @@
-const ID_TOKEN_KEY = "web_gateway_token";
-
+import {ID_TOKEN_KEY} from './config'
 export const getToken = () => {
   return window.localStorage.getItem(ID_TOKEN_KEY);
 };

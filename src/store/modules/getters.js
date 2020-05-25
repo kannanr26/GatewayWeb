@@ -11,7 +11,6 @@ const getters = {
   isSuccess(state) {
     return state.success;
   },
-
   showSuperAdminBoard() {
     if (this.currentUser && this.currentUser.roles) {
       return this.currentUser.roles.includes('ROLE_SUPERADMIN');

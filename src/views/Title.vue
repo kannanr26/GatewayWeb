@@ -25,16 +25,17 @@ name: "Title",
       title: "Gateway"
     };
   },
+  
+  computed: mapGetters(["getTitle"]),
+  created() {
+   
+  },
   methods: {
     ...mapActions(["addTitle"]),
     onSubmit(e) {
       e.preventDefault();
       this.addTitle(this.title);
     }
-  },
-  computed: mapGetters(["getTitle"]),
-  created() {
-   
   }
 };
 </script>

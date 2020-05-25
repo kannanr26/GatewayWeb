@@ -17,8 +17,14 @@ const mutations = {
     console.log('Operator'+state.operator)
     JwtService.saveToken(state.operator.accessToken);
   },
-  SET_MESSAGE: (state, msg, success) => {
+  SET_MESSAGE: (state, msg,success) => {
     state.success = success;
+    console.log(msg)
+    state.message = msg;
+  },
+  SET_ERROR: (state, msg, success) => {
+    state.success = false;
+    console.log(msg)
     state.message = msg;
   },
   PURGE_AUTH: (state) => {
@@ -27,5 +33,6 @@ const mutations = {
     state.errors = {};
     JwtService.destroyToken();
   }
+  
 }
 export default mutations;

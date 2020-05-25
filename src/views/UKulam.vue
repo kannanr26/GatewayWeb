@@ -1,10 +1,14 @@
 <template>
-  <div class="col-md-12">
-    <div class="add">
+    <div class="col-sm-8">
+    <div class="card card-container">
       <form @submit="onSubmitKulam">
         <input type="text" v-model="kulamName" placeholder="Add Kulam..." />
-        <input type="submit" value="Submit" />
-        <label>{{getMessage}}</label>
+        <button class="btn btn-primary btn-block" :disabled="loading">
+          <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+          <span>Add</span>
+        </button>
+        <label v-if="isSuccess" class="alert alert-success" role="alert">{{getMessage}}</label>
+        <label  v-else-if="getMessage" class="alert alert-danger" role="alert">{{getMessage}}</label>
       </form>
     </div>
   </div>
@@ -17,50 +21,35 @@ export default {
   name: 'KULAM',
   data() {
     return {
-      kulamName: ''
+      kulamName: '',
+      message: '',
+     loading: false,
     };
   },
-    computed: {
+  computed: {
     ...mapActions(['addKumal']),
-    ...mapGetters(['getMessage', 'isSucess'])
+    ...mapGetters(['getMessage', 'isSuccess'])
   },
   methods: {
     onSubmitKulam(e) {
+      this.loading = true;
       e.preventDefault();
-      this.addKumal(this.kulamName);
+      this.$store
+        .dispatch('addKumal', this.kulamName)
+        .then(() => {
+          console.log('SUCCESS');
+          this.loading = false;
+        })
+        .catch(() => {
+          this.loading = false;
+          //  this.message = err.response.data.message;
+          // this.$router.push({ name: '/kulam' });
+        });
     }
-  },
-
-  created() {}
+  }
 };
 </script>
 
 <style scoped>
-.buttonHolder {
-  text-align: right;
-}
 
-.kulam-container.card {
-  max-width: 100% !important;
-  padding: 20px;
-}
-
-select {
-  max-width: 100% !important;
-  padding: 10px;
-}
-
-label {
-  margin-top: 5px;
-  float: left;
-  display: inline-block;
-  width: 49%;
-}
-
-span {
-  display: block;
-  overflow: hidden;
-  padding: 0 4px 0 6px;
-  width: 50%;
-}
 </style>

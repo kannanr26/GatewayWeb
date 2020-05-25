@@ -89,9 +89,10 @@ export default {
         }).catch((err) =>{
             
           this.loading = false;
-
+          console.log("In else "+response);
+          //reject(response);
           this.message = err.response.data.message;
-          // this.$router.push({ name: '/kulam' });
+        // this.$router.push({ name: '/kulam' });
         });
       });
     }
