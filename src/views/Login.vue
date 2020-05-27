@@ -54,7 +54,7 @@
 
 <script>
  /* eslint-disable */
-import Operator from '../models/operator';
+import Operator from '@/models/operator';
 import { mapGetters } from 'vuex';
 export default {
   name: 'Login',
@@ -85,12 +85,9 @@ export default {
 
         this.$store.dispatch('login', this.operator).then((res) => {
             console.log('SUCCESS');
-            this.$router.push({ name: 'Kulam' });
+            this.$router.push({ name: 'Utility' });
         }).catch((err) =>{
-            
           this.loading = false;
-          console.log("In else "+response);
-          //reject(response);
           this.message = err.response.data.message;
         // this.$router.push({ name: '/kulam' });
         });

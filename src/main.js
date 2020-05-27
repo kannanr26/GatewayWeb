@@ -2,8 +2,11 @@ import Vue from 'vue';
 import App from './App.vue';
 import router  from './router/router.js';
 import store from './store';
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+import { DropdownPlugin, TablePlugin } from 'bootstrap-vue'
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VeeValidate from 'vee-validate';
 import Vuex from 'vuex';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -24,6 +27,13 @@ Vue.use(VeeValidate);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.use(Vuex);
+
+
+
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
+Vue.use(DropdownPlugin)
+Vue.use(TablePlugin)
 
 new Vue({
   router,

@@ -11,6 +11,14 @@ const getters = {
   isSuccess(state) {
     return state.success;
   },
+  getKulams(state) {
+    console.log('get Kulam');
+    return state.kulams;
+  },
+  getEducations(state) {
+    console.log('get Education'+state.educations);
+    return state.educations;
+  },
   showSuperAdminBoard() {
     if (this.currentUser && this.currentUser.roles) {
       return this.currentUser.roles.includes('ROLE_SUPERADMIN');
@@ -31,6 +39,6 @@ const getters = {
     }
 
     return false;
-  }
+  },
 }
 export default getters;

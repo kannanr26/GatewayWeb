@@ -1,16 +1,18 @@
 <template>
   <div class="col-sm-8">
     <div class="card card-container">
-      <form @submit="onSubmitKulam">
-        <input type="text" v-model="kulam.kulamName" placeholder="Add Kulam..." />
+      <form @submit="onSubmitEducation">
+        <input type="text" v-model="education.educationName" placeholder="Add Education.." />
         <button class="btn btn-primary" :disabled="loading">
           <span v-show="loading" class="spinner-border spinner-border-sm"></span>
           <span>Add</span>
         </button>
       </form>
       <div>
-        <ul id="kulam">
-          <li v-for="kulamItem in getKulams" :key="kulamItem.kulamName">{{ kulamItem.kulamName }}</li>
+        <ul id="educationul">
+          {{getEducations}}
+          <li v-for="educationItem in getEducations" :key="educationItem.id">
+            {{ educationItem.educationName }}</li>
         </ul>
       </div>
     </div>
@@ -21,23 +23,22 @@
 import {  mapGetters } from 'vuex';
 //import { ADDKULAM, GETKULAM } from '@/common/config';
 export default {
-  name: 'KULAM',
+  name: 'Education',
   data() {
     return {
-      kulam: {
-        kulamName: ''
+      education: {
+        educationName: ''
       },
       // kulams:[],
       loading: false
     };
   },
   created() {
-    console.log(' Mount get Kulam');
+    console.log(' Mount get Edu');
 
     this.$store
-      .dispatch('getKulam')
-      .then(() => {
-        console.log('in get Kulam');
+      .dispatch('getEducation_action').then(() => {
+        console.log('in get education');
         this.loading = false;
       })
       .catch(() => {
@@ -48,15 +49,15 @@ export default {
   },
   computed: {
     //...mapActions([GETKULAM]),
-    ...mapGetters(['getKulams'])
+    ...mapGetters(['getEducations'])
   },
 
   methods: {
-    onSubmitKulam(e) {
+    onSubmitEducation(e) {
       this.loading = true;
       e.preventDefault();
       this.$store
-        .dispatch('addKulam', this.kulam)
+        .dispatch('addEducation', this.education)
         .then(() => {
           console.log('SUCCESS');
           this.loading = false;

@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from '@/views/Login.vue';
 import Title from '@/views/Title.vue';
-import Kulam from '@/views/UKulam.vue';
+import Utility from '@/views/Utility';
 Vue.use(Router);
 
 export default new Router({
@@ -22,9 +22,9 @@ export default new Router({
       component: Title
     },
     {
-      path: '/Kulam',
-      component: Kulam,
-      name: "Kulam"
+      path: '/utility',
+      component: Utility,
+      name: "Utility"
     }
   ]
 });
