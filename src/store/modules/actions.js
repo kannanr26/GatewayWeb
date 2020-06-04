@@ -28,7 +28,7 @@ const actions = {
         });
     });
   },
-  async  [ADDKULAM]({ commit }, kulam) {
+  /*async  [ADDKULAM]({ commit }, kulam) {
     console.log("in add kulam");
     return new Promise((resolve, reject) => {
       console.log("in Promise");
@@ -62,7 +62,7 @@ const actions = {
         });
     });
   },
-
+*/
   async  [ADDEDUCATION]({ commit }, education) {
     return new Promise((resolve, reject) => {
       return axios.post(API_URL + 'gws/addeducation', education,{ headers }).then(response => {

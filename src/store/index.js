@@ -3,6 +3,7 @@ import Vue from 'vue';
 
 import auth from './modules/auth';
 
+import kulam from './modules/kulam';
 import title from './modules/title';
 // Load Vuex
 Vue.use(Vuex);
@@ -11,6 +12,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: {
     auth,
-    title
+    title,
+    kulam
   }
 });

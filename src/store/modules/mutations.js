@@ -17,10 +17,10 @@ const mutations = {
     console.log('Operator' + state.operator)
     JwtService.saveToken(state.operator.accessToken);
   },
-  SET_KULAMS: (state, data) => {
+ /* SET_KULAMS: (state, data) => {
     console.log("kulams in MUT" + data)
     state.kulams = data;
-  },
+  },*/
   SET_EDUCATIONS: (state, data) => {
     console.log("education in MUT" + data)
     state.kulams = data;
@@ -32,7 +32,7 @@ const mutations = {
   },
   PURGE_AUTH: (state) => {
     state.isAuthenticated = false;
-    state.operator = {};
+    state.operator = null;
     state.errors = {};
     JwtService.destroyToken();
   }

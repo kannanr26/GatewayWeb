@@ -32,7 +32,7 @@
         </li>
       </div>
 
-      <div v-if="currentUser && isAuthenticated" class="navbar-nav ml-auto">
+      <div v-if="(currentUser && currentUser!='' && isAuthenticated)" class="navbar-nav ml-auto">
         <li class="nav-item">
           <router-link to="/profile" class="nav-link">
             <font-awesome-icon icon="user" />
@@ -69,9 +69,8 @@ export default {
   },
   mounted() {
     // Clear the browser cache data in localStorage when closing the browser window
-    
     window.onbeforeunload = function() {
-      console.log('Inside onbeforeunload' );
+      console.log('Inside onbeforeunload');
       this.$store.dispatch('LOGOUT').then(() => {
         var storage = window.localStorage;
         storage.clear();

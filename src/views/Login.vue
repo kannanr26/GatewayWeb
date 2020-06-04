@@ -68,11 +68,6 @@ export default {
   computed: {
     ...mapGetters(['getMessage', 'isSuccess' ])
   },
-  created() {
-    if (this.loggedIn) {
-      this.$router.push('/title');
-    }
-  },
   methods: {
     handleLogin() {
       //console.log('login method');

@@ -10,15 +10,17 @@
       </form>
       <div>
         <ul id="kulam">
-          <li v-for="kulamItem in getKulams" :key="kulamItem.kulamName">{{ kulamItem.kulamName }}</li>
+          <li v-for="kulamItem in kulams" :key="kulamItem.kulamName">{{ kulamItem.kulamName }}</li>
         </ul>
       </div>
     </div>
   </div>
 </template>
-
+ 
 <script>
-import {  mapGetters } from 'vuex';
+//import {  mapGetters } from 'vuex';
+import { mapState } from 'vuex'
+
 //import { ADDKULAM, GETKULAM } from '@/common/config';
 export default {
   name: 'KULAM',
@@ -48,13 +50,15 @@ export default {
   },
   computed: {
     //...mapActions([GETKULAM]),
-    ...mapGetters(['getKulams'])
+  //  ...mapGetters(['getKulams']),
+    ...mapState([ 'kulams'])
   },
 
   methods: {
     onSubmitKulam(e) {
       this.loading = true;
       e.preventDefault();
+     
       this.$store
         .dispatch('addKulam', this.kulam)
         .then(() => {

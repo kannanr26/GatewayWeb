@@ -4,8 +4,8 @@ const state = {
   message: null,
   success: false,
   operator: new Operator('', '','','',''),
-  kulams:[],
-  educations:[],
+  //kulams:[],
+  //educations:[],
   isAuthenticated: !!JwtService.getToken()
 }
 export default state;

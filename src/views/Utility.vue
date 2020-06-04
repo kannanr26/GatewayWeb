@@ -28,7 +28,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import UKulam from '@/components/UKulam.vue';
+import UKulam from '@/components/kulam/UKulam.vue';
 
 import UEducation from '@/components/UEducation.vue';
 

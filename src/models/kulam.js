@@ -1,6 +1,8 @@
 export default class Kulam {
 
-  constructor(kulamName) {
+  constructor(id,kulamName) {
+    this.id=id;
     this.kulamName = kulamName;
+
   }
 }
