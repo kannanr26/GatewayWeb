@@ -10,7 +10,7 @@
       :key="i"
       :kulam="kulam"
       @delete="deleteKulam(i)"
-      @edit="saveKulam"
+      @edit="saveToKulams"
     />
   </ul>
 
@@ -49,8 +49,7 @@ export default {
       });
   },
   methods: {
-    ...mapActions(['addKulam','deleteKulam',// 'checkStorage',
-      'saveKulam'])
+    ...mapActions(['addKulam','deleteKulam','saveToKulams'])
   }
 }
 </script>

@@ -15,7 +15,7 @@
         title="delete"
         class="font-bold rounded-full w-8 h-8"
       >
-        X
+        X Delete
       </button>
 
       <button

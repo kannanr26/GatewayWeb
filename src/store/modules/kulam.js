@@ -34,7 +34,7 @@ export default {
     },
   },
   actions: {
-    addKulam({ commit, dispatch }, kulam) {
+    addKulam({ commit }, kulam) {
 
       console.log("in add kulam");
       return new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ export default {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
           commit('addKulam', kulam)
-          dispatch('saveKulams')
+         // dispatch('saveKulams')
           resolve(response);
         })
           .catch(error => {
@@ -71,30 +71,35 @@ export default {
           });
       });
     },
-    deleteKulam({ commit, dispatch }, kulam) {
+    deleteKulam({ commit }, kulam) {
 
       return new Promise((resolve, reject) => {
-        let id= kulam.id;
-        return axios.delete(API_URL + 'gws/deleteKulam', {id}, { headers }).then(response => {
+        let id = kulam.id;
+        return axios.delete(API_URL + 'gws/deleteKulam/' + id, '', { headers }).then(response => {
           //return axios.post(API_URL + 'gws/addkulam', kulam).then(response => {
           console.log('get action Kulam');
 
           console.log(response.data)
-          commit('SET_KULAMS', response.data);
+          commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
           resolve(response);
         })
           .catch(error => {
             // console.log(error.response.data.message);
-            // commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
+             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
-      commit('deleteKulam', kulam)
-      dispatch('saveKulams')
+      //commit('deleteKulam', kulam)
+    //  dispatch('saveToKulams')
     },
     async saveToKulams({ state }) {
       state.dataFields;
 
+/*      try {
+        await Promise.all(state.dataFields.map(field => idbs.saveToStorage(field, state[field])))
+      } catch (e) {
+        state.dataFields.forEach(field => ls.saveToStorage(field, state[field]))
+      }*/
     }
   }
 }
