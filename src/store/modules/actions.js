@@ -63,6 +63,7 @@ const actions = {
     });
   },
 */
+/*
   async  [ADDEDUCATION]({ commit }, education) {
     return new Promise((resolve, reject) => {
       return axios.post(API_URL + 'gws/addeducation', education,{ headers }).then(response => {
@@ -96,6 +97,7 @@ const actions = {
         });
     });
   },
+  */
   LOGOUT(context) {
     console.log('logout action')
     context.commit('PURGE_AUTH');

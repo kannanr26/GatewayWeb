@@ -21,10 +21,10 @@ const mutations = {
     console.log("kulams in MUT" + data)
     state.kulams = data;
   },*/
-  SET_EDUCATIONS: (state, data) => {
-    console.log("education in MUT" + data)
-    state.kulams = data;
-  },
+  // SET_EDUCATIONS: (state, data) => {
+  //   console.log("education in MUT" + data)
+  //   state.kulams = data;
+  // },
   SET_MESSAGE: (state, msg, success) => {
     state.success = success;
     console.log(msg)

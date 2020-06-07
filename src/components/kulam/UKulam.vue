@@ -1,10 +1,10 @@
 <template>
-<div class="flex flex-col mt-20 mx-4">
+<div class="flex flex-col mt-20 mx-4 border border-gray-400">
   <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
     Add Kulam</h1>
   <kulamAddForm submit="addKulam" />
 
-  <ul id="kulam-list">
+  <ul id="kulam-list" style="width: 100%; height:40%; overflow: auto">
     <list-item
       v-for="(kulam, i) in getKulams"
       :key="i"

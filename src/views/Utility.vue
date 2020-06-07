@@ -12,7 +12,13 @@
       <input type="radio" @click="selectedComponent = 'appEducation'" id="Education" name="utility" />
       <label for="education">&nbsp;&nbsp;Education</label>
       <br />
-    </div>
+
+      <input type="radio" @click="selectedComponent = 'appGothiram'" id="Gothiram" name="utility" />
+      <label for="gothiram">&nbsp;&nbsp;Gothiram</label>
+      <br />
+      
+     
+      </div>
 
     <div class="card entry-container" style="padding: 20px">
       <hr />
@@ -30,7 +36,9 @@
 import { mapGetters } from 'vuex';
 import UKulam from '@/components/kulam/UKulam.vue';
 
-import UEducation from '@/components/UEducation.vue';
+import UEducation from '@/components/education/UEducation.vue';
+import UGothiram from '@/components/gothiram/UGothiram.vue';
+
 
 export default {
   name: 'Util',
@@ -45,7 +53,9 @@ export default {
   },
   components: {
     appKulam: UKulam,
-    appEducation: UEducation
+    appEducation: UEducation,
+    appGothiram: UGothiram,
+    
   }
 };
 </script>   
