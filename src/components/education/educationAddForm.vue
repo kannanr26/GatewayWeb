@@ -1,6 +1,6 @@
 <template>
 <form
-  @submit.prevent="submitKulam"
+  @submit.prevent="submitEducation"
   class="flex flex-wrap justify-between sm:justify-center"
 >
  <div
@@ -12,8 +12,8 @@
     <input
       class="block my-2 p-2 rounded border border-gray-400 focus:border-green-400 focus:outline-none"
       type="text"
-      placeholder="Add Kulam..."
-      v-model.trim="kulam.kulamName"
+      placeholder="Add Education..."
+      v-model.trim="education.educationName"
     >
   </label>&nbsp;&nbsp;
     <button
@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: 'kulamAddForm',
+  name: 'educationAddForm',
   props: {
     populateWith: {
       type: Object,
@@ -50,24 +50,24 @@ export default {
   },
   data () {
     return {
-      kulam: {
-        kulamName: '',
+      education: {
+        educationName: '',
         
       }
     }
   },
   methods: {
     clearForm () {
-      this.kulam = {
-        kulamName: ''
+      this.education = {
+        educationName: ''
       }
     },
-    submitKulam () {
-      if (this.kulam.kulamName !== '') {
-        //this.$emit('submit', this.kulam)
+    submitEducation () {
+      if (this.education.educationName !== '') {
+        //this.$emit('submit', this.education)
  
         this.$store
-        .dispatch('addKulam', this.kulam)
+        .dispatch('addEducation', this.education)
         .then(() => {
           console.log('SUCCESS');
           this.loading = false;
@@ -75,7 +75,7 @@ export default {
         .catch(() => {
           this.loading = false;
           //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/kulam' });
+          // this.$router.push({ name: '/education' });
         });
 
         this.clearForm()
@@ -88,7 +88,7 @@ export default {
   },
   created () {
     if (!this.populateWith.empty) {
-      this.kulam = this.populateWith
+      this.education = this.populateWith
     }
   }
 }

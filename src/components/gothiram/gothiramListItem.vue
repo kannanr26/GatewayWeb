@@ -5,11 +5,11 @@
     v-if="!editing"
 
   >
-   {{ kulam.kulamName }}
+   {{ gothiram.gothiramName }}
 
     <div class="float-sm-right" >
       <button 
-        @click="deleteKulam"
+        @click="deleteGothiram"
         type="button"
         title="delete"
          >  X
@@ -17,7 +17,7 @@
 
       <button
        
-        @click="editKulam"
+        @click="editGothiram"
         type="button"
         title="edit"
         
@@ -37,27 +37,27 @@
   </div>
  
 
-  <kulamAddForm
+  <gothiramAddForm
     v-else
-    :populateWith="kulam"
-    @close="editKulam" />
+    :populateWith="gothiram"
+    @close="editGothiram" />
      </div>
 </ul>
 </template>
 
 <script>
-import kulamAddForm  from './kulamAddForm.vue'
+import gothiramAddForm  from './gothiramAddForm.vue'
 
 export default {
   name: 'ListItem',
   props: {
-    kulam: {
+    gothiram: {
       type: Object,
       required: true
     },
     },
   components: {
-    kulamAddForm
+    gothiramAddForm
   },
   data () {
     return {
@@ -65,10 +65,10 @@ export default {
     }
   },
   methods: {
-    deleteKulam () {
+    deleteGothiram () {
     //  this.$emit('delete')
        this.$store
-        .dispatch('deleteKulam', this.kulam)
+        .dispatch('deleteGothiram', this.gothiram)
         .then(() => {
           console.log('SUCCESS');
           this.loading = false;
@@ -76,10 +76,10 @@ export default {
         .catch(() => {
           this.loading = false;
           //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/kulam' });
+          // this.$router.push({ name: '/gothiram' });
         });
     },
-    editKulam () {
+    editGothiram () {
       this.$emit('edit')
       this.editing = !this.editing
     }

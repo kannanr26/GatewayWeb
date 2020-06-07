@@ -5,11 +5,11 @@
     v-if="!editing"
 
   >
-   {{ kulam.kulamName }}
+   {{ education.educationName }}
 
     <div class="float-sm-right" >
       <button 
-        @click="deleteKulam"
+        @click="deleteEducation"
         type="button"
         title="delete"
          >  X
@@ -17,7 +17,7 @@
 
       <button
        
-        @click="editKulam"
+        @click="editEducation"
         type="button"
         title="edit"
         
@@ -37,27 +37,27 @@
   </div>
  
 
-  <kulamAddForm
+  <educationAddForm
     v-else
-    :populateWith="kulam"
-    @close="editKulam" />
+    :populateWith="education"
+    @close="editEducation" />
      </div>
 </ul>
 </template>
 
 <script>
-import kulamAddForm  from './kulamAddForm.vue'
+import educationAddForm  from './educationAddForm.vue'
 
 export default {
   name: 'ListItem',
   props: {
-    kulam: {
+    education: {
       type: Object,
       required: true
     },
     },
   components: {
-    kulamAddForm
+    educationAddForm
   },
   data () {
     return {
@@ -65,10 +65,10 @@ export default {
     }
   },
   methods: {
-    deleteKulam () {
+    deleteEducation () {
     //  this.$emit('delete')
        this.$store
-        .dispatch('deleteKulam', this.kulam)
+        .dispatch('deleteEducation', this.education)
         .then(() => {
           console.log('SUCCESS');
           this.loading = false;
@@ -76,10 +76,10 @@ export default {
         .catch(() => {
           this.loading = false;
           //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/kulam' });
+          // this.$router.push({ name: '/education' });
         });
     },
-    editKulam () {
+    editEducation () {
       this.$emit('edit')
       this.editing = !this.editing
     }

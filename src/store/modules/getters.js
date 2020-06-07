@@ -15,10 +15,12 @@ const getters = {
     console.log('get Kulam');
     return state.kulams;
   },*/
-  getEducations(state) {
-    console.log('get Education'+state.educations);
-    return state.educations;
-  },
+  /*
+   getEducations(state) {
+     console.log('get Education'+state.educations);
+     return state.educations;
+   },
+   */
   showSuperAdminBoard() {
     if (this.currentUser && this.currentUser.roles) {
       return this.currentUser.roles.includes('ROLE_SUPERADMIN');
