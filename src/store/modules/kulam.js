@@ -39,7 +39,7 @@ export default {
       console.log("in add kulam");
       return new Promise((resolve, reject) => {
         console.log("in Promise");
-        return axios.post(API_URL + 'gws/addkulam', kulam, { headers }).then(response => {
+        return axios.post(API_URL + 'gws/addKulam', kulam, { headers }).then(response => {
           //return axios.post(API_URL + 'gws/addkulam', kulam).then(response => {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
@@ -56,7 +56,7 @@ export default {
     },
     async  getKulam({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getkulams', '', { headers }).then(response => {
+        return axios.get(API_URL + 'gws/getKulams', '', { headers }).then(response => {
           //return axios.post(API_URL + 'gws/addkulam', kulam).then(response => {
           console.log('get action Kulam');
 

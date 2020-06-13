@@ -39,7 +39,7 @@ export default {
       console.log("in add education");
       return new Promise((resolve, reject) => {
         console.log("in Promise");
-        return axios.post(API_URL + 'gws/addeducation', education, { headers }).then(response => {
+        return axios.post(API_URL + 'gws/addEducation', education, { headers }).then(response => {
           //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
@@ -56,7 +56,7 @@ export default {
     },
     async  getEducation({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/geteducation', '', { headers }).then(response => {
+        return axios.get(API_URL + 'gws/getEducations', '', { headers }).then(response => {
           //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
           console.log('get action Education');
 
