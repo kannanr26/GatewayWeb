@@ -1,90 +1,34 @@
 <template>
-  <div class="row">
-    <div class="col-sm-4" style="padding: 20px">
+<div >
+    <div >
       <p>
         <label v-if="isSuccess" class="alert alert-success" role="alert">{{getMessage}}</label>
         <label v-else-if="getMessage" class="alert alert-danger" role="alert">{{getMessage}}</label>
       </p>
-      <input type="radio" @click="selectedComponent = 'appKulam'" checked="checked" id="kulam" name="utility" />
-      <label for="kulam">&nbsp;&nbsp;Kulam</label>
-      <br />
-
-      <input type="radio" @click="selectedComponent = 'appEducation'" id="Education" name="utility" />
-      <label for="education">&nbsp;&nbsp;Education</label>
-      <br />
-
-      <input type="radio" @click="selectedComponent = 'appGothiram'" id="Gothiram" name="utility" />
-      <label for="gothiram">&nbsp;&nbsp;Gothiram</label>
-      <br />
-      
-      <input type="radio" @click="selectedComponent = 'appBloodgroup'" id="Bloodgroup" name="utility" />
-      <label for="bloodgroup">&nbsp;&nbsp;BloodGroup</label>
-      <br />
-      
-      <input type="radio" @click="selectedComponent = 'appAssociationcommittee'" id="Associationcommittee" name="utility" />
-      <label for="associationcommittee">&nbsp;&nbsp;Associationcommittee</label>
-      <br />
-     
-      <input type="radio" @click="selectedComponent = 'appCaste'" id="Caste" name="utility" />
-      <label for="caste">&nbsp;&nbsp;Caste</label>
-      <br />
-
-      <input type="radio" @click="selectedComponent = 'appDataupdator'" id="Dataupdator" name="utility" />
-      <label for="dataupdator">&nbsp;&nbsp;OperatorType</label>
-      <br />
-     
-      <input type="radio" @click="selectedComponent = 'appRole'" id="Role" name="utility" />
-      <label for="role">&nbsp;&nbsp;Role</label>
-      <br />
-     
-      <input type="radio" @click="selectedComponent = 'appMaritalstatus'" id="Maritalstatus" name="utility" />
-      <label for="maritalstatus">&nbsp;&nbsp;Maritalstatus</label>
-      <br />
-     
-      <input type="radio" @click="selectedComponent = 'appCourse'" id="Course" name="utility" />
-      <label for="course">&nbsp;&nbsp;Course</label>
-      <br />
-     
-      <input type="radio" @click="selectedComponent = 'appCountry'" id="Country" name="utility" />
-      <label for="country">&nbsp;&nbsp;Country</label>
-      <br />
-
-      <input type="radio" @click="selectedComponent = 'appRelationship'" id="Relationship" name="utility" />
-      <label for="relationship">&nbsp;&nbsp;Relationship</label>
-      <br />
-
-      <input type="radio" @click="selectedComponent = 'appPermission'" id="Permission" name="utility" />
-      <label for="permission">&nbsp;&nbsp;Permission</label>
-      <br />
-
-      <input type="radio" @click="selectedComponent = 'appOccupation'" id="Occupation" name="utility" />
-      <label for="occupation">&nbsp;&nbsp;Occupation</label>
-      <br />
-
-      <input type="radio" @click="selectedComponent = 'appJobtype'" id="Jobtype" name="utility" />
-      <label for="jobtype">&nbsp;&nbsp;Jobtype</label>
-      <br />
-
-      <input type="radio" @click="selectedComponent = 'appBusinesstype'" id="Businesstype" name="utility" />
-      <label for="busiesstype">&nbsp;&nbsp;Businesstype</label>
-      <br />
-
-      <input type="radio" @click="selectedComponent = 'appDeity'" id="Deity" name="utility" />
-      <label for="deity">&nbsp;&nbsp;Deity</label>
-      <br />
-
-
-      </div>
-
-    <div class="card entry-container" style="padding: 20px">
-      <hr />
-      <!-- <p>{{ selectedComponent }}</p> -->
-      <keep-alive>
-        <component :is="selectedComponent">
-          <p>Default Content</p>
-        </component>
-      </keep-alive>
     </div>
+   
+    <div>
+      <b-card no-body>
+        
+          <b-tabs active-nav-item-class="font-weight-bold"
+            content-class="mt-3">
+            <b-tab v-for="tab in tabs" 
+              :key="tab.id" 
+              :title="tab.title" 
+              @click="selectedComponent = tab.selectedComponent">
+              <div >
+                <!-- <p>{{ selectedComponent }}</p> -->
+                <keep-alive>
+                  <component :is="selectedComponent" >
+                    <p>Default Content</p>
+                  </component>
+                </keep-alive>
+              </div>
+            </b-tab>
+          </b-tabs>
+      </b-card>
+    </div>
+    
   </div>
 </template>
 
@@ -113,7 +57,97 @@ export default {
   data: function() {
     return {
       kulamTitle: 'Kulam',
-      selectedComponent: 'appKulam'
+      selectedComponent: 'appKulam',
+      
+tabs: [
+        {
+          id: 'kulam',
+          title: 'Kulam',
+          selectedComponent: 'appKulam'
+        },
+        {
+          id: 'gothiram',
+          title: 'Gothiram',
+          selectedComponent: 'appGothiram'
+        },
+        {
+          id: 'caste',
+          title: 'Caste',
+          selectedComponent: 'appCaste'
+        },
+        {
+          id: 'deity',
+          title: 'Deity',
+          selectedComponent: 'appDeity'
+        },
+        {
+          id: 'education',
+          title: 'Education',
+          selectedComponent: 'appEducation'
+        },
+        {
+          id: 'course',
+          title: 'Course',
+          selectedComponent: 'appCourse'
+        },
+        {
+          id: 'jobtype',
+          title: 'JobType',
+          selectedComponent: 'appJobtype'
+        },
+        {
+          id: 'businesstype',
+          title: 'BusinessType',
+          selectedComponent: 'appBusinesstype'
+        },
+        {
+          id: 'occupation',
+          title: 'Occupation',
+          selectedComponent: 'appOccupation'
+        },
+        {
+          id: 'bloodgroup',
+          title: 'Bloodgroup',
+          selectedComponent: 'appBloodgroup'
+        },
+        {
+          id: 'permission',
+          title: 'Permission',
+          selectedComponent: 'appPermission'
+        },
+        {
+          id: 'associationCommittee',
+          title: 'AssociationCommittee',
+          selectedComponent: 'appAssociationCommittee'
+        },
+        {
+          id: 'dataUpdator',
+          title: 'DataUpdator',
+          selectedComponent: 'appDataUpdator'
+        },
+        {
+          id: 'role',
+          title: 'Role',
+          selectedComponent: 'appRole'
+        },
+        {
+          id: 'maritalStatus',
+          title: 'MaritalStatus',
+          selectedComponent: 'appMaritalStatus'
+        },
+        {
+          id: 'relationship',
+          title: 'Relationship',
+          selectedComponent: 'appRelationship'
+        },
+        {
+          id: 'country',
+          title: 'Country',
+          selectedComponent: 'appCountry'
+        },
+        
+        ]
+
     };
   },
   computed: {
@@ -145,9 +179,38 @@ export default {
 
 <style scoped>
 .entry-container.card {
-  width: 50%;
+  width: 70%;
+  height:100%;
   float: left;
-  padding: 100px;
+  padding: 70px;
   border-style: none !important;
+  position: absolute;
+}
+
+.utilitydiv.card {
+width: 70%; 
+height:80%;  
+border: 1px ;
+solid:black; 
+position: absolute;
+} 
+
+.parent{
+  display: flex;
+  flex-direction: column;
+   align-items: center;
+  flex-wrap: nowrap;
+    height: 100%;
+}
+
+
+.child{
+  width:100%;
+ 
+  
+  height: 100%;
+    flex: 0 1;
+  
+    padding:5px;
 }
 </style>
