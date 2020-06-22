@@ -31,8 +31,7 @@
       type="button"
       title="cancel"
       class="bg-white active:bg-green-800 text-green-500 border border-green-500 mt-2 mb-3 rounded-circle w-8 h-8 self-end font-bold hover:bg-green-500 hover:text-white focus:outline-none"
-      :class="populateWith.empty ? 'flex-grow-0' : 'flex-grow'"
-    >
+      :class="populateWith.empty ? 'flex-grow-0' : 'flex-grow'">
       Cancel
     </button>
   </div>
@@ -64,8 +63,6 @@ export default {
     },
     submitKulam () {
       if (this.kulam.kulamName !== '') {
-        //this.$emit('submit', this.kulam)
- 
         this.$store
         .dispatch('addKulam', this.kulam)
         .then(() => {
@@ -74,9 +71,7 @@ export default {
         })
         .catch(() => {
           this.loading = false;
-          //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/kulam' });
-        });
+          });
 
         this.clearForm()
         this.close()
