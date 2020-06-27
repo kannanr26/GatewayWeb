@@ -21,9 +21,10 @@ export default {
     addKulamList(state, newKulam) {
       state.kulams.push(newKulam)
     },
-    deleteKulamList(state, { kulamIndex }) {
-      console.log('splice kulamindex'+kulamIndex)
-      state.kulams.splice(kulamIndex, 1)
+    deleteKulamList(state, deleteKulam) {
+      state.kulams = state.kulams.filter
+      (kulam => ( (kulam.kulamName !== deleteKulam.kulamName) &&
+      (kulam.id !== deleteKulam.id)) );
     },
     SET_KulamList: (state, data) => {
       console.log("kulams in MUT" + data)
@@ -66,7 +67,7 @@ export default {
         return axios.delete(API_URL + 'gws/deleteKulam/' + id, 
         '', { headers }).then(response => {
         commit('SET_MESSAGE', response.data.message, response.data.success);    
-        commit('deleteKulamList', id);
+        commit('deleteKulamList', kulam);
        
         resolve(response);
         })

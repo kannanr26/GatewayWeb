@@ -10,7 +10,7 @@
       :key="kulam.id"
       :kulam="kulam"
       @delete="deleteKulam(kulam)"
-      @edit="saveToKulams"
+      @edit="editKulam"
     />
   </ul>
 
@@ -46,7 +46,10 @@ export default {
       });
   },
   methods: {
-    ...mapActions(['addKulam','deleteKulam','saveToKulams'])
+    ...mapActions(['addKulam','deleteKulam']),
+  editKulam(){
+    this.editing = !this.editing;
+    }
   }
 }
 </script>

@@ -8,21 +8,17 @@
    {{ kulam.kulamName }}
 
     <div class="float-sm-right" >
-      <button 
-        @click="deleteKulam"
-        type="button"
-        title="delete"
-         >  X
-      </button>
 
-      <button
-       
-        @click="editKulam"
-        type="button"
-        title="edit"
-        
-      > Edit
-        </button>
+
+    <button
+      @click="editKulam()"
+      class="btn btn-outline-primary border-0 ml-2"
+    >
+      <span class="fa fa-edit"></span>
+    </button>
+    <button @click="deleteKulam()" class="btn btn-outline-danger border-0">
+      <span class="fa fa-trash"></span>
+    </button>
 
     </div>
   </div>
@@ -61,7 +57,6 @@ export default {
     },
     editKulam () {
       this.$emit('edit')
-      this.editing = !this.editing
     }
   }
 }
