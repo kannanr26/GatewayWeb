@@ -49,7 +49,7 @@
 <script>
 export default {
 
-  name: 'vue-good-wizard',
+  name: 'vue-wizard',
 
   props: {
     steps: {},

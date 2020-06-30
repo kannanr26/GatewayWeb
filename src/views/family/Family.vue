@@ -2,7 +2,7 @@
   <div>
     <button @click="enableSave">Enable</button>
     <button @click="go()">goto</button>
-    <vue-good-wizard
+    <vue-wizard
       ref="wizard"
       :steps="steps"
       :onNext="nextClicked" 
@@ -24,7 +24,7 @@
         </div>
       <div slot="page3">
       </div>
-    </vue-good-wizard>
+    </vue-wizard>
   </div>
 </template>
 

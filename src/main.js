@@ -19,7 +19,7 @@ import {
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 
-import VueGoodWizard from '@/components/wizard';
+import VueWizard from '@/components/wizard';
 
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
@@ -33,7 +33,7 @@ Vue.use(BootstrapVueIcons)
 Vue.use(DropdownPlugin)
 Vue.use(TablePlugin)
 
-Vue.use(VueGoodWizard);
+Vue.use(VueWizard);
 new Vue({
   router,
   store,
