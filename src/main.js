@@ -19,22 +19,21 @@ import {
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 
+import VueGoodWizard from '@/components/wizard';
+
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
 Vue.config.productionTip = false;
 
 Vue.use(VeeValidate);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-
 Vue.use(Vuex);
-
-
-
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(DropdownPlugin)
 Vue.use(TablePlugin)
 
+Vue.use(VueGoodWizard);
 new Vue({
   router,
   store,

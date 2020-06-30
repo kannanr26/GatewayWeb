@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Login from '@/views/Login.vue';
 import Title from '@/views/Title.vue';
 import Utility from '@/views/Utility';
+import Family from '@/views/family/Family';
 Vue.use(Router);
 
 export default new Router({
@@ -25,6 +26,11 @@ export default new Router({
       path: '/utility',
       component: Utility,
       name: "Utility"
+    },
+    {
+      path: '/family',
+      component: Family,
+      name: "Family"
     }
   ]
 });
