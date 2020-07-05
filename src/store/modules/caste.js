@@ -9,42 +9,42 @@ const headers = {
 
 export default {
   state: {
-    educations: [],
-    dataFields: ['educations']
+    castes: [],
+    dataFields: ['castes']
   },
   getters: {
-    getEducation(state) {
-      console.log('get Education');
-      return state.educations;
+    getCaste(state) {
+      console.log('get Caste');
+      return state.castes;
     },
   },
   mutations: {
     setState(state, { field, data }) {
       Vue.set(state, field, data)
     },
-    addEducation(state, newEducation) {
-      state.educations.push(newEducation)
+    addCaste(state, newCaste) {
+      state.castes.push(newCaste)
     },
-    deleteEducation(state, { educationIndex }) {
-      state.educations.splice(educationIndex, 1)
+    deleteCaste(state, { casteIndex }) {
+      state.castes.splice(casteIndex, 1)
     },
-    SET_EDUCATIONS: (state, data) => {
-      console.log("educations in MUT" + data)
-      state.educations = data;
+    SET_CASTES: (state, data) => {
+      console.log("castes in MUT" + data)
+      state.castes = data;
     },
   },
   actions: {
-    addEducation({ commit }, education) {
+    addCaste({ commit }, caste) {
 
-      console.log("in add education");
+      console.log("in add caste");
       return new Promise((resolve, reject) => {
         console.log("in Promise");
-        return axios.post(API_URL + 'gws/addEducation', education, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
+        return axios.post(API_URL + 'gws/addCaste', caste, { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addcaste', caste).then(response => {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addEducation', education)
-         // dispatch('saveEducations')
+          commit('addCaste', caste)
+         // dispatch('saveCastes')
           resolve(response);
         })
           .catch(error => {
@@ -54,14 +54,14 @@ export default {
           });
       });
     },
-    async  getEducation({ commit }) {
+    async  getCaste({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getEducations', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        return axios.get(API_URL + 'gws/getCastes', '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addcaste', caste).then(response => {
+          console.log('get action Caste');
 
           console.log(response.data)
-          commit('SET_EDUCATIONS', response.data);
+          commit('SET_CASTES', response.data);
           resolve(response);
         })
           .catch(error => {
@@ -71,13 +71,13 @@ export default {
           });
       });
     },
-    deleteEducation({ commit }, education) {
+    deleteCaste({ commit }, caste) {
 
       return new Promise((resolve, reject) => {
-        let id = education.id;
-        return axios.delete(API_URL + 'gws/deleteEducation/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        let id = caste.id;
+        return axios.delete(API_URL + 'gws/deleteCaste/' + id, '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addcaste', caste).then(response => {
+          console.log('get action Caste');
 
           console.log(response.data)
           commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
@@ -89,10 +89,10 @@ export default {
             reject(error);
           });
       });
-      //commit('deleteEducation', education)
-    //  dispatch('saveToEducations')
+      //commit('deleteCaste', caste)
+    //  dispatch('saveToCastes')
     },
-    async saveToEducations({ state }) {
+    async saveToCastes({ state }) {
       state.dataFields;
 
 /*      try {

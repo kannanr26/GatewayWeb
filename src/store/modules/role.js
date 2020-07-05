@@ -9,42 +9,42 @@ const headers = {
 
 export default {
   state: {
-    educations: [],
-    dataFields: ['educations']
+    roles: [],
+    dataFields: ['roles']
   },
   getters: {
-    getEducation(state) {
-      console.log('get Education');
-      return state.educations;
+    getRole(state) {
+      console.log('get Role');
+      return state.roles;
     },
   },
   mutations: {
     setState(state, { field, data }) {
       Vue.set(state, field, data)
     },
-    addEducation(state, newEducation) {
-      state.educations.push(newEducation)
+    addRole(state, newRole) {
+      state.roles.push(newRole)
     },
-    deleteEducation(state, { educationIndex }) {
-      state.educations.splice(educationIndex, 1)
+    deleteRole(state, { roleIndex }) {
+      state.roles.splice(roleIndex, 1)
     },
     SET_EDUCATIONS: (state, data) => {
-      console.log("educations in MUT" + data)
-      state.educations = data;
+      console.log("roles in MUT" + data)
+      state.roles = data;
     },
   },
   actions: {
-    addEducation({ commit }, education) {
+    addRole({ commit }, role) {
 
-      console.log("in add education");
+      console.log("in add role");
       return new Promise((resolve, reject) => {
         console.log("in Promise");
-        return axios.post(API_URL + 'gws/addEducation', education, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
+        return axios.post(API_URL + 'gws/addRole', role, { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addrole', role).then(response => {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addEducation', education)
-         // dispatch('saveEducations')
+          commit('addRole', role)
+         // dispatch('saveRoles')
           resolve(response);
         })
           .catch(error => {
@@ -54,11 +54,11 @@ export default {
           });
       });
     },
-    async  getEducation({ commit }) {
+    async  getRole({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getEducations', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        return axios.get(API_URL + 'gws/getRoles', '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addrole', role).then(response => {
+          console.log('get action Role');
 
           console.log(response.data)
           commit('SET_EDUCATIONS', response.data);
@@ -71,13 +71,13 @@ export default {
           });
       });
     },
-    deleteEducation({ commit }, education) {
+    deleteRole({ commit }, role) {
 
       return new Promise((resolve, reject) => {
-        let id = education.id;
-        return axios.delete(API_URL + 'gws/deleteEducation/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        let id = role.id;
+        return axios.delete(API_URL + 'gws/deleteRole/' + id, '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addrole', role).then(response => {
+          console.log('get action Role');
 
           console.log(response.data)
           commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
@@ -89,10 +89,10 @@ export default {
             reject(error);
           });
       });
-      //commit('deleteEducation', education)
-    //  dispatch('saveToEducations')
+      //commit('deleteRole', role)
+    //  dispatch('saveToRoles')
     },
-    async saveToEducations({ state }) {
+    async saveToRoles({ state }) {
       state.dataFields;
 
 /*      try {

@@ -9,42 +9,42 @@ const headers = {
 
 export default {
   state: {
-    educations: [],
-    dataFields: ['educations']
+    countrys: [],
+    dataFields: ['countrys']
   },
   getters: {
-    getEducation(state) {
-      console.log('get Education');
-      return state.educations;
+    getCountry(state) {
+      console.log('get Country');
+      return state.countrys;
     },
   },
   mutations: {
     setState(state, { field, data }) {
       Vue.set(state, field, data)
     },
-    addEducation(state, newEducation) {
-      state.educations.push(newEducation)
+    addCountry(state, newCountry) {
+      state.countrys.push(newCountry)
     },
-    deleteEducation(state, { educationIndex }) {
-      state.educations.splice(educationIndex, 1)
+    deleteCountry(state, { countryIndex }) {
+      state.countrys.splice(countryIndex, 1)
     },
     SET_EDUCATIONS: (state, data) => {
-      console.log("educations in MUT" + data)
-      state.educations = data;
+      console.log("countrys in MUT" + data)
+      state.countrys = data;
     },
   },
   actions: {
-    addEducation({ commit }, education) {
+    addCountry({ commit }, country) {
 
-      console.log("in add education");
+      console.log("in add country");
       return new Promise((resolve, reject) => {
         console.log("in Promise");
-        return axios.post(API_URL + 'gws/addEducation', education, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
+        return axios.post(API_URL + 'gws/addCountry', country, { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addcountry', country).then(response => {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addEducation', education)
-         // dispatch('saveEducations')
+          commit('addCountry', country)
+         // dispatch('saveCountrys')
           resolve(response);
         })
           .catch(error => {
@@ -54,11 +54,11 @@ export default {
           });
       });
     },
-    async  getEducation({ commit }) {
+    async  getCountry({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getEducations', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        return axios.get(API_URL + 'gws/getCountries', '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addcountry', country).then(response => {
+          console.log('get action Country');
 
           console.log(response.data)
           commit('SET_EDUCATIONS', response.data);
@@ -71,13 +71,13 @@ export default {
           });
       });
     },
-    deleteEducation({ commit }, education) {
+    deleteCountry({ commit }, country) {
 
       return new Promise((resolve, reject) => {
-        let id = education.id;
-        return axios.delete(API_URL + 'gws/deleteEducation/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        let id = country.id;
+        return axios.delete(API_URL + 'gws/deleteCountry/' + id, '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addcountry', country).then(response => {
+          console.log('get action Country');
 
           console.log(response.data)
           commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
@@ -89,10 +89,10 @@ export default {
             reject(error);
           });
       });
-      //commit('deleteEducation', education)
-    //  dispatch('saveToEducations')
+      //commit('deleteCountry', country)
+    //  dispatch('saveToCountrys')
     },
-    async saveToEducations({ state }) {
+    async saveToCountrys({ state }) {
       state.dataFields;
 
 /*      try {

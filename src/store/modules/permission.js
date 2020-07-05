@@ -9,42 +9,42 @@ const headers = {
 
 export default {
   state: {
-    educations: [],
-    dataFields: ['educations']
+    permissions: [],
+    dataFields: ['permissions']
   },
   getters: {
-    getEducation(state) {
-      console.log('get Education');
-      return state.educations;
+    getPermission(state) {
+      console.log('get Permission');
+      return state.permissions;
     },
   },
   mutations: {
     setState(state, { field, data }) {
       Vue.set(state, field, data)
     },
-    addEducation(state, newEducation) {
-      state.educations.push(newEducation)
+    addPermission(state, newPermission) {
+      state.permissions.push(newPermission)
     },
-    deleteEducation(state, { educationIndex }) {
-      state.educations.splice(educationIndex, 1)
+    deletePermission(state, { permissionIndex }) {
+      state.permissions.splice(permissionIndex, 1)
     },
-    SET_EDUCATIONS: (state, data) => {
-      console.log("educations in MUT" + data)
-      state.educations = data;
+    SET_PERMISSIONS: (state, data) => {
+      console.log("permissions in MUT" + data)
+      state.permissions = data;
     },
   },
   actions: {
-    addEducation({ commit }, education) {
+    addPermission({ commit }, permission) {
 
-      console.log("in add education");
+      console.log("in add permission");
       return new Promise((resolve, reject) => {
         console.log("in Promise");
-        return axios.post(API_URL + 'gws/addEducation', education, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
+        return axios.post(API_URL + 'gws/addPermission', permission, { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addpermission', permission).then(response => {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addEducation', education)
-         // dispatch('saveEducations')
+          commit('addPermission', permission)
+         // dispatch('savePermissions')
           resolve(response);
         })
           .catch(error => {
@@ -54,14 +54,14 @@ export default {
           });
       });
     },
-    async  getEducation({ commit }) {
+    async  getPermission({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getEducations', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        return axios.get(API_URL + 'gws/getPermissions', '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addpermission', permission).then(response => {
+          console.log('get action Permission');
 
           console.log(response.data)
-          commit('SET_EDUCATIONS', response.data);
+          commit('SET_PERMISSIONS', response.data);
           resolve(response);
         })
           .catch(error => {
@@ -71,13 +71,13 @@ export default {
           });
       });
     },
-    deleteEducation({ commit }, education) {
+    deletePermission({ commit }, permission) {
 
       return new Promise((resolve, reject) => {
-        let id = education.id;
-        return axios.delete(API_URL + 'gws/deleteEducation/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        let id = permission.id;
+        return axios.delete(API_URL + 'gws/deletePermission/' + id, '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addpermission', permission).then(response => {
+          console.log('get action Permission');
 
           console.log(response.data)
           commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
@@ -89,10 +89,10 @@ export default {
             reject(error);
           });
       });
-      //commit('deleteEducation', education)
-    //  dispatch('saveToEducations')
+      //commit('deletePermission', permission)
+    //  dispatch('saveToPermissions')
     },
-    async saveToEducations({ state }) {
+    async saveToPermissions({ state }) {
       state.dataFields;
 
 /*      try {

@@ -9,42 +9,42 @@ const headers = {
 
 export default {
   state: {
-    educations: [],
-    dataFields: ['educations']
+    bloodgroups: [],
+    dataFields: ['bloodgroups']
   },
   getters: {
-    getEducation(state) {
-      console.log('get Education');
-      return state.educations;
+    getBloodgroup(state) {
+      console.log('get Bloodgroup');
+      return state.bloodgroups;
     },
   },
   mutations: {
     setState(state, { field, data }) {
       Vue.set(state, field, data)
     },
-    addEducation(state, newEducation) {
-      state.educations.push(newEducation)
+    addBloodgroup(state, newBloodgroup) {
+      state.bloodgroups.push(newBloodgroup)
     },
-    deleteEducation(state, { educationIndex }) {
-      state.educations.splice(educationIndex, 1)
+    deleteBloodgroup(state, { bloodgroupIndex }) {
+      state.bloodgroups.splice(bloodgroupIndex, 1)
     },
-    SET_EDUCATIONS: (state, data) => {
-      console.log("educations in MUT" + data)
-      state.educations = data;
+    SET_BLOODGROUPS: (state, data) => {
+      console.log("bloodgroups in MUT" + data)
+      state.bloodgroups = data;
     },
   },
   actions: {
-    addEducation({ commit }, education) {
+    addBloodgroup({ commit }, bloodgroup) {
 
-      console.log("in add education");
+      console.log("in add bloodgroup");
       return new Promise((resolve, reject) => {
         console.log("in Promise");
-        return axios.post(API_URL + 'gws/addEducation', education, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
+        return axios.post(API_URL + 'gws/addBloodgroup', bloodgroup, { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addbloodgroup', bloodgroup).then(response => {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addEducation', education)
-         // dispatch('saveEducations')
+          commit('addBloodgroup', bloodgroup)
+         // dispatch('saveBloodgroups')
           resolve(response);
         })
           .catch(error => {
@@ -54,14 +54,14 @@ export default {
           });
       });
     },
-    async  getEducation({ commit }) {
+    async  getBloodgroup({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getEducations', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        return axios.get(API_URL + 'gws/getBloodgroups', '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addbloodgroup', bloodgroup).then(response => {
+          console.log('get action Bloodgroup');
 
           console.log(response.data)
-          commit('SET_EDUCATIONS', response.data);
+          commit('SET_BLOODGROUPS', response.data);
           resolve(response);
         })
           .catch(error => {
@@ -71,13 +71,13 @@ export default {
           });
       });
     },
-    deleteEducation({ commit }, education) {
+    deleteBloodgroup({ commit }, bloodgroup) {
 
       return new Promise((resolve, reject) => {
-        let id = education.id;
-        return axios.delete(API_URL + 'gws/deleteEducation/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        let id = bloodgroup.id;
+        return axios.delete(API_URL + 'gws/deleteBloodgroup/' + id, '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addbloodgroup', bloodgroup).then(response => {
+          console.log('get action Bloodgroup');
 
           console.log(response.data)
           commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
@@ -89,10 +89,10 @@ export default {
             reject(error);
           });
       });
-      //commit('deleteEducation', education)
-    //  dispatch('saveToEducations')
+      //commit('deleteBloodgroup', bloodgroup)
+    //  dispatch('saveToBloodgroups')
     },
-    async saveToEducations({ state }) {
+    async saveToBloodgroups({ state }) {
       state.dataFields;
 
 /*      try {

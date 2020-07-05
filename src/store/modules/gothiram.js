@@ -39,7 +39,7 @@ export default {
       console.log("in add gothiram");
       return new Promise((resolve, reject) => {
         console.log("in Promise");
-        return axios.post(API_URL + 'gws/addgothiram', gothiram, { headers }).then(response => {
+        return axios.post(API_URL + 'gws/addGothiram', gothiram, { headers }).then(response => {
           //return axios.post(API_URL + 'gws/addgothiram', gothiram).then(response => {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
@@ -56,7 +56,7 @@ export default {
     },
     async  getGothirams({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getgothirams', '', { headers }).then(response => {
+        return axios.get(API_URL + 'gws/getGothirams', '', { headers }).then(response => {
           //return axios.post(API_URL + 'gws/addgothiram', gothiram).then(response => {
           console.log('get action Gothiram');
 

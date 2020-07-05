@@ -9,42 +9,42 @@ const headers = {
 
 export default {
   state: {
-    educations: [],
-    dataFields: ['educations']
+    jobtypes: [],
+    dataFields: ['jobtypes']
   },
   getters: {
-    getEducation(state) {
-      console.log('get Education');
-      return state.educations;
+    getJobtype(state) {
+      console.log('get Jobtype');
+      return state.jobtypes;
     },
   },
   mutations: {
     setState(state, { field, data }) {
       Vue.set(state, field, data)
     },
-    addEducation(state, newEducation) {
-      state.educations.push(newEducation)
+    addJobtype(state, newJobtype) {
+      state.jobtypes.push(newJobtype)
     },
-    deleteEducation(state, { educationIndex }) {
-      state.educations.splice(educationIndex, 1)
+    deleteJobtype(state, { jobtypeIndex }) {
+      state.jobtypes.splice(jobtypeIndex, 1)
     },
-    SET_EDUCATIONS: (state, data) => {
-      console.log("educations in MUT" + data)
-      state.educations = data;
+    SET_JOBTYPES: (state, data) => {
+      console.log("jobtypes in MUT" + data)
+      state.jobtypes = data;
     },
   },
   actions: {
-    addEducation({ commit }, education) {
+    addJobtype({ commit }, jobtype) {
 
-      console.log("in add education");
+      console.log("in add jobtype");
       return new Promise((resolve, reject) => {
         console.log("in Promise");
-        return axios.post(API_URL + 'gws/addEducation', education, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
+        return axios.post(API_URL + 'gws/addJob', jobtype, { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addJob', jobtype).then(response => {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addEducation', education)
-         // dispatch('saveEducations')
+          commit('addJobtype', jobtype)
+         // dispatch('saveJobtypes')
           resolve(response);
         })
           .catch(error => {
@@ -54,14 +54,14 @@ export default {
           });
       });
     },
-    async  getEducation({ commit }) {
+    async  getJobtype({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getEducations', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        return axios.get(API_URL + 'gws/getJobs', '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addjobtype', jobtype).then(response => {
+          console.log('get action Jobtype');
 
           console.log(response.data)
-          commit('SET_EDUCATIONS', response.data);
+          commit('SET_JOBTYPES', response.data);
           resolve(response);
         })
           .catch(error => {
@@ -71,13 +71,13 @@ export default {
           });
       });
     },
-    deleteEducation({ commit }, education) {
+    deleteJobtype({ commit }, jobtype) {
 
       return new Promise((resolve, reject) => {
-        let id = education.id;
-        return axios.delete(API_URL + 'gws/deleteEducation/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        let id = jobtype.id;
+        return axios.delete(API_URL + 'gws/deleteJob/' + id, '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addjobtype', jobtype).then(response => {
+          console.log('get action Jobtype');
 
           console.log(response.data)
           commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
@@ -89,10 +89,10 @@ export default {
             reject(error);
           });
       });
-      //commit('deleteEducation', education)
-    //  dispatch('saveToEducations')
+      //commit('deleteJobtype', jobtype)
+    //  dispatch('saveToJobtypes')
     },
-    async saveToEducations({ state }) {
+    async saveToJobtypes({ state }) {
       state.dataFields;
 
 /*      try {
