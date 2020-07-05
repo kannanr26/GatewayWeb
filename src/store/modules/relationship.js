@@ -9,42 +9,42 @@ const headers = {
 
 export default {
   state: {
-    educations: [],
-    dataFields: ['educations']
+    relationships: [],
+    dataFields: ['relationships']
   },
   getters: {
-    getEducation(state) {
-      console.log('get Education');
-      return state.educations;
+    getRelationship(state) {
+      console.log('get Relationship');
+      return state.relationships;
     },
   },
   mutations: {
     setState(state, { field, data }) {
       Vue.set(state, field, data)
     },
-    addEducation(state, newEducation) {
-      state.educations.push(newEducation)
+    addRelationship(state, newRelationship) {
+      state.relationships.push(newRelationship)
     },
-    deleteEducation(state, { educationIndex }) {
-      state.educations.splice(educationIndex, 1)
+    deleteRelationship(state, { relationshipIndex }) {
+      state.relationships.splice(relationshipIndex, 1)
     },
-    SET_EDUCATIONS: (state, data) => {
-      console.log("educations in MUT" + data)
-      state.educations = data;
+    SET_RELATIONSHIPS: (state, data) => {
+      console.log("relationships in MUT" + data)
+      state.relationships = data;
     },
   },
   actions: {
-    addEducation({ commit }, education) {
+    addRelationship({ commit }, relationship) {
 
-      console.log("in add education");
+      console.log("in add relationship");
       return new Promise((resolve, reject) => {
         console.log("in Promise");
-        return axios.post(API_URL + 'gws/addEducation', education, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
+        return axios.post(API_URL + 'gws/addRelationship', relationship, { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addrelationship', relationship).then(response => {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addEducation', education)
-         // dispatch('saveEducations')
+          commit('addRelationship', relationship)
+         // dispatch('saveRelationships')
           resolve(response);
         })
           .catch(error => {
@@ -54,14 +54,14 @@ export default {
           });
       });
     },
-    async  getEducation({ commit }) {
+    async  getRelationship({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getEducations', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        return axios.get(API_URL + 'gws/getRelationships', '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addrelationship', relationship).then(response => {
+          console.log('get action Relationship');
 
           console.log(response.data)
-          commit('SET_EDUCATIONS', response.data);
+          commit('SET_RELATIONSHIPS', response.data);
           resolve(response);
         })
           .catch(error => {
@@ -71,13 +71,13 @@ export default {
           });
       });
     },
-    deleteEducation({ commit }, education) {
+    deleteRelationship({ commit }, relationship) {
 
       return new Promise((resolve, reject) => {
-        let id = education.id;
-        return axios.delete(API_URL + 'gws/deleteEducation/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        let id = relationship.id;
+        return axios.delete(API_URL + 'gws/deleteRelationship/' + id, '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addrelationship', relationship).then(response => {
+          console.log('get action Relationship');
 
           console.log(response.data)
           commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
@@ -89,10 +89,10 @@ export default {
             reject(error);
           });
       });
-      //commit('deleteEducation', education)
-    //  dispatch('saveToEducations')
+      //commit('deleteRelationship', relationship)
+    //  dispatch('saveToRelationships')
     },
-    async saveToEducations({ state }) {
+    async saveToRelationships({ state }) {
       state.dataFields;
 
 /*      try {

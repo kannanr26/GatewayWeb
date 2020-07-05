@@ -1,20 +1,24 @@
+
 <template>
-<div class="flex flex-col mt-20 mx-4 border border-gray-400">
-  <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
-    Add Education</h1>
-  <educationAddForm submit="addEducation" />
+  <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center" style="border:5px">
+    <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
+      Add Education</h1>
 
-  <ul id="education-list" style="width: 100%; height:40%; overflow: auto">
-    <list-item
-      v-for="(education, i) in getEducation"
-      :key="i"
-      :education="education"
-      @delete="deleteEducation(i)"
-      @edit="saveToEducations"
-    />
-  </ul>
+  <div class="flex flex-col mt-20 mx-4 border border-dark  sm:justify-center" style="border:5px">
+    
+    <educationAddForm submit="addEducation" />
 
-</div>
+    <ul id="education-list" class = "child1">
+      <list-item 
+        v-for="(education, i) in getEducation"
+        :key="i"
+        :education="education"
+        @delete="deleteEducation(i)"
+        @edit="saveToEducations"
+      />
+    </ul>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -53,3 +57,19 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+
+.child1{
+  border: 2px;
+  width: 100%;
+  padding:10px;  
+  max-height: 200px;
+   overflow-y: scroll;
+   
+}
+
+
+
+</style>

@@ -9,42 +9,42 @@ const headers = {
 
 export default {
   state: {
-    educations: [],
-    dataFields: ['educations']
+    businesstypes: [],
+    dataFields: ['businesstypes']
   },
   getters: {
-    getEducation(state) {
-      console.log('get Education');
-      return state.educations;
+    getBusinesstype(state) {
+      console.log('get Businesstype');
+      return state.businesstypes;
     },
   },
   mutations: {
     setState(state, { field, data }) {
       Vue.set(state, field, data)
     },
-    addEducation(state, newEducation) {
-      state.educations.push(newEducation)
+    addBusinesstype(state, newBusinesstype) {
+      state.businesstypes.push(newBusinesstype)
     },
-    deleteEducation(state, { educationIndex }) {
-      state.educations.splice(educationIndex, 1)
+    deleteBusinesstype(state, { businesstypeIndex }) {
+      state.businesstypes.splice(businesstypeIndex, 1)
     },
-    SET_EDUCATIONS: (state, data) => {
-      console.log("educations in MUT" + data)
-      state.educations = data;
+    SET_BUSINESSTYPES: (state, data) => {
+      console.log("businesstypes in MUT" + data)
+      state.businesstypes = data;
     },
   },
   actions: {
-    addEducation({ commit }, education) {
+    addBusinesstype({ commit }, businesstype) {
 
-      console.log("in add education");
+      console.log("in add businesstype");
       return new Promise((resolve, reject) => {
         console.log("in Promise");
-        return axios.post(API_URL + 'gws/addEducation', education, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
+        return axios.post(API_URL + 'gws/addBusiness', businesstype, { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addbusinesstype', businesstype).then(response => {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addEducation', education)
-         // dispatch('saveEducations')
+          commit('addBusinesstype', businesstype)
+         // dispatch('saveBusinesstypes')
           resolve(response);
         })
           .catch(error => {
@@ -54,14 +54,14 @@ export default {
           });
       });
     },
-    async  getEducation({ commit }) {
+    async  getBusinesstype({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getEducations', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        return axios.get(API_URL + 'gws/getBusiness', '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addbusinesstype', businesstype).then(response => {
+          console.log('get action Businesstype');
 
           console.log(response.data)
-          commit('SET_EDUCATIONS', response.data);
+          commit('SET_BUSINESSTYPES', response.data);
           resolve(response);
         })
           .catch(error => {
@@ -71,13 +71,13 @@ export default {
           });
       });
     },
-    deleteEducation({ commit }, education) {
+    deleteBusinesstype({ commit }, businesstype) {
 
       return new Promise((resolve, reject) => {
-        let id = education.id;
-        return axios.delete(API_URL + 'gws/deleteEducation/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        let id = businesstype.id;
+        return axios.delete(API_URL + 'gws/deleteBusiness/' + id, '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addbusinesstype', businesstype).then(response => {
+          console.log('get action Businesstype');
 
           console.log(response.data)
           commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
@@ -89,10 +89,10 @@ export default {
             reject(error);
           });
       });
-      //commit('deleteEducation', education)
-    //  dispatch('saveToEducations')
+      //commit('deleteBusinesstype', businesstype)
+    //  dispatch('saveToBusinesstypes')
     },
-    async saveToEducations({ state }) {
+    async saveToBusinesstypes({ state }) {
       state.dataFields;
 
 /*      try {

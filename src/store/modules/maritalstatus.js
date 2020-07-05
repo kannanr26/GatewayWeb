@@ -9,42 +9,42 @@ const headers = {
 
 export default {
   state: {
-    educations: [],
-    dataFields: ['educations']
+    maritalstatuss: [],
+    dataFields: ['maritalstatuss']
   },
   getters: {
-    getEducation(state) {
-      console.log('get Education');
-      return state.educations;
+    getMaritalstatus(state) {
+      console.log('get Maritalstatus');
+      return state.maritalstatuss;
     },
   },
   mutations: {
     setState(state, { field, data }) {
       Vue.set(state, field, data)
     },
-    addEducation(state, newEducation) {
-      state.educations.push(newEducation)
+    addMaritalstatus(state, newMaritalstatus) {
+      state.maritalstatuss.push(newMaritalstatus)
     },
-    deleteEducation(state, { educationIndex }) {
-      state.educations.splice(educationIndex, 1)
+    deleteMaritalstatus(state, { maritalstatusIndex }) {
+      state.maritalstatuss.splice(maritalstatusIndex, 1)
     },
     SET_EDUCATIONS: (state, data) => {
-      console.log("educations in MUT" + data)
-      state.educations = data;
+      console.log("maritalstatuss in MUT" + data)
+      state.maritalstatuss = data;
     },
   },
   actions: {
-    addEducation({ commit }, education) {
+    addMaritalstatus({ commit }, maritalstatus) {
 
-      console.log("in add education");
+      console.log("in add maritalstatus");
       return new Promise((resolve, reject) => {
         console.log("in Promise");
-        return axios.post(API_URL + 'gws/addEducation', education, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
+        return axios.post(API_URL + 'gws/addMaritalStatus', maritalstatus, { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addmaritalstatus', maritalstatus).then(response => {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addEducation', education)
-         // dispatch('saveEducations')
+          commit('addMaritalstatus', maritalstatus)
+         // dispatch('saveMaritalstatuss')
           resolve(response);
         })
           .catch(error => {
@@ -54,11 +54,11 @@ export default {
           });
       });
     },
-    async  getEducation({ commit }) {
+    async  getMaritalstatus({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getEducations', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        return axios.get(API_URL + 'gws/getMaritalStatuses', '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addmaritalstatus', maritalstatus).then(response => {
+          console.log('get action Maritalstatus');
 
           console.log(response.data)
           commit('SET_EDUCATIONS', response.data);
@@ -71,13 +71,13 @@ export default {
           });
       });
     },
-    deleteEducation({ commit }, education) {
+    deleteMaritalstatus({ commit }, maritalstatus) {
 
       return new Promise((resolve, reject) => {
-        let id = education.id;
-        return axios.delete(API_URL + 'gws/deleteEducation/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        let id = maritalstatus.id;
+        return axios.delete(API_URL + 'gws/deleteMaritalStatus/' + id, '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/addmaritalstatus', maritalstatus).then(response => {
+          console.log('get action Maritalstatus');
 
           console.log(response.data)
           commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
@@ -89,10 +89,10 @@ export default {
             reject(error);
           });
       });
-      //commit('deleteEducation', education)
-    //  dispatch('saveToEducations')
+      //commit('deleteMaritalstatus', maritalstatus)
+    //  dispatch('saveToMaritalstatuss')
     },
-    async saveToEducations({ state }) {
+    async saveToMaritalstatuss({ state }) {
       state.dataFields;
 
 /*      try {

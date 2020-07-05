@@ -9,42 +9,42 @@ const headers = {
 
 export default {
   state: {
-    educations: [],
-    dataFields: ['educations']
+    dataupdators: [],
+    dataFields: ['dataupdators']
   },
   getters: {
-    getEducation(state) {
-      console.log('get Education');
-      return state.educations;
+    getDataupdator(state) {
+      console.log('get Dataupdator');
+      return state.dataupdators;
     },
   },
   mutations: {
     setState(state, { field, data }) {
       Vue.set(state, field, data)
     },
-    addEducation(state, newEducation) {
-      state.educations.push(newEducation)
+    addDataupdator(state, newDataupdator) {
+      state.dataupdators.push(newDataupdator)
     },
-    deleteEducation(state, { educationIndex }) {
-      state.educations.splice(educationIndex, 1)
+    deleteDataupdator(state, { dataupdatorIndex }) {
+      state.dataupdators.splice(dataupdatorIndex, 1)
     },
-    SET_EDUCATIONS: (state, data) => {
-      console.log("educations in MUT" + data)
-      state.educations = data;
+    SET_DATAUPDATORS: (state, data) => {
+      console.log("dataupdators in MUT" + data)
+      state.dataupdators = data;
     },
   },
   actions: {
-    addEducation({ commit }, education) {
+    addDataupdator({ commit }, dataupdator) {
 
-      console.log("in add education");
+      console.log("in add dataupdator");
       return new Promise((resolve, reject) => {
         console.log("in Promise");
-        return axios.post(API_URL + 'gws/addEducation', education, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
+        return axios.post(API_URL + 'gws/addOperatorType', dataupdator, { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/adddataupdator', dataupdator).then(response => {
           console.log(response.data)
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addEducation', education)
-         // dispatch('saveEducations')
+          commit('addDataupdator', dataupdator)
+         // dispatch('saveDataupdators')
           resolve(response);
         })
           .catch(error => {
@@ -54,14 +54,14 @@ export default {
           });
       });
     },
-    async  getEducation({ commit }) {
+    async  getDataupdator({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getEducations', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        return axios.get(API_URL + 'gws/getOperatorTypes', '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/adddataupdator', dataupdator).then(response => {
+          console.log('get action Dataupdator');
 
           console.log(response.data)
-          commit('SET_EDUCATIONS', response.data);
+          commit('SET_DATAUPDATORS', response.data);
           resolve(response);
         })
           .catch(error => {
@@ -71,13 +71,13 @@ export default {
           });
       });
     },
-    deleteEducation({ commit }, education) {
+    deleteDataupdator({ commit }, dataupdator) {
 
       return new Promise((resolve, reject) => {
-        let id = education.id;
-        return axios.delete(API_URL + 'gws/deleteEducation/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addeducation', education).then(response => {
-          console.log('get action Education');
+        let id = dataupdator.id;
+        return axios.delete(API_URL + 'gws/deleteOperatorType/' + id, '', { headers }).then(response => {
+          //return axios.post(API_URL + 'gws/adddataupdator', dataupdator).then(response => {
+          console.log('get action Dataupdator');
 
           console.log(response.data)
           commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
@@ -89,10 +89,10 @@ export default {
             reject(error);
           });
       });
-      //commit('deleteEducation', education)
-    //  dispatch('saveToEducations')
+      //commit('deleteDataupdator', dataupdator)
+    //  dispatch('saveToDataupdators')
     },
-    async saveToEducations({ state }) {
+    async saveToDataupdators({ state }) {
       state.dataFields;
 
 /*      try {
