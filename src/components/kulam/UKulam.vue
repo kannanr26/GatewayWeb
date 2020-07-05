@@ -6,11 +6,11 @@
 
   <ul id="kulam-list" style="width: 100%; height:40%; overflow: auto">
     <list-item
-      v-for="(kulam, i) in getKulams"
-      :key="i"
+      v-for="(kulam) in getKulams"
+      :key="kulam.id"
       :kulam="kulam"
-      @delete="deleteKulam(i)"
-      @edit="saveToKulams"
+      @delete="deleteKulam(kulam)"
+      @edit="editKulam"
     />
   </ul>
 
@@ -30,7 +30,6 @@ export default {
     ListItem
   }, 
   computed: {
-    //...mapState(['kulams']),
     ...mapGetters(['getKulams'])
     
   },mounted() {
@@ -44,12 +43,13 @@ export default {
       })
       .catch(() => {
         this.loading = false;
-        //  this.message = err.response.data.message;
-        // this.$router.push({ name: '/kulam' });
       });
   },
   methods: {
-    ...mapActions(['addKulam','deleteKulam','saveToKulams'])
+    ...mapActions(['addKulam','deleteKulam']),
+  editKulam(){
+    this.editing = !this.editing;
+    }
   }
 }
 </script>
