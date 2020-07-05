@@ -4,6 +4,8 @@ import Login from '@/views/Login.vue';
 import Title from '@/views/Title.vue';
 import Utility from '@/views/Utility';
 import Family from '@/views/family/Family';
+
+import PersonalRegistration from '@/components/family/PersonalRegistration';
 Vue.use(Router);
 
 export default new Router({
@@ -31,6 +33,11 @@ export default new Router({
       path: '/family',
       component: Family,
       name: "Family"
+    },
+    {
+      path: '/family1',
+      component: PersonalRegistration,
+      
     }
   ]
 });

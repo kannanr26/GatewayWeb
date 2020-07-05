@@ -8,12 +8,14 @@
       :onNext="nextClicked" 
       :onBack="backClicked">
       <div slot="page1">
-        <h4>Step 1</h4>
-        <input
-        id="step1"
-        v-model="step1"
-        rows="15"
-        />
+    <!--  <template src ="./PersonalRegistration.vue" >
+    </template> <PersonalRegistration/>-->
+     
+     <div class="form-group row">
+     <label for="registration" class="col-sm-2 col-form-label">
+       Registration:</label>
+     </div>
+     
         </div>
       <div slot="page2">
         <input
@@ -30,7 +32,7 @@
 
 <script>
 // import { GoodWizard } from '../dist/vue-good-wizard.es.js';
-
+import PersonalRegistration from '@/components/family/PersonalRegistration';
 export default {
   name: 'demo',
   data(){
@@ -77,9 +79,9 @@ export default {
       this.$refs.wizard.goTo(this.cStep++);
     }
   },
-  // components: {
-  //   'vue-good-wizard': GoodWizard,
-  // }
+   components: {
+     PersonalRegistration : PersonalRegistration,
+   }
 };
 </script>
 

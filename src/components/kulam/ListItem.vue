@@ -56,7 +56,8 @@ export default {
       this.$emit('delete');
     },
     editKulam () {
-      this.$emit('edit')
+      this.$emit('edit');
+      this.editing = !this.editing;
     }
   }
 }
