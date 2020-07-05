@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router  from './router/router.js';
+import router from './router/router.js';
 import store from './store';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import { DropdownPlugin, TablePlugin } from 'bootstrap-vue'

@@ -6,11 +6,11 @@
 
   <ul id="gothiram-list" style="width: 100%; height:40%; overflow: auto">
     <list-item
-      v-for="(gothiram, i) in getGothirams"
-      :key="i"
+      v-for="(gothiram) in getGothirams"
+      :key="gothiram.id"
       :gothiram="gothiram"
-      @delete="deleteGothiram(i)"
-      @edit="saveToGothirams"
+      @delete="deleteGothiram(gothiram)"
+      @edit="editGothiram"
     />
   </ul>
 
@@ -30,26 +30,22 @@ export default {
     ListItem
   }, 
   computed: {
-    //...mapState(['gothirams']),
     ...mapGetters(['getGothirams'])
     
   },mounted() {
-    console.log(' Created get Gothiram');
-
     this.$store
       .dispatch('getGothirams')
       .then(() => {
-        console.log('Created in get Gothiram');
         this.loading = false;
       })
       .catch(() => {
         this.loading = false;
-        //  this.message = err.response.data.message;
-        // this.$router.push({ name: '/gothiram' });
       });
   },
   methods: {
-    ...mapActions(['addGothiram','deleteGothiram','saveToGothirams'])
+    ...mapActions(['addGothiram','deleteGothiram']),
+  editGothiram(){
+    }
   }
 }
 </script>
