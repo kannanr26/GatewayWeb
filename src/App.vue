@@ -4,38 +4,38 @@
       <a href class="navbar-brand" @click.prevent>Gateway</a>
       <div class="navbar-nav mr-auto">
         <div v-if="!currentUser" class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <router-link to="/login" class="nav-link">
-            <font-awesome-icon icon="home" />Home
-          </router-link>
-        </li>
+          <li class="nav-item">
+            <router-link to="/login" class="nav-link">
+              <font-awesome-icon icon="home" />Home
+            </router-link>
+          </li>
         </div>
-        
-         <div v-if="currentUser" class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <router-link to="/utility" class="nav-link">Utility
-          </router-link>
-        </li>
 
-       <li  class="nav-item">
-          <router-link to="/family" class="nav-link">Family</router-link>
-        </li>
+        <div v-if="currentUser" class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <router-link to="/utility" class="nav-link">Utility</router-link>
+          </li>
+
+          <li class="nav-item">
+            <router-link to="/family" class="nav-link">Family</router-link>
+          </li>
+        </div>
+
+        <!-- Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbardrop"
+            data-toggle="dropdown"
+          >Dropdown link</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Link 1</a>
+            <a class="dropdown-item" href="#">Link 2</a>
+            <a class="dropdown-item" href="#">Link 3</a>
           </div>
+        </li>
 
-
-    <!-- Dropdown -->
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-        Dropdown link
-      </a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Link 1</a>
-        <a class="dropdown-item" href="#">Link 2</a>
-        <a class="dropdown-item" href="#">Link 3</a>
-      </div>
-    </li>
-        
-        
         <!--<li v-if="showModeratorBoard" class="nav-item">
           <router-link to="/mod" class="nav-link">Moderator Board</router-link>
         </li>
@@ -83,7 +83,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters(['currentUser', 'isAuthenticated','showAdminBoard'])
+    ...mapGetters(['currentUser', 'isAuthenticated', 'showAdminBoard'])
   },
   methods: {
     logOut() {

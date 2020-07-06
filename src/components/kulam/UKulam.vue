@@ -48,7 +48,6 @@ export default {
   methods: {
     ...mapActions(['addKulam','deleteKulam']),
   editKulam(){
-    this.editing = !this.editing;
     }
   }
 }

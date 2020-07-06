@@ -79,10 +79,6 @@ export default {
       });
     
     //  dispatch('saveToKulams')
-    },
-    async saveToKulams({ state }) {
-      state;
-      console.log('saveToKulams')
     }
   }
 }

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router  from './router/router.js';
+import router from './router/router.js';
 import store from './store';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import { DropdownPlugin, TablePlugin } from 'bootstrap-vue'
@@ -21,22 +21,21 @@ import {
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 
+import VueWizard from '@/components/wizard';
+
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
 Vue.config.productionTip = false;
 
 Vue.use(VeeValidate);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-
 Vue.use(Vuex);
-
-
-
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(DropdownPlugin)
 Vue.use(TablePlugin)
 
+Vue.use(VueWizard);
 new Vue({
   router,
   store,

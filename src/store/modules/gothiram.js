@@ -9,46 +9,39 @@ const headers = {
 
 export default {
   state: {
-    gothirams: [],
-    dataFields: ['gothirams']
+    gothirams: []
   },
   getters: {
     getGothirams(state) {
-      console.log('get Gothiram');
       return state.gothirams;
     },
   },
   mutations: {
-    setState(state, { field, data }) {
-      Vue.set(state, field, data)
-    },
-    addGothiram(state, newGothiram) {
+    addGothiramList(state, newGothiram) {
       state.gothirams.push(newGothiram)
     },
-    deleteGothiram(state, { gothiramIndex }) {
-      state.gothirams.splice(gothiramIndex, 1)
+    deleteGothiramList(state, deleteGothiram) {
+      state.gothirams = state.gothirams.filter
+      (gothiram => ( (gothiram.gothiramName !== deleteGothiram.gothiramName) &&
+      (gothiram.id !== deleteGothiram.id)) );
     },
-    SET_GOTHIRAMS: (state, data) => {
-      console.log("gothirams in MUT" + data)
+    SET_GothiramsList: (state, data) => {
       state.gothirams = data;
     },
   },
   actions: {
     addGothiram({ commit }, gothiram) {
-
-      console.log("in add gothiram");
+      let id= gothiram.id;
       return new Promise((resolve, reject) => {
-        console.log("in Promise");
-        return axios.post(API_URL + 'gws/addGothiram', gothiram, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addgothiram', gothiram).then(response => {
-          console.log(response.data)
+        return axios.post(API_URL + 'gws/addGothiram', gothiram,
+         { headers }).then(response => {
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addGothiram', gothiram)
-         // dispatch('saveGothirams')
+          if(id==0 || id===undefined){
+             commit('addGothiramList', response.data.obj);
+          }
           resolve(response);
         })
           .catch(error => {
-            console.log(error.response.data.message);
             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
@@ -57,16 +50,10 @@ export default {
     async  getGothirams({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getGothirams', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addgothiram', gothiram).then(response => {
-          console.log('get action Gothiram');
-
-          console.log(response.data)
-          commit('SET_GOTHIRAMS', response.data);
+          commit('SET_GothiramsList', response.data);
           resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
-            // commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
@@ -75,31 +62,19 @@ export default {
 
       return new Promise((resolve, reject) => {
         let id = gothiram.id;
-        return axios.delete(API_URL + 'gws/deleteGothiram/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addgothiram', gothiram).then(response => {
-          console.log('get action Gothiram');
-
-          console.log(response.data)
-          commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-          resolve(response);
+        return axios.delete(API_URL + 'gws/deleteGothiram/' + id, 
+        '', { headers }).then(response => {
+        commit('SET_MESSAGE', response.data.message, response.data.success);    
+        commit('deleteGothiramList', gothiram);
+       
+        resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
+             console.log(error.response.data.message);
              commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
-      //commit('deleteGothiram', gothiram)
-    //  dispatch('saveToGothirams')
-    },
-    async saveToGothirams({ state }) {
-      state.dataFields;
-
-/*      try {
-        await Promise.all(state.dataFields.map(field => idbs.saveToStorage(field, state[field])))
-      } catch (e) {
-        state.dataFields.forEach(field => ls.saveToStorage(field, state[field]))
-      }*/
     }
   }
 }
