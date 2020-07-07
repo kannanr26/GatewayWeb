@@ -1,7 +1,9 @@
-<template>
-<ul>
+<template> 
+<li class="my-2 p-2 px-2">
+
+
 <div class="clearfix">
-  <div   class= " w-75 p-2  border border-primary " style="background-color: #eee;"
+  <div 
     v-if="!editing"
 
   >
@@ -29,7 +31,7 @@
     :populateWith="kulam"
     @close="editKulam" />
      </div>
-</ul>
+</li>
 </template>
 
 <script>
@@ -65,5 +67,19 @@ export default {
 
 
 <style>
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+}
+
 
 </style>

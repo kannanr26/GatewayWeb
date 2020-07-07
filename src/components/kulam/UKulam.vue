@@ -1,10 +1,12 @@
 <template>
-<div class="flex flex-col mt-20 mx-4 border border-gray-400">
+<div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
   <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
     Add Kulam</h1>
+    <div class="flex flex-col mt-20 mx-4   sm:justify-center">
+    
   <kulamAddForm submit="addKulam" />
 
-  <ul id="kulam-list" style="width: 100%; height:40%; overflow: auto">
+  <ul id="kulam-list" class = "child1">
     <list-item
       v-for="(kulam) in getKulams"
       :key="kulam.id"
@@ -14,7 +16,9 @@
     />
   </ul>
 
-</div>
+
+
+</div></div>
 </template>
 
 <script>
@@ -52,3 +56,20 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+
+
+.child1{
+  border: 2px;
+  width: 100%;
+  padding:10px;  
+  max-height: 200px;
+   overflow-y: scroll;
+   
+}
+
+
+
+</style>
