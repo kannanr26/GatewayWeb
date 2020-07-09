@@ -1,20 +1,20 @@
 
 <template>
-  <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center" style="border:5px">
+  <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
     <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
       Add Education</h1>
 
-  <div class="flex flex-col mt-20 mx-4 border border-dark  sm:justify-center" style="border:5px">
+  <div class="flex flex-col mt-20 mx-4  sm:justify-center">
     
     <educationAddForm submit="addEducation" />
 
     <ul id="education-list" class = "child1">
       <list-item 
-        v-for="(education, i) in getEducation"
-        :key="i"
+        v-for="(education) in getEducation"
+        :key="education.id"
         :education="education"
-        @delete="deleteEducation(i)"
-        @edit="saveToEducations"
+        @delete="deleteEducation(education)"
+        @edit="editEducation"
       />
     </ul>
   </div>
@@ -34,27 +34,26 @@ export default {
     ListItem
   }, 
   computed: {
-    //...mapState(['educations']),
     ...mapGetters(['getEducation'])
     
   },mounted() {
     console.log(' Created get Education');
 
     this.$store
-      .dispatch('getEducation')
+      .dispatch('getEducations')
       .then(() => {
         console.log('Created in get Education');
         this.loading = false;
       })
       .catch(() => {
         this.loading = false;
-        //  this.message = err.response.data.message;
-        // this.$router.push({ name: '/education' });
       });
   },
   methods: {
-    ...mapActions(['addEducation','deleteEducation','saveToEducations'])
-  }
+    ...mapActions(['addEducation','deleteEducation']),
+editEducation(){
+}    
+}
 }
 </script>
 

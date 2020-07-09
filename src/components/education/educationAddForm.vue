@@ -89,8 +89,7 @@ export default {
 </script>
 
 <style scoped>
-
 .border-3 {
     border-width:2px !important;
 }
-</style>>
+</style>

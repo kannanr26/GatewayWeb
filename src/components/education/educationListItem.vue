@@ -1,33 +1,24 @@
 <template>
-  <li class="my-2 p-2 px-2">
-    <div class="clearfix">
-      <div 
-        v-if="!editing"
-      >
-        {{ education.educationName }}
-        <div class="float-sm-right" >
-          <button 
-            @click="editEducation"
-            type="button"
-            title="edit"     
-             style="border:none;"   
-          > 
-            <span class="edit" >
-              <i class="fa fa-edit" style="font-size:16px"></i>
-            </span>
-          </button>
-          &nbsp;&nbsp;
-          <button 
-            @click="deleteEducation"
-            type="button"
-            title="delete"
-             style="border:none;"
-          >
-            X
-          </button>
-        </div>
-      </div>
-      <educationAddForm
+<li class="my-2 p-2 px-2">
+<div class="clearfix">
+  <div 
+    v-if="!editing"
+  >
+   {{ education.educationName }}
+    <div class="float-sm-right" >
+    <button
+      @click="editEducation()"
+      class="btn btn-outline-primary border-0 ml-2"
+    >
+     <span class="fa fa-edit"></span>
+    </button>
+    <button @click="deleteEducation()" class="btn btn-outline-danger border-0">
+     <span class="fa fa-trash"></span>
+    </button>
+</div>
+</div>
+
+<educationAddForm
         v-else
         :populateWith="education"
         @close="editEducation"
@@ -57,22 +48,11 @@ export default {
   },
   methods: {
     deleteEducation () {
-    //  this.$emit('delete')
-       this.$store
-        .dispatch('deleteEducation', this.education)
-        .then(() => {
-          console.log('SUCCESS');
-          this.loading = false;
-        })
-        .catch(() => {
-          this.loading = false;
-          //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/education' });
-        });
+      this.$emit('delete');
     },
     editEducation () {
       this.$emit('edit')
-      this.editing = !this.editing
+      this.editing = !this.editing;
     }
   }
 }
