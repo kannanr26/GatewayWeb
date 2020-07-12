@@ -32,11 +32,6 @@ export default new Router({
       component: Title
     },
     {
-      path: '/utility',
-      component: Utility,
-      name: "Utility"
-    },
-    {
       path: '/family',
       component: Family,
       name: "Family"

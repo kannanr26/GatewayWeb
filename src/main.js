@@ -7,7 +7,7 @@ import { DropdownPlugin, TablePlugin } from 'bootstrap-vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import 'bootstrap/dist/js/bootstrap.bundle';
+
 
 import VeeValidate from 'vee-validate';
 import Vuex from 'vuex';

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button @click="enableSave">Enable</button>
-    <button @click="go()">goto</button>
+<!--    <button @click="enableSave">Enable</button>
+    <button @click="go()">goto</button> -->
     <vue-wizard
       ref="wizard"
       :steps="steps"
@@ -32,7 +32,7 @@
 
 <script>
 // import { GoodWizard } from '../dist/vue-good-wizard.es.js';
-import PersonalRegistration from '@/components/family/PersonalRegistration';
+//import PersonalRegistration from '@/components/family/PersonalRegistration';
 export default {
   name: 'demo',
   data(){
@@ -80,7 +80,7 @@ export default {
     }
   },
    components: {
-     PersonalRegistration : PersonalRegistration,
+//     PersonalRegistration : PersonalRegistration,
    }
 };
 </script>

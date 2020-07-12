@@ -3,40 +3,38 @@
     <nav class="navbar navbar-expand navbar-dark bg-dark">
       <a href class="navbar-brand" @click.prevent>Gateway</a>
       <div class="navbar-nav mr-auto">
-        <div v-if="!currentUser" class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <router-link to="/login" class="nav-link">
-              <font-awesome-icon icon="home" />Home
-            </router-link>
-          </li>
-        </div>
+        <li class="nav-item">
+          <router-link to="/login" class="nav-link">
+            <font-awesome-icon icon="home" />Home
+          </router-link>
+        </li>       
+        
 
-        <div v-if="currentUser" class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <router-link to="/utility" class="nav-link">Utility</router-link>
-          </li>
-
+        <!-- Dropdown -->
+      <li v-if="currentUser"  class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"      
+       id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">
+        Utility
+      </a>
+      <div class="dropdown-menu "  aria-labelledby="navbarDropdownMenuLink">
+        <a class="dropdown-item" href="#"><router-link to="/utilityAddress" class="nav-link text-dark" >Utility Address</router-link></a>
+        <a class="dropdown-item" href="#"><router-link to="/utilityDeity" class="nav-link text-dark">Utility Deity</router-link></a>
+        <a class="dropdown-item" href="#"><router-link to="/utilityManagement" class="nav-link text-dark">Utility Management</router-link></a>
+         <a class="dropdown-item" href="#"> <router-link to="/utilityPersonal" class="nav-link text-dark">Utility Personal</router-link></a>
+        <a class="dropdown-item" href="#"> <router-link to="/utilityProfession" class="nav-link text-dark">Utility Profession</router-link></a>
+      
+      </div>
+    </li>
+         <div v-if="currentUser" class="navbar-nav ml-auto">
           <li class="nav-item">
             <router-link to="/family" class="nav-link">Family</router-link>
           </li>
-        </div>
-
-        <!-- Dropdown -->
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbardrop"
-            data-toggle="dropdown"
-          >Dropdown link</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Link 1</a>
-            <a class="dropdown-item" href="#">Link 2</a>
-            <a class="dropdown-item" href="#">Link 3</a>
-          </div>
+        </div>   
+    
+        <!-- <li v-if="showAdminBoard" class="nav-item">
+          <router-link to="/admin" class="nav-link">Admin Board</router-link>
         </li>
-
-        <!--<li v-if="showModeratorBoard" class="nav-item">
+        <li v-if="showModeratorBoard" class="nav-item">
           <router-link to="/mod" class="nav-link">Moderator Board</router-link>
         </li>
         <li class="nav-item">
@@ -57,7 +55,7 @@
         </li>
       </div>
 
-      <div v-if="(currentUser  && isAuthenticated)" class="navbar-nav ml-auto">
+      <div v-if="(currentUser && currentUser!='' && isAuthenticated)" class="navbar-nav ml-auto">
         <li class="nav-item">
           <router-link to="/profile" class="nav-link">
             <font-awesome-icon icon="user" />
@@ -71,7 +69,6 @@
         </li>
       </div>
     </nav>
-
     <div class="container">
       <router-view />
     </div>
@@ -82,8 +79,9 @@
 import { mapGetters } from 'vuex';
 
 export default {
+
   computed: {
-    ...mapGetters(['currentUser', 'isAuthenticated', 'showAdminBoard'])
+    ...mapGetters(['currentUser', 'isAuthenticated'])
   },
   methods: {
     logOut() {
@@ -105,3 +103,6 @@ export default {
   }
 };
 </script>
+<style scoped>
+a {text-decoration: none;}
+</style>
