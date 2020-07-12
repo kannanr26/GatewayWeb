@@ -1,55 +1,73 @@
 <template>
-<div class="flex flex-col mt-20 mx-4 border border-gray-400">
-  <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
-    Add Maritalstatus</h1>
-  <maritalstatusAddForm submit="addMaritalstatus" />
+  <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
+    <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
+      Add MaritalStatus</h1>
 
-  <ul id="maritalstatus-list" style="width: 100%; height:40%; overflow: auto">
-    <list-item
-      v-for="(maritalstatus, i) in getMaritalstatus"
-      :key="i"
-      :maritalstatus="maritalstatus"
-      @delete="deleteMaritalstatus(i)"
-      @edit="saveToMaritalstatuss"
-    />
-  </ul>
+  <div class="flex flex-col mt-20 mx-4  sm:justify-center">
+    
+    <maritalStatusAddForm submit="addMaritalStatus" />
 
-</div>
+    <ul id="maritalStatus-list" class = "child1">
+      <list-item 
+        v-for="(maritalStatus) in getMaritalStatus"
+        :key="maritalStatus.id"
+        :maritalStatus="maritalStatus"
+        @delete="deleteMaritalStatus(maritalStatus)"
+        @edit="editMaritalStatus"
+      />
+    </ul>
+  </div>
+  </div>
 </template>
 
 <script>
 import {  mapActions,mapGetters } from 'vuex'
 
-import maritalstatusAddForm from './maritalstatusAddForm.vue'
+import maritalStatusAddForm from './maritalstatusAddForm.vue'
 import ListItem from './maritalstatusListItem.vue'
 
 export default {
-  name: 'MaritalstatusList',
+  name: 'MaritalStatusList',
   components: {
-    maritalstatusAddForm,
+    maritalStatusAddForm,
     ListItem
   }, 
   computed: {
-    //...mapState(['maritalstatuss']),
-    ...mapGetters(['getMaritalstatus'])
+    ...mapGetters(['getMaritalStatus'])
     
   },mounted() {
-    console.log(' Created get Maritalstatus');
+    console.log(' Created get MaritalStatus');
 
     this.$store
-      .dispatch('getMaritalstatus')
+      .dispatch('getMaritalStatuss')
       .then(() => {
-        console.log('Created in get Maritalstatus');
+        console.log('Created in get MaritalStatus');
         this.loading = false;
       })
       .catch(() => {
         this.loading = false;
-        //  this.message = err.response.data.message;
-        // this.$router.push({ name: '/maritalstatus' });
       });
   },
   methods: {
-    ...mapActions(['addMaritalstatus','deleteMaritalstatus','saveToMaritalstatuss'])
-  }
+    ...mapActions(['addMaritalStatus','deleteMaritalStatus']),
+editMaritalStatus(){
+}    
+}
 }
 </script>
+
+<style scoped>
+
+
+.child1{
+  border: 2px;
+  width: 100%;
+  padding:10px;  
+  max-height: 200px;
+   overflow-y: scroll;
+   
+}
+
+
+
+</style>

@@ -1,28 +1,22 @@
+
 <template>
-<form
-  @submit.prevent="submitAssociationcommittee"
-  class="flex flex-wrap justify-between sm:justify-center"
->
- <div
- 
-    class="flex flex-grow sm:ml-4"
-    :class="{ 'sm:flex-grow-0': populateWith.empty }"
-  >
-  <label class="inline">
-    <input
-      class="block my-2 p-2 rounded border border-gray-400 focus:border-green-400 focus:outline-none"
-      type="text"
-      placeholder="Add Associationcommittee..."
-      v-model.trim="associationcommittee.associationCommitteeName"
-    >
-  </label>&nbsp;&nbsp;
-    <button
+
+<form @submit.prevent="submitAssociationCommittee" >
+
+  <div  class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }" >
+     &nbsp;&nbsp;
+      <input  class=" w-75 p-3 rounded border border-success justify-center "
+        placeholder="Add AssociationCommittee..."
+        v-model.trim="associationCommittee.associationCommitteeName"
+      >
+    &nbsp;&nbsp;
+
+    <button 
       type="submit"
       title="save"
-      class="bg-white flex-grow active:bg-green-800 text-green-500 border border-green-500 mt-2 mb-3 rounded-circle w-10 h-10 self-end font-bold hover:bg-green-500 hover:text-white focus:outline-none"
-      :class="populateWith.empty ? 'sm:flex-grow-0' : 'mr-4'"
-    >
-      {{ populateWith.empty ? '+' : 'Save' }}
+      class=" bg-white  flex-grow active:bg-green-800 text-green-500  border-3 border-green-500 mt-2 mb-3 rounded-circle w-10 h-10 self-end font-bold hover:bg-green-500 hover:text-white focus:outline-none"
+      :class="populateWith.empty ? 'sm:flex-grow-0' : 'mr-4'" >
+        {{ populateWith.empty ? 'Add' : 'Save' }}
     </button>
 
     <button
@@ -30,18 +24,18 @@
       @click="close"
       type="button"
       title="cancel"
-      class="bg-white active:bg-green-800 text-green-500 border border-green-500 mt-2 mb-3 rounded-circle w-8 h-8 self-end font-bold hover:bg-green-500 hover:text-white focus:outline-none"
-      :class="populateWith.empty ? 'flex-grow-0' : 'flex-grow'"
-    >
-      Cancel
+      class=" bg-white active:bg-green-800 text-green-500  border-3 border-green-500 mt-2 mb-3 rounded-circle w-10 h-10 self-end font-bold hover:bg-green-500 hover:text-white focus:outline-none"
+      :class="populateWith.empty ? 'flex-grow-0' : 'flex-grow'" >
+        Cancel
     </button>
-  </div>
+</div>
 </form>
 </template>
 
+
 <script>
 export default {
-  name: 'associationcommitteeAddForm',
+  name: 'associationCommitteeAddForm',
   props: {
     populateWith: {
       type: Object,
@@ -50,7 +44,7 @@ export default {
   },
   data () {
     return {
-      associationcommittee: {
+      associationCommittee: {
         associationCommitteeName: '',
         
       }
@@ -58,16 +52,17 @@ export default {
   },
   methods: {
     clearForm () {
-      this.associationcommittee = {
+      this.associationCommittee = {
         associationCommitteeName: ''
       }
     },
-    submitAssociationcommittee () {
-      if (this.associationcommittee.associationCommitteeName !== '') {
-        //this.$emit('submit', this.associationcommittee)
+    submitAssociationCommittee () {
+      if (this.associationCommittee.associationCommitteeName !== '') {
+        //this.$emit('submit', this.associationCommittee)
  
+        this.saved();
         this.$store
-        .dispatch('addAssociationcommittee', this.associationcommittee)
+        .dispatch('addAssociationCommittee', this.associationCommittee)
         .then(() => {
           console.log('SUCCESS');
           this.loading = false;
@@ -75,7 +70,7 @@ export default {
         .catch(() => {
           this.loading = false;
           //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/associationcommittee' });
+          // this.$router.push({ name: '/associationCommittee' });
         });
 
         this.clearForm()
@@ -84,13 +79,25 @@ export default {
     },
     close () {
       this.$emit('close')
-    }
+      this.isEditing = false;
+    },
+    saved () {
+      if (!this.associationCommittee.empty) {
+        this.populateWith.associationCommitteeName =  this.associationCommittee.associationCommitteeName;
+      }
+    },
   },
   created () {
     if (!this.populateWith.empty) {
-      this.associationcommittee = this.populateWith
+      this.associationCommittee =  Object.assign({}, this.populateWith);
+      //this.associationCommittee = this.populateWith
     }
   }
 }
 </script>
 
+<style scoped>
+.border-3 {
+    border-width:2px !important;
+}
+</style>

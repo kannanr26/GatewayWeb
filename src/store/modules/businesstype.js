@@ -9,64 +9,51 @@ const headers = {
 
 export default {
   state: {
-    businesstypes: [],
-    dataFields: ['businesstypes']
+    businesstypes: []
   },
   getters: {
     getBusinesstype(state) {
-      console.log('get Businesstype');
       return state.businesstypes;
     },
   },
   mutations: {
-    setState(state, { field, data }) {
-      Vue.set(state, field, data)
-    },
-    addBusinesstype(state, newBusinesstype) {
+    addBusinesstypeList(state, newBusinesstype) {
       state.businesstypes.push(newBusinesstype)
     },
-    deleteBusinesstype(state, { businesstypeIndex }) {
-      state.businesstypes.splice(businesstypeIndex, 1)
+    deleteBusinesstypeList(state, deleteBusinesstype) {
+      state.businesstypes = state.businesstypes.filter
+      (businesstype => ( (businesstype.businessName !== deleteBusinesstype.businessName) &&
+      (businesstype.id !== deleteBusinesstype.id)) );
     },
-    SET_BUSINESSTYPES: (state, data) => {
-      console.log("businesstypes in MUT" + data)
+    SET_BusinesstypeList: (state, data) => {
       state.businesstypes = data;
     },
   },
   actions: {
     addBusinesstype({ commit }, businesstype) {
-
-      console.log("in add businesstype");
+      let id= businesstype.id;
       return new Promise((resolve, reject) => {
-        console.log("in Promise");
-        return axios.post(API_URL + 'gws/addBusiness', businesstype, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addbusinesstype', businesstype).then(response => {
-          console.log(response.data)
+        return axios.post(API_URL + 'gws/addBusiness', businesstype,
+         { headers }).then(response => {
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addBusinesstype', businesstype)
-         // dispatch('saveBusinesstypes')
+          if(id==0 || id===undefined){
+             commit('addBusinesstypeList', response.data.obj);
+          }
           resolve(response);
         })
           .catch(error => {
-            console.log(error.response.data.message);
             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
     },
-    async  getBusinesstype({ commit }) {
+    async  getBusinesstypes({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getBusiness', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addbusinesstype', businesstype).then(response => {
-          console.log('get action Businesstype');
-
-          console.log(response.data)
-          commit('SET_BUSINESSTYPES', response.data);
+          commit('SET_BusinesstypeList', response.data);
           resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
-            // commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
@@ -75,31 +62,21 @@ export default {
 
       return new Promise((resolve, reject) => {
         let id = businesstype.id;
-        return axios.delete(API_URL + 'gws/deleteBusiness/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addbusinesstype', businesstype).then(response => {
-          console.log('get action Businesstype');
-
-          console.log(response.data)
-          commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-          resolve(response);
+        return axios.delete(API_URL + 'gws/deleteBusiness/' + id, 
+        '', { headers }).then(response => {
+        commit('SET_MESSAGE', response.data.message, response.data.success);    
+        commit('deleteBusinesstypeList', businesstype);
+       
+        resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
+             console.log(error.response.data.message);
              commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
-      //commit('deleteBusinesstype', businesstype)
-    //  dispatch('saveToBusinesstypes')
-    },
-    async saveToBusinesstypes({ state }) {
-      state.dataFields;
-
-/*      try {
-        await Promise.all(state.dataFields.map(field => idbs.saveToStorage(field, state[field])))
-      } catch (e) {
-        state.dataFields.forEach(field => ls.saveToStorage(field, state[field]))
-      }*/
+    
+    //  dispatch('saveToKulams')
     }
   }
 }

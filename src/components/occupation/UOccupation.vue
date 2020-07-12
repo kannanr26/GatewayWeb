@@ -1,20 +1,24 @@
+
 <template>
-<div class="flex flex-col mt-20 mx-4 border border-gray-400">
-  <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
-    Add Occupation</h1>
-  <occupationAddForm submit="addOccupation" />
+  <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
+    <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
+      Add Occupation</h1>
 
-  <ul id="occupation-list" style="width: 100%; height:40%; overflow: auto">
-    <list-item
-      v-for="(occupation, i) in getOccupation"
-      :key="i"
-      :occupation="occupation"
-      @delete="deleteOccupation(i)"
-      @edit="saveToOccupations"
-    />
-  </ul>
+  <div class="flex flex-col mt-20 mx-4  sm:justify-center">
+    
+    <occupationAddForm submit="addOccupation" />
 
-</div>
+    <ul id="occupation-list" class = "child1">
+      <list-item 
+        v-for="(occupation) in getOccupations"
+        :key="occupation.id"
+        :occupation="occupation"
+        @delete="deleteOccupation(occupation)"
+        @edit="editOccupation"
+      />
+    </ul>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -30,26 +34,41 @@ export default {
     ListItem
   }, 
   computed: {
-    //...mapState(['occupations']),
-    ...mapGetters(['getOccupation'])
+    ...mapGetters(['getOccupations'])
     
   },mounted() {
     console.log(' Created get Occupation');
 
     this.$store
-      .dispatch('getOccupation')
+      .dispatch('getOccupations')
       .then(() => {
         console.log('Created in get Occupation');
         this.loading = false;
       })
       .catch(() => {
         this.loading = false;
-        //  this.message = err.response.data.message;
-        // this.$router.push({ name: '/occupation' });
       });
   },
   methods: {
-    ...mapActions(['addOccupation','deleteOccupation','saveToOccupations'])
-  }
+    ...mapActions(['addOccupation','deleteOccupation']),
+editOccupation(){
+}    
+}
 }
 </script>
+
+<style scoped>
+
+
+.child1{
+  border: 2px;
+  width: 100%;
+  padding:10px;  
+  max-height: 200px;
+   overflow-y: scroll;
+   
+}
+
+
+
+</style>

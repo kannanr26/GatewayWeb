@@ -9,64 +9,51 @@ const headers = {
 
 export default {
   state: {
-    jobtypes: [],
-    dataFields: ['jobtypes']
+    jobtypes: []
   },
   getters: {
     getJobtype(state) {
-      console.log('get Jobtype');
       return state.jobtypes;
     },
   },
   mutations: {
-    setState(state, { field, data }) {
-      Vue.set(state, field, data)
-    },
-    addJobtype(state, newJobtype) {
+    addJobtypeList(state, newJobtype) {
       state.jobtypes.push(newJobtype)
     },
-    deleteJobtype(state, { jobtypeIndex }) {
-      state.jobtypes.splice(jobtypeIndex, 1)
+    deleteJobtypeList(state, deleteJobtype) {
+      state.jobtypes = state.jobtypes.filter
+      (jobtype => ( (jobtype.jobName !== deleteJobtype.jobName) &&
+      (jobtype.id !== deleteJobtype.id)) );
     },
-    SET_JOBTYPES: (state, data) => {
-      console.log("jobtypes in MUT" + data)
+    SET_JobtypeList: (state, data) => {
       state.jobtypes = data;
     },
   },
   actions: {
     addJobtype({ commit }, jobtype) {
-
-      console.log("in add jobtype");
+      let id= jobtype.id;
       return new Promise((resolve, reject) => {
-        console.log("in Promise");
-        return axios.post(API_URL + 'gws/addJob', jobtype, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addJob', jobtype).then(response => {
-          console.log(response.data)
+        return axios.post(API_URL + 'gws/addJob', jobtype,
+         { headers }).then(response => {
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addJobtype', jobtype)
-         // dispatch('saveJobtypes')
+          if(id==0 || id===undefined){
+             commit('addJobtypeList', response.data.obj);
+          }
           resolve(response);
         })
           .catch(error => {
-            console.log(error.response.data.message);
             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
     },
-    async  getJobtype({ commit }) {
+    async  getJobtypes({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getJobs', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addjobtype', jobtype).then(response => {
-          console.log('get action Jobtype');
-
-          console.log(response.data)
-          commit('SET_JOBTYPES', response.data);
+          commit('SET_JobtypeList', response.data);
           resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
-            // commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
@@ -75,31 +62,21 @@ export default {
 
       return new Promise((resolve, reject) => {
         let id = jobtype.id;
-        return axios.delete(API_URL + 'gws/deleteJob/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addjobtype', jobtype).then(response => {
-          console.log('get action Jobtype');
-
-          console.log(response.data)
-          commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-          resolve(response);
+        return axios.delete(API_URL + 'gws/deleteJob/' + id, 
+        '', { headers }).then(response => {
+        commit('SET_MESSAGE', response.data.message, response.data.success);    
+        commit('deleteJobtypeList', jobtype);
+       
+        resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
+             console.log(error.response.data.message);
              commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
-      //commit('deleteJobtype', jobtype)
-    //  dispatch('saveToJobtypes')
-    },
-    async saveToJobtypes({ state }) {
-      state.dataFields;
-
-/*      try {
-        await Promise.all(state.dataFields.map(field => idbs.saveToStorage(field, state[field])))
-      } catch (e) {
-        state.dataFields.forEach(field => ls.saveToStorage(field, state[field]))
-      }*/
+    
+    //  dispatch('saveToKulams')
     }
   }
 }

@@ -60,6 +60,7 @@ export default {
       if (this.education.educationName !== '') {
         //this.$emit('submit', this.education)
  
+        this.saved();
         this.$store
         .dispatch('addEducation', this.education)
         .then(() => {
@@ -78,11 +79,18 @@ export default {
     },
     close () {
       this.$emit('close')
-    }
+      this.isEditing = false;
+    },
+    saved () {
+      if (!this.education.empty) {
+        this.populateWith.educationName =  this.education.educationName;
+      }
+    },
   },
   created () {
     if (!this.populateWith.empty) {
-      this.education = this.populateWith
+      this.education =  Object.assign({}, this.populateWith);
+      //this.education = this.populateWith
     }
   }
 }

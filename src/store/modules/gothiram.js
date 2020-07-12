@@ -12,7 +12,7 @@ export default {
     gothirams: []
   },
   getters: {
-    getGothirams(state) {
+    getGothiram(state) {
       return state.gothirams;
     },
   },
@@ -25,7 +25,7 @@ export default {
       (gothiram => ( (gothiram.gothiramName !== deleteGothiram.gothiramName) &&
       (gothiram.id !== deleteGothiram.id)) );
     },
-    SET_GothiramsList: (state, data) => {
+    SET_GothiramList: (state, data) => {
       state.gothirams = data;
     },
   },
@@ -50,7 +50,7 @@ export default {
     async  getGothirams({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getGothirams', '', { headers }).then(response => {
-          commit('SET_GothiramsList', response.data);
+          commit('SET_GothiramList', response.data);
           resolve(response);
         })
           .catch(error => {
@@ -75,6 +75,8 @@ export default {
             reject(error);
           });
       });
+    
+    //  dispatch('saveToKulams')
     }
   }
 }

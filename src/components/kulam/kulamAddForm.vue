@@ -58,6 +58,8 @@ export default {
     },
     submitKulam () {
       if (this.kulam.kulamName !== '') {
+
+        this.saved();
         this.$store
         .dispatch('addKulam', this.kulam)
         .then(() => {
@@ -74,11 +76,18 @@ export default {
     },
     close () {
       this.$emit('close')
-    }
+      this.isEditing = false;
+    },
+    saved () {
+      if (!this.kulam.empty) {
+        this.populateWith.kulamName =  this.kulam.kulamName;
+      }
+    },
   },
   created () {
     if (!this.populateWith.empty) {
-      this.kulam = this.populateWith
+      this.kulam =  Object.assign({}, this.populateWith);
+      //this.kulam = this.populateWith
     }
   }
 }

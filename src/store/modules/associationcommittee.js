@@ -9,97 +9,74 @@ const headers = {
 
 export default {
   state: {
-    associationcommittees: [],
-    dataFields: ['associationcommittees']
+    associationCommittees: []
   },
   getters: {
-    getAssociationcommittee(state) {
-      console.log('get Associationcommittee');
-      return state.associationcommittees;
+    getAssociationCommittee(state) {
+      return state.associationCommittees;
     },
   },
   mutations: {
-    setState(state, { field, data }) {
-      Vue.set(state, field, data)
+    addAssociationCommitteeList(state, newAssociationCommittee) {
+      state.associationCommittees.push(newAssociationCommittee)
     },
-    addAssociationcommittee(state, newAssociationcommittee) {
-      state.associationcommittees.push(newAssociationcommittee)
+    deleteAssociationCommitteeList(state, deleteAssociationCommittee) {
+      state.associationCommittees = state.associationCommittees.filter
+      (associationCommittee => ( (associationCommittee.associationCommitteeName !== deleteAssociationCommittee.associationCommitteeName) &&
+      (associationCommittee.id !== deleteAssociationCommittee.id)) );
     },
-    deleteAssociationcommittee(state, { associationcommitteeIndex }) {
-      state.associationcommittees.splice(associationcommitteeIndex, 1)
-    },
-    SET_ASSOCIATIONCOMMITTEES: (state, data) => {
-      console.log("associationcommittees in MUT" + data)
-      state.associationcommittees = data;
+    SET_AssociationCommitteeList: (state, data) => {
+      state.associationCommittees = data;
     },
   },
   actions: {
-    addAssociationcommittee({ commit }, associationcommittee) {
-
-      console.log("in add associationcommittee");
+    addAssociationCommittee({ commit }, associationCommittee) {
+      let id= associationCommittee.id;
       return new Promise((resolve, reject) => {
-        console.log("in Promise");
-        return axios.post(API_URL + 'gws/addAssociationCommittee', associationcommittee, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addassociationcommittee', associationcommittee).then(response => {
-          console.log(response.data)
+        return axios.post(API_URL + 'gws/addAssociationCommittee', associationCommittee,
+         { headers }).then(response => {
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addAssociationcommittee', associationcommittee)
-         // dispatch('saveAssociationcommittees')
+          if(id==0 || id===undefined){
+             commit('addAssociationCommitteeList', response.data.obj);
+          }
           resolve(response);
         })
           .catch(error => {
-            console.log(error.response.data.message);
             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
     },
-    async  getAssociationcommittee({ commit }) {
+    async  getAssociationCommittees({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getAssociationCommittees', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addassociationcommittee', associationcommittee).then(response => {
-          console.log('get action Associationcommittee');
-
-          console.log(response.data)
-          commit('SET_ASSOCIATIONCOMMITTEES', response.data);
+          commit('SET_AssociationCommitteeList', response.data);
           resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
-            // commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
     },
-    deleteAssociationcommittee({ commit }, associationcommittee) {
+    deleteAssociationCommittee({ commit }, associationCommittee) {
 
       return new Promise((resolve, reject) => {
-        let id = associationcommittee.id;
-        return axios.delete(API_URL + 'gws/deleteAssociationCommittee/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addassociationcommittee', associationcommittee).then(response => {
-          console.log('get action Associationcommittee');
-
-          console.log(response.data)
-          commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-          resolve(response);
+        let id = associationCommittee.id;
+        return axios.delete(API_URL + 'gws/deleteAssociationCommittee/' + id, 
+        '', { headers }).then(response => {
+        commit('SET_MESSAGE', response.data.message, response.data.success);    
+        commit('deleteAssociationCommitteeList', associationCommittee);
+       
+        resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
+             console.log(error.response.data.message);
              commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
-      //commit('deleteAssociationcommittee', associationcommittee)
-    //  dispatch('saveToAssociationcommittees')
-    },
-    async saveToAssociationcommittees({ state }) {
-      state.dataFields;
-
-/*      try {
-        await Promise.all(state.dataFields.map(field => idbs.saveToStorage(field, state[field])))
-      } catch (e) {
-        state.dataFields.forEach(field => ls.saveToStorage(field, state[field]))
-      }*/
+    
+    //  dispatch('saveToKulams')
     }
   }
 }

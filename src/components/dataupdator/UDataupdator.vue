@@ -1,55 +1,73 @@
 <template>
-<div class="flex flex-col mt-20 mx-4 border border-gray-400">
-  <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
-    Add Operator Type</h1>
-  <dataupdatorAddForm submit="addDataupdator" />
+  <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
+    <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
+      Add DataUpdator</h1>
 
-  <ul id="dataupdator-list" style="width: 100%; height:40%; overflow: auto">
-    <list-item
-      v-for="(dataupdator, i) in getDataupdator"
-      :key="i"
-      :dataupdator="dataupdator"
-      @delete="deleteDataupdator(i)"
-      @edit="saveToDataupdators"
-    />
-  </ul>
+  <div class="flex flex-col mt-20 mx-4  sm:justify-center">
+    
+    <dataUpdatorAddForm submit="addDataUpdator" />
 
-</div>
+    <ul id="dataUpdator-list" class = "child1">
+      <list-item 
+        v-for="(dataUpdator) in getDataUpdator"
+        :key="dataUpdator.id"
+        :dataUpdator="dataUpdator"
+        @delete="deleteDataUpdator(dataUpdator)"
+        @edit="editDataUpdator"
+      />
+    </ul>
+  </div>
+  </div>
 </template>
 
 <script>
 import {  mapActions,mapGetters } from 'vuex'
 
-import dataupdatorAddForm from './dataupdatorAddForm.vue'
+import dataUpdatorAddForm from './dataupdatorAddForm.vue'
 import ListItem from './dataupdatorListItem.vue'
 
 export default {
-  name: 'DataupdatorList',
+  name: 'DataUpdatorList',
   components: {
-    dataupdatorAddForm,
+    dataUpdatorAddForm,
     ListItem
   }, 
   computed: {
-    //...mapState(['dataupdators']),
-    ...mapGetters(['getDataupdator'])
+    ...mapGetters(['getDataUpdator'])
     
   },mounted() {
-    console.log(' Created get Dataupdator');
+    console.log(' Created get DataUpdator');
 
     this.$store
-      .dispatch('getDataupdator')
+      .dispatch('getDataUpdators')
       .then(() => {
-        console.log('Created in get Dataupdator');
+        console.log('Created in get DataUpdator');
         this.loading = false;
       })
       .catch(() => {
         this.loading = false;
-        //  this.message = err.response.data.message;
-        // this.$router.push({ name: '/dataupdator' });
       });
   },
   methods: {
-    ...mapActions(['addDataupdator','deleteDataupdator','saveToDataupdators'])
-  }
+    ...mapActions(['addDataUpdator','deleteDataUpdator']),
+editDataUpdator(){
+}    
+}
 }
 </script>
+
+<style scoped>
+
+
+.child1{
+  border: 2px;
+  width: 100%;
+  padding:10px;  
+  max-height: 200px;
+   overflow-y: scroll;
+   
+}
+
+
+
+</style>

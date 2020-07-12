@@ -1,20 +1,24 @@
+
 <template>
-<div class="flex flex-col mt-20 mx-4 border border-gray-400">
-  <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
-    Add Bloodgroup</h1>
-  <bloodgroupAddForm submit="addBloodgroup" />
+  <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
+    <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
+      Add Bloodgroup</h1>
 
-  <ul id="bloodgroup-list" style="width: 100%; height:40%; overflow: auto">
-    <list-item
-      v-for="(bloodgroup, i) in getBloodgroup"
-      :key="i"
-      :bloodgroup="bloodgroup"
-      @delete="deleteBloodgroup(i)"
-      @edit="saveToBloodgroups"
-    />
-  </ul>
+  <div class="flex flex-col mt-20 mx-4  sm:justify-center">
+    
+    <bloodgroupAddForm submit="addBloodgroup" />
 
-</div>
+    <ul id="bloodgroup-list" class = "child1">
+      <list-item 
+        v-for="(bloodgroup) in getBloodgroup"
+        :key="bloodgroup.id"
+        :bloodgroup="bloodgroup"
+        @delete="deleteBloodgroup(bloodgroup)"
+        @edit="editBloodgroup"
+      />
+    </ul>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -30,26 +34,41 @@ export default {
     ListItem
   }, 
   computed: {
-    //...mapState(['bloodgroups']),
     ...mapGetters(['getBloodgroup'])
     
   },mounted() {
     console.log(' Created get Bloodgroup');
 
     this.$store
-      .dispatch('getBloodgroup')
+      .dispatch('getBloodgroups')
       .then(() => {
         console.log('Created in get Bloodgroup');
         this.loading = false;
       })
       .catch(() => {
         this.loading = false;
-        //  this.message = err.response.data.message;
-        // this.$router.push({ name: '/bloodgroup' });
       });
   },
   methods: {
-    ...mapActions(['addBloodgroup','deleteBloodgroup','saveToBloodgroups'])
-  }
+    ...mapActions(['addBloodgroup','deleteBloodgroup']),
+editBloodgroup(){
+}    
+}
 }
 </script>
+
+<style scoped>
+
+
+.child1{
+  border: 2px;
+  width: 100%;
+  padding:10px;  
+  max-height: 200px;
+   overflow-y: scroll;
+   
+}
+
+
+
+</style>
