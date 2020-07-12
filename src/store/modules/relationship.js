@@ -9,64 +9,51 @@ const headers = {
 
 export default {
   state: {
-    relationships: [],
-    dataFields: ['relationships']
+    relationships: []
   },
   getters: {
     getRelationship(state) {
-      console.log('get Relationship');
       return state.relationships;
     },
   },
   mutations: {
-    setState(state, { field, data }) {
-      Vue.set(state, field, data)
-    },
-    addRelationship(state, newRelationship) {
+    addRelationshipList(state, newRelationship) {
       state.relationships.push(newRelationship)
     },
-    deleteRelationship(state, { relationshipIndex }) {
-      state.relationships.splice(relationshipIndex, 1)
+    deleteRelationshipList(state, deleteRelationship) {
+      state.relationships = state.relationships.filter
+      (relationship => ( (relationship.relationshipName !== deleteRelationship.relationshipName) &&
+      (relationship.id !== deleteRelationship.id)) );
     },
-    SET_RELATIONSHIPS: (state, data) => {
-      console.log("relationships in MUT" + data)
+    SET_RelationshipList: (state, data) => {
       state.relationships = data;
     },
   },
   actions: {
     addRelationship({ commit }, relationship) {
-
-      console.log("in add relationship");
+      let id= relationship.id;
       return new Promise((resolve, reject) => {
-        console.log("in Promise");
-        return axios.post(API_URL + 'gws/addRelationship', relationship, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addrelationship', relationship).then(response => {
-          console.log(response.data)
+        return axios.post(API_URL + 'gws/addRelationShipName', relationship,
+         { headers }).then(response => {
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addRelationship', relationship)
-         // dispatch('saveRelationships')
+          if(id==0 || id===undefined){
+             commit('addRelationshipList', response.data.obj);
+          }
           resolve(response);
         })
           .catch(error => {
-            console.log(error.response.data.message);
             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
     },
-    async  getRelationship({ commit }) {
+    async  getRelationships({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getRelationships', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addrelationship', relationship).then(response => {
-          console.log('get action Relationship');
-
-          console.log(response.data)
-          commit('SET_RELATIONSHIPS', response.data);
+        return axios.get(API_URL + 'gws/getRelationShipNames', '', { headers }).then(response => {
+          commit('SET_RelationshipList', response.data);
           resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
-            // commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
@@ -75,31 +62,21 @@ export default {
 
       return new Promise((resolve, reject) => {
         let id = relationship.id;
-        return axios.delete(API_URL + 'gws/deleteRelationship/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addrelationship', relationship).then(response => {
-          console.log('get action Relationship');
-
-          console.log(response.data)
-          commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-          resolve(response);
+        return axios.delete(API_URL + 'gws/deleteRelationShipName/' + id, 
+        '', { headers }).then(response => {
+        commit('SET_MESSAGE', response.data.message, response.data.success);    
+        commit('deleteRelationshipList', relationship);
+       
+        resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
+             console.log(error.response.data.message);
              commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
-      //commit('deleteRelationship', relationship)
-    //  dispatch('saveToRelationships')
-    },
-    async saveToRelationships({ state }) {
-      state.dataFields;
-
-/*      try {
-        await Promise.all(state.dataFields.map(field => idbs.saveToStorage(field, state[field])))
-      } catch (e) {
-        state.dataFields.forEach(field => ls.saveToStorage(field, state[field]))
-      }*/
+    
+    //  dispatch('saveToKulams')
     }
   }
 }

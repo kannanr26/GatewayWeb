@@ -143,7 +143,8 @@ export default {
           id: 'country',
           title: 'Country',
           selectedComponent: 'appCountry'
-        }
+        },
+        
       ]
     };
   },
@@ -156,11 +157,11 @@ export default {
     appGothiram: UGothiram,
     appJobtype: UJobtype,
     appBloodgroup: UBloodgroup,
-    appAssociationcommittee: UAssociationcommittee,
+    appAssociationCommittee: UAssociationcommittee,
     appCaste: UCaste,
-    appDataupdator: UDataupdator,
+    appDataUpdator: UDataupdator,
     appRole: URole,
-    appMaritalstatus: UMaritalstatus,
+    appMaritalStatus: UMaritalstatus,
     appCourse: UCourse,
     appCountry: UCountry,
     appRelationship: URelationship,
@@ -168,7 +169,8 @@ export default {
     appOccupation: UOccupation,
     //appJobTitletype: UJobTitletype,
     appBusinesstype: UBusinesstype,
-    appDeity: UDeity
+    appDeity: UDeity,
+  
   }
 };
 </script>   

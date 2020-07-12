@@ -1,20 +1,24 @@
+
 <template>
-<div class="flex flex-col mt-20 mx-4 border border-gray-400">
-  <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
-    Add Course</h1>
-  <courseAddForm submit="addCourse" />
+  <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
+    <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
+      Add Course</h1>
 
-  <ul id="course-list" style="width: 100%; height:40%; overflow: auto">
-    <list-item
-      v-for="(course, i) in getCourse"
-      :key="i"
-      :course="course"
-      @delete="deleteCourse(i)"
-      @edit="saveToCourses"
-    />
-  </ul>
+  <div class="flex flex-col mt-20 mx-4  sm:justify-center">
+    
+    <courseAddForm submit="addCourse" />
 
-</div>
+    <ul id="course-list" class = "child1">
+      <list-item 
+        v-for="(course) in getCourse"
+        :key="course.id"
+        :course="course"
+        @delete="deleteCourse(course)"
+        @edit="editCourse"
+      />
+    </ul>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -30,26 +34,41 @@ export default {
     ListItem
   }, 
   computed: {
-    //...mapState(['courses']),
     ...mapGetters(['getCourse'])
     
   },mounted() {
     console.log(' Created get Course');
 
     this.$store
-      .dispatch('getCourse')
+      .dispatch('getCourses')
       .then(() => {
         console.log('Created in get Course');
         this.loading = false;
       })
       .catch(() => {
         this.loading = false;
-        //  this.message = err.response.data.message;
-        // this.$router.push({ name: '/course' });
       });
   },
   methods: {
-    ...mapActions(['addCourse','deleteCourse','saveToCourses'])
-  }
+    ...mapActions(['addCourse','deleteCourse']),
+editCourse(){
+}    
+}
 }
 </script>
+
+<style scoped>
+
+
+.child1{
+  border: 2px;
+  width: 100%;
+  padding:10px;  
+  max-height: 200px;
+   overflow-y: scroll;
+   
+}
+
+
+
+</style>

@@ -9,46 +9,39 @@ const headers = {
 
 export default {
   state: {
-    countrys: [],
-    dataFields: ['countrys']
+    countrys: []
   },
   getters: {
     getCountry(state) {
-      console.log('get Country');
       return state.countrys;
     },
   },
   mutations: {
-    setState(state, { field, data }) {
-      Vue.set(state, field, data)
-    },
-    addCountry(state, newCountry) {
+    addCountryList(state, newCountry) {
       state.countrys.push(newCountry)
     },
-    deleteCountry(state, { countryIndex }) {
-      state.countrys.splice(countryIndex, 1)
+    deleteCountryList(state, deleteCountry) {
+      state.countrys = state.countrys.filter
+      (country => ( (country.countryName !== deleteCountry.countryName) &&
+      (country.id !== deleteCountry.id)) );
     },
-    SET_EDUCATIONS: (state, data) => {
-      console.log("countrys in MUT" + data)
+    SET_CountryList: (state, data) => {
       state.countrys = data;
     },
   },
   actions: {
     addCountry({ commit }, country) {
-
-      console.log("in add country");
+      let id= country.id;
       return new Promise((resolve, reject) => {
-        console.log("in Promise");
-        return axios.post(API_URL + 'gws/addCountry', country, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addcountry', country).then(response => {
-          console.log(response.data)
+        return axios.post(API_URL + 'gws/addCountry', country,
+         { headers }).then(response => {
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addCountry', country)
-         // dispatch('saveCountrys')
+          if(id==0 || id===undefined){
+             commit('addCountryList', response.data.obj);
+          }
           resolve(response);
         })
           .catch(error => {
-            console.log(error.response.data.message);
             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
@@ -57,16 +50,10 @@ export default {
     async  getCountry({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getCountries', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addcountry', country).then(response => {
-          console.log('get action Country');
-
-          console.log(response.data)
-          commit('SET_EDUCATIONS', response.data);
+          commit('SET_CountryList', response.data);
           resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
-            // commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
@@ -75,31 +62,21 @@ export default {
 
       return new Promise((resolve, reject) => {
         let id = country.id;
-        return axios.delete(API_URL + 'gws/deleteCountry/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addcountry', country).then(response => {
-          console.log('get action Country');
-
-          console.log(response.data)
-          commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-          resolve(response);
+        return axios.delete(API_URL + 'gws/deleteCountry/' + id, 
+        '', { headers }).then(response => {
+        commit('SET_MESSAGE', response.data.message, response.data.success);    
+        commit('deleteCountryList', country);
+       
+        resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
+             console.log(error.response.data.message);
              commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
-      //commit('deleteCountry', country)
-    //  dispatch('saveToCountrys')
-    },
-    async saveToCountrys({ state }) {
-      state.dataFields;
-
-/*      try {
-        await Promise.all(state.dataFields.map(field => idbs.saveToStorage(field, state[field])))
-      } catch (e) {
-        state.dataFields.forEach(field => ls.saveToStorage(field, state[field]))
-      }*/
+    
+    //  dispatch('saveToKulams')
     }
   }
 }

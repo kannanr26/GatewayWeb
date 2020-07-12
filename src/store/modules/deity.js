@@ -9,46 +9,39 @@ const headers = {
 
 export default {
   state: {
-    deitys: [],
-    dataFields: ['deitys']
+    deitys: []
   },
   getters: {
     getDeity(state) {
-      console.log('get Deity');
       return state.deitys;
     },
   },
   mutations: {
-    setState(state, { field, data }) {
-      Vue.set(state, field, data)
-    },
-    addDeity(state, newDeity) {
+    addDeityList(state, newDeity) {
       state.deitys.push(newDeity)
     },
-    deleteDeity(state, { deityIndex }) {
-      state.deitys.splice(deityIndex, 1)
+    deleteDeityList(state, deleteDeity) {
+      state.deitys = state.deitys.filter
+      (deity => ( (deity.deityName !== deleteDeity.deityName) &&
+      (deity.id !== deleteDeity.id)) );
     },
-    SET_DEITYS: (state, data) => {
-      console.log("deitys in MUT" + data)
+    SET_DeityList: (state, data) => {
       state.deitys = data;
     },
   },
   actions: {
     addDeity({ commit }, deity) {
-
-      console.log("in add deity");
+      let id= deity.id;
       return new Promise((resolve, reject) => {
-        console.log("in Promise");
-        return axios.post(API_URL + 'gws/addDeity', deity, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/adddeity', deity).then(response => {
-          console.log(response.data)
+        return axios.post(API_URL + 'gws/addDeitys', deity,
+         { headers }).then(response => {
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addDeity', deity)
-         // dispatch('saveDeitys')
+          if(id==0 || id===undefined){
+             commit('addDeityList', response.data.obj);
+          }
           resolve(response);
         })
           .catch(error => {
-            console.log(error.response.data.message);
             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
@@ -57,16 +50,10 @@ export default {
     async  getDeity({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getDeitys', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/adddeity', deity).then(response => {
-          console.log('get action Deity');
-
-          console.log(response.data)
-          commit('SET_DEITYS', response.data);
+          commit('SET_DeityList', response.data);
           resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
-            // commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
@@ -75,31 +62,21 @@ export default {
 
       return new Promise((resolve, reject) => {
         let id = deity.id;
-        return axios.delete(API_URL + 'gws/deleteDeity/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/adddeity', deity).then(response => {
-          console.log('get action Deity');
-
-          console.log(response.data)
-          commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-          resolve(response);
+        return axios.delete(API_URL + 'gws/deleteDeity/' + id, 
+        '', { headers }).then(response => {
+        commit('SET_MESSAGE', response.data.message, response.data.success);    
+        commit('deleteDeityList', deity);
+       
+        resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
+             console.log(error.response.data.message);
              commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
-      //commit('deleteDeity', deity)
-    //  dispatch('saveToDeitys')
-    },
-    async saveToDeitys({ state }) {
-      state.dataFields;
-
-/*      try {
-        await Promise.all(state.dataFields.map(field => idbs.saveToStorage(field, state[field])))
-      } catch (e) {
-        state.dataFields.forEach(field => ls.saveToStorage(field, state[field]))
-      }*/
+    
+    //  dispatch('saveToKulams')
     }
   }
 }

@@ -1,20 +1,24 @@
+
 <template>
-<div class="flex flex-col mt-20 mx-4 border border-gray-400">
-  <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
-    Add Businesstype</h1>
-  <businesstypeAddForm submit="addBusinesstype" />
+  <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
+    <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
+      Add Businesstype</h1>
 
-  <ul id="businesstype-list" style="width: 100%; height:40%; overflow: auto">
-    <list-item
-      v-for="(businesstype, i) in getBusinesstype"
-      :key="i"
-      :businesstype="businesstype"
-      @delete="deleteBusinesstype(i)"
-      @edit="saveToBusinesstypes"
-    />
-  </ul>
+  <div class="flex flex-col mt-20 mx-4  sm:justify-center">
+    
+    <businesstypeAddForm submit="addBusinesstype" />
 
-</div>
+    <ul id="businesstype-list" class = "child1">
+      <list-item 
+        v-for="(businesstype) in getBusinesstype"
+        :key="businesstype.id"
+        :businesstype="businesstype"
+        @delete="deleteBusinesstype(businesstype)"
+        @edit="editBusinesstype"
+      />
+    </ul>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -30,26 +34,41 @@ export default {
     ListItem
   }, 
   computed: {
-    //...mapState(['businesstypes']),
     ...mapGetters(['getBusinesstype'])
     
   },mounted() {
     console.log(' Created get Businesstype');
 
     this.$store
-      .dispatch('getBusinesstype')
+      .dispatch('getBusinesstypes')
       .then(() => {
         console.log('Created in get Businesstype');
         this.loading = false;
       })
       .catch(() => {
         this.loading = false;
-        //  this.message = err.response.data.message;
-        // this.$router.push({ name: '/businesstype' });
       });
   },
   methods: {
-    ...mapActions(['addBusinesstype','deleteBusinesstype','saveToBusinesstypes'])
-  }
+    ...mapActions(['addBusinesstype','deleteBusinesstype']),
+editBusinesstype(){
+}    
+}
 }
 </script>
+
+<style scoped>
+
+
+.child1{
+  border: 2px;
+  width: 100%;
+  padding:10px;  
+  max-height: 200px;
+   overflow-y: scroll;
+   
+}
+
+
+
+</style>

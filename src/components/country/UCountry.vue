@@ -1,20 +1,24 @@
+
 <template>
-<div class="flex flex-col mt-20 mx-4 border border-gray-400">
-  <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
-    Add Country</h1>
-  <countryAddForm submit="addCountry" />
+  <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
+    <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
+      Add Country</h1>
 
-  <ul id="country-list" style="width: 100%; height:40%; overflow: auto">
-    <list-item
-      v-for="(country, i) in getCountry"
-      :key="i"
-      :country="country"
-      @delete="deleteCountry(i)"
-      @edit="saveToCountrys"
-    />
-  </ul>
+  <div class="flex flex-col mt-20 mx-4  sm:justify-center">
+    
+    <countryAddForm submit="addCountry" />
 
-</div>
+    <ul id="country-list" class = "child1">
+      <list-item 
+        v-for="(country) in getCountry"
+        :key="country.id"
+        :country="country"
+        @delete="deleteCountry(country)"
+        @edit="editCountry"
+      />
+    </ul>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -30,7 +34,6 @@ export default {
     ListItem
   }, 
   computed: {
-    //...mapState(['countrys']),
     ...mapGetters(['getCountry'])
     
   },mounted() {
@@ -44,12 +47,28 @@ export default {
       })
       .catch(() => {
         this.loading = false;
-        //  this.message = err.response.data.message;
-        // this.$router.push({ name: '/country' });
       });
   },
   methods: {
-    ...mapActions(['addCountry','deleteCountry','saveToCountrys'])
-  }
+    ...mapActions(['addCountry','deleteCountry']),
+editCountry(){
+}    
+}
 }
 </script>
+
+<style scoped>
+
+
+.child1{
+  border: 2px;
+  width: 100%;
+  padding:10px;  
+  max-height: 200px;
+   overflow-y: scroll;
+   
+}
+
+
+
+</style>

@@ -1,55 +1,74 @@
+
 <template>
-<div class="flex flex-col mt-20 mx-4 border border-gray-400">
-  <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
-    Add Associationcommittee</h1>
-  <associationcommitteeAddForm submit="addAssociationcommittee" />
+  <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
+    <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
+      Add AssociationCommittee</h1>
 
-  <ul id="associationcommittee-list" style="width: 100%; height:40%; overflow: auto">
-    <list-item
-      v-for="(associationcommittee, i) in getAssociationcommittee"
-      :key="i"
-      :associationcommittee="associationcommittee"
-      @delete="deleteAssociationcommittee(i)"
-      @edit="saveToAssociationcommittees"
-    />
-  </ul>
+  <div class="flex flex-col mt-20 mx-4  sm:justify-center">
+    
+    <associationCommitteeAddForm submit="addAssociationCommittee" />
 
-</div>
+    <ul id="associationCommittee-list" class = "child1">
+      <list-item 
+        v-for="(associationCommittee) in getAssociationCommittee"
+        :key="associationCommittee.id"
+        :associationCommittee="associationCommittee"
+        @delete="deleteAssociationCommittee(associationCommittee)"
+        @edit="editAssociationCommittee"
+      />
+    </ul>
+  </div>
+  </div>
 </template>
 
 <script>
 import {  mapActions,mapGetters } from 'vuex'
 
-import associationcommitteeAddForm from './associationcommitteeAddForm.vue'
+import associationCommitteeAddForm from './associationcommitteeAddForm.vue'
 import ListItem from './associationcommitteeListItem.vue'
 
 export default {
-  name: 'AssociationcommitteeList',
+  name: 'AssociationCommitteeList',
   components: {
-    associationcommitteeAddForm,
+    associationCommitteeAddForm,
     ListItem
   }, 
   computed: {
-    //...mapState(['associationcommittees']),
-    ...mapGetters(['getAssociationcommittee'])
+    ...mapGetters(['getAssociationCommittee'])
     
   },mounted() {
-    console.log(' Created get Associationcommittee');
+    console.log(' Created get AssociationCommittee');
 
     this.$store
-      .dispatch('getAssociationcommittee')
+      .dispatch('getAssociationCommittees')
       .then(() => {
-        console.log('Created in get Associationcommittee');
+        console.log('Created in get AssociationCommittee');
         this.loading = false;
       })
       .catch(() => {
         this.loading = false;
-        //  this.message = err.response.data.message;
-        // this.$router.push({ name: '/associationcommittee' });
       });
   },
   methods: {
-    ...mapActions(['addAssociationcommittee','deleteAssociationcommittee','saveToAssociationcommittees'])
-  }
+    ...mapActions(['addAssociationCommittee','deleteAssociationCommittee']),
+editAssociationCommittee(){
+}    
+}
 }
 </script>
+
+<style scoped>
+
+
+.child1{
+  border: 2px;
+  width: 100%;
+  padding:10px;  
+  max-height: 200px;
+   overflow-y: scroll;
+   
+}
+
+
+
+</style>

@@ -9,64 +9,51 @@ const headers = {
 
 export default {
   state: {
-    bloodgroups: [],
-    dataFields: ['bloodgroups']
+    bloodgroups: []
   },
   getters: {
     getBloodgroup(state) {
-      console.log('get Bloodgroup');
       return state.bloodgroups;
     },
   },
   mutations: {
-    setState(state, { field, data }) {
-      Vue.set(state, field, data)
-    },
-    addBloodgroup(state, newBloodgroup) {
+    addBloodgroupList(state, newBloodgroup) {
       state.bloodgroups.push(newBloodgroup)
     },
-    deleteBloodgroup(state, { bloodgroupIndex }) {
-      state.bloodgroups.splice(bloodgroupIndex, 1)
+    deleteBloodgroupList(state, deleteBloodgroup) {
+      state.bloodgroups = state.bloodgroups.filter
+      (bloodgroup => ( (bloodgroup.bloodGroupName !== deleteBloodgroup.bloodGroupName) &&
+      (bloodgroup.id !== deleteBloodgroup.id)) );
     },
-    SET_BLOODGROUPS: (state, data) => {
-      console.log("bloodgroups in MUT" + data)
+    SET_BloodgroupList: (state, data) => {
       state.bloodgroups = data;
     },
   },
   actions: {
     addBloodgroup({ commit }, bloodgroup) {
-
-      console.log("in add bloodgroup");
+      let id= bloodgroup.id;
       return new Promise((resolve, reject) => {
-        console.log("in Promise");
-        return axios.post(API_URL + 'gws/addBloodgroup', bloodgroup, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addbloodgroup', bloodgroup).then(response => {
-          console.log(response.data)
+        return axios.post(API_URL + 'gws/addBloodgroup', bloodgroup,
+         { headers }).then(response => {
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addBloodgroup', bloodgroup)
-         // dispatch('saveBloodgroups')
+          if(id==0 || id===undefined){
+             commit('addBloodgroupList', response.data.obj);
+          }
           resolve(response);
         })
           .catch(error => {
-            console.log(error.response.data.message);
             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
     },
-    async  getBloodgroup({ commit }) {
+    async  getBloodgroups({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getBloodgroups', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addbloodgroup', bloodgroup).then(response => {
-          console.log('get action Bloodgroup');
-
-          console.log(response.data)
-          commit('SET_BLOODGROUPS', response.data);
+          commit('SET_BloodgroupList', response.data);
           resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
-            // commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
@@ -75,31 +62,21 @@ export default {
 
       return new Promise((resolve, reject) => {
         let id = bloodgroup.id;
-        return axios.delete(API_URL + 'gws/deleteBloodgroup/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/addbloodgroup', bloodgroup).then(response => {
-          console.log('get action Bloodgroup');
-
-          console.log(response.data)
-          commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-          resolve(response);
+        return axios.delete(API_URL + 'gws/deleteBloodgroup/' + id, 
+        '', { headers }).then(response => {
+        commit('SET_MESSAGE', response.data.message, response.data.success);    
+        commit('deleteBloodgroupList', bloodgroup);
+       
+        resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
+             console.log(error.response.data.message);
              commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
-      //commit('deleteBloodgroup', bloodgroup)
-    //  dispatch('saveToBloodgroups')
-    },
-    async saveToBloodgroups({ state }) {
-      state.dataFields;
-
-/*      try {
-        await Promise.all(state.dataFields.map(field => idbs.saveToStorage(field, state[field])))
-      } catch (e) {
-        state.dataFields.forEach(field => ls.saveToStorage(field, state[field]))
-      }*/
+    
+    //  dispatch('saveToKulams')
     }
   }
 }
