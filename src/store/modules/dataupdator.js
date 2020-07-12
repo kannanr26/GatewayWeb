@@ -9,97 +9,74 @@ const headers = {
 
 export default {
   state: {
-    dataupdators: [],
-    dataFields: ['dataupdators']
+    dataUpdators: []
   },
   getters: {
-    getDataupdator(state) {
-      console.log('get Dataupdator');
-      return state.dataupdators;
+    getDataUpdator(state) {
+      return state.dataUpdators;
     },
   },
   mutations: {
-    setState(state, { field, data }) {
-      Vue.set(state, field, data)
+    addDataUpdatorList(state, newDataUpdator) {
+      state.dataUpdators.push(newDataUpdator)
     },
-    addDataupdator(state, newDataupdator) {
-      state.dataupdators.push(newDataupdator)
+    deleteDataUpdatorList(state, deleteDataUpdator) {
+      state.dataUpdators = state.dataUpdators.filter
+      (dataUpdator => ( (dataUpdator.operatorTypeName !== deleteDataUpdator.operatorTypeName) &&
+      (dataUpdator.id !== deleteDataUpdator.id)) );
     },
-    deleteDataupdator(state, { dataupdatorIndex }) {
-      state.dataupdators.splice(dataupdatorIndex, 1)
-    },
-    SET_DATAUPDATORS: (state, data) => {
-      console.log("dataupdators in MUT" + data)
-      state.dataupdators = data;
+    SET_DataUpdatorList: (state, data) => {
+      state.dataUpdators = data;
     },
   },
   actions: {
-    addDataupdator({ commit }, dataupdator) {
-
-      console.log("in add dataupdator");
+    addDataUpdator({ commit }, dataUpdator) {
+      let id= dataUpdator.id;
       return new Promise((resolve, reject) => {
-        console.log("in Promise");
-        return axios.post(API_URL + 'gws/addOperatorType', dataupdator, { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/adddataupdator', dataupdator).then(response => {
-          console.log(response.data)
+        return axios.post(API_URL + 'gws/addOperatorType', dataUpdator,
+         { headers }).then(response => {
           commit('SET_MESSAGE', response.data.message, true);
-          commit('addDataupdator', dataupdator)
-         // dispatch('saveDataupdators')
+          if(id==0 || id===undefined){
+             commit('addDataUpdatorList', response.data.obj);
+          }
           resolve(response);
         })
           .catch(error => {
-            console.log(error.response.data.message);
             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
     },
-    async  getDataupdator({ commit }) {
+    async  getDataUpdators({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getOperatorTypes', '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/adddataupdator', dataupdator).then(response => {
-          console.log('get action Dataupdator');
-
-          console.log(response.data)
-          commit('SET_DATAUPDATORS', response.data);
+          commit('SET_DataUpdatorList', response.data);
           resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
-            // commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
     },
-    deleteDataupdator({ commit }, dataupdator) {
+    deleteDataUpdator({ commit }, dataUpdator) {
 
       return new Promise((resolve, reject) => {
-        let id = dataupdator.id;
-        return axios.delete(API_URL + 'gws/deleteOperatorType/' + id, '', { headers }).then(response => {
-          //return axios.post(API_URL + 'gws/adddataupdator', dataupdator).then(response => {
-          console.log('get action Dataupdator');
-
-          console.log(response.data)
-          commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-          resolve(response);
+        let id = dataUpdator.id;
+        return axios.delete(API_URL + 'gws/deleteOperatorType/' + id, 
+        '', { headers }).then(response => {
+        commit('SET_MESSAGE', response.data.message, response.data.success);    
+        commit('deleteDataUpdatorList', dataUpdator);
+       
+        resolve(response);
         })
           .catch(error => {
-            // console.log(error.response.data.message);
+             console.log(error.response.data.message);
              commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
             reject(error);
           });
       });
-      //commit('deleteDataupdator', dataupdator)
-    //  dispatch('saveToDataupdators')
-    },
-    async saveToDataupdators({ state }) {
-      state.dataFields;
-
-/*      try {
-        await Promise.all(state.dataFields.map(field => idbs.saveToStorage(field, state[field])))
-      } catch (e) {
-        state.dataFields.forEach(field => ls.saveToStorage(field, state[field]))
-      }*/
+    
+    //  dispatch('saveToKulams')
     }
   }
 }
