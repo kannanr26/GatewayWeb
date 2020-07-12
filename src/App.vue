@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
+
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
       <a href class="navbar-brand" @click.prevent>Gateway</a>
       <div class="navbar-nav mr-auto">
         <div v-if="!currentUser" class="navbar-nav ml-auto">
@@ -10,10 +11,48 @@
             </router-link>
           </li>
         </div>
+<!--
+  <div class="text-center">
+   <v-app> <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="primary"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+          Dropdown
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item
+          v-for="(item, index) in items"
+          :key="index"
+          
+        >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu></v-app>
+  </div>
+
+-->
 
         <div v-if="currentUser" class="navbar-nav ml-auto">
           <li class="nav-item">
-            <router-link to="/utility" class="nav-link">Utility</router-link>
+            <router-link to="/utilityAddress" class="nav-link">Utility Address</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/utilityDeity" class="nav-link">Utility Deity</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/utilityManagement" class="nav-link">Utility Management</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/utilityPersonal" class="nav-link">Utility Personal</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/utilityProfession" class="nav-link">Utility Profession</router-link>
           </li>
 
           <li class="nav-item">
@@ -21,36 +60,22 @@
           </li>
         </div>
 
-        <!-- Dropdown -->
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbardrop"
-            data-toggle="dropdown"
-          >Dropdown link</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Link 1</a>
-            <a class="dropdown-item" href="#">Link 2</a>
-            <a class="dropdown-item" href="#">Link 3</a>
-          </div>
-        </li>
-
+      
         <!--<li v-if="showModeratorBoard" class="nav-item">
           <router-link to="/mod" class="nav-link">Moderator Board</router-link>
         </li>
         <li class="nav-item">
           <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
-        </li>-->
-      </div>
-
+        </li>
+        -->
+        </div>
+      
       <div v-if="!currentUser" class="navbar-nav ml-auto">
         <!-- <li class="nav-item">
           <router-link to="/register" class="nav-link">
             <font-awesome-icon icon="user-plus" />Sign Up
-          </router-link>
-        </li>-->
-        <li class="nav-item">
+          </router-link> 
+        </li>    -->    <li class="nav-item">
           <router-link to="/login" class="nav-link">
             <font-awesome-icon icon="sign-in-alt" />Login
           </router-link>
@@ -71,7 +96,6 @@
         </li>
       </div>
     </nav>
-
     <div class="container">
       <router-view />
     </div>
@@ -82,6 +106,14 @@
 import { mapGetters } from 'vuex';
 
 export default {
+/*  data: () => ({
+      items: [
+        { title: 'Click Me' },
+        { title: 'Click Me' },
+        { title: 'Click Me' },
+        { title: 'Click Me 2' },
+      ],
+    }),*/
   computed: {
     ...mapGetters(['currentUser', 'isAuthenticated', 'showAdminBoard'])
   },
@@ -104,4 +136,6 @@ export default {
     };
   }
 };
+
+
 </script>
