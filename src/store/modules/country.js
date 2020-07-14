@@ -4,7 +4,6 @@ import axios from 'axios';
 
 const headers = {
   'Content-Type': 'application/json',
-
 };
 
 export default {
@@ -22,8 +21,8 @@ export default {
     },
     deleteCountryList(state, deleteCountry) {
       state.countrys = state.countrys.filter
-      (country => ( (country.countryName !== deleteCountry.countryName) &&
-      (country.id !== deleteCountry.id)) );
+        (country => ((country.countryName !== deleteCountry.countryName) &&
+        (country.id !== deleteCountry.id)));
     },
     SET_CountryList: (state, data) => {
       state.countrys = data;
@@ -31,23 +30,26 @@ export default {
   },
   actions: {
     addCountry({ commit }, country) {
-      let id= country.id;
+      let id = country.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addCountry', country,
-         { headers }).then(response => {
-          commit('SET_MESSAGE', response.data.message, true);
-          if(id==0 || id===undefined){
-             commit('addCountryList', response.data.obj);
-          }
-          resolve(response);
-        })
+          { headers }).then(response => {
+            console.log(response.data.success);
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            if (id == 0 || id === undefined) {
+              commit('addCountryList', response.data.obj);
+            }
+            resolve(response);
+          })
           .catch(error => {
-            commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
+            commit('SET_MESSAGE', error.response.data.message);
+            commit('SET_SUCCESS', error.response.data.success);
             reject(error);
           });
       });
     },
-    async  getCountry({ commit }) {
+    async getCountry({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getCountries', '', { headers }).then(response => {
           commit('SET_CountryList', response.data);
@@ -59,24 +61,23 @@ export default {
       });
     },
     deleteCountry({ commit }, country) {
-
       return new Promise((resolve, reject) => {
         let id = country.id;
-        return axios.delete(API_URL + 'gws/deleteCountry/' + id, 
-        '', { headers }).then(response => {
-        commit('SET_MESSAGE', response.data.message, response.data.success);    
-        commit('deleteCountryList', country);
-       
-        resolve(response);
-        })
+        return axios.delete(API_URL + 'gws/deleteCountry/' + id,
+          '', { headers }).then(response => {
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            commit('deleteCountryList', country);
+            resolve(response);
+          })
           .catch(error => {
-             console.log(error.response.data.message);
-             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
+            console.log(error.response.data.message);
+            commit('SET_MESSAGE', error.response.data.message);
+            commit('SET_SUCCESS', error.response.data.success);
             reject(error);
           });
       });
-    
-    //  dispatch('saveToKulams')
+  //  dispatch('saveToKulams')
     }
   }
 }

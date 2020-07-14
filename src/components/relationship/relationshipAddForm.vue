@@ -1,14 +1,12 @@
-
 <template>
 
 <form @submit.prevent="submitRelationship" >
-
   <div  class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }" >
      &nbsp;&nbsp;
       <input  class=" w-75 p-3 rounded border border-success justify-center "
         placeholder="Add Relationship..."
         v-model.trim="relationship.relationshipName"
-      >
+      />
     &nbsp;&nbsp;
 
     <button 
@@ -32,7 +30,6 @@
 </form>
 </template>
 
-
 <script>
 export default {
   name: 'relationshipAddForm',
@@ -42,54 +39,50 @@ export default {
       default: () => ({ empty: true })
     }
   },
-  data () {
+  data() {
     return {
       relationship: {
-        relationshipName: '',
-        
-      }
-    }
-  },
-  methods: {
-    clearForm () {
-      this.relationship = {
         relationshipName: ''
       }
+    };
+  },
+  methods: {
+    clearForm() {
+      this.relationship = {
+        relationshipName: ''
+      };
     },
-    submitRelationship () {
+    submitRelationship() {
       if (this.relationship.relationshipName !== '') {
-        //this.$emit('submit', this.relationship)
- 
-        this.saved();
         this.$store
         .dispatch('addRelationship', this.relationship)
         .then(() => {
-          console.log('SUCCESS');
-          this.loading = false;
+          this.saved();
+          console.log('SUCCESS'+this.isEditing);
+          if (!this.isEditing) 
+            this.clearForm();
         })
         .catch(() => {
-          this.loading = false;
-          //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/relationship' });
+          this.isEditing = false;
         });
 
-        this.clearForm()
+        this.loading = false;
         this.close()
       }
     },
-    close () {
-      this.$emit('close')
+    close() {
+      this.$emit('close');
       this.isEditing = false;
     },
-    saved () {
+    saved() {
       if (!this.relationship.empty) {
-        this.populateWith.relationshipName =  this.relationship.relationshipName;
+        this.populateWith.relationshipName = this.relationship.relationshipName;
       }
-    },
+    }
   },
-  created () {
+  created() {
     if (!this.populateWith.empty) {
-      this.relationship =  Object.assign({}, this.populateWith);
+      this.relationship = Object.assign({}, this.populateWith);
       //this.relationship = this.populateWith
     }
   }
@@ -98,6 +91,6 @@ export default {
 
 <style scoped>
 .border-3 {
-    border-width:2px !important;
+  border-width: 2px !important;
 }
 </style>

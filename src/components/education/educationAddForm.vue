@@ -1,14 +1,12 @@
-
 <template>
 
 <form @submit.prevent="submitEducation" >
-
   <div  class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }" >
      &nbsp;&nbsp;
       <input  class=" w-75 p-3 rounded border border-success justify-center "
         placeholder="Add Education..."
         v-model.trim="education.educationName"
-      >
+      />
     &nbsp;&nbsp;
 
     <button 
@@ -32,7 +30,6 @@
 </form>
 </template>
 
-
 <script>
 export default {
   name: 'educationAddForm',
@@ -42,54 +39,50 @@ export default {
       default: () => ({ empty: true })
     }
   },
-  data () {
+  data() {
     return {
       education: {
-        educationName: '',
-        
-      }
-    }
-  },
-  methods: {
-    clearForm () {
-      this.education = {
         educationName: ''
       }
+    };
+  },
+  methods: {
+    clearForm() {
+      this.education = {
+        educationName: ''
+      };
     },
-    submitEducation () {
+    submitEducation() {
       if (this.education.educationName !== '') {
-        //this.$emit('submit', this.education)
- 
-        this.saved();
         this.$store
         .dispatch('addEducation', this.education)
         .then(() => {
-          console.log('SUCCESS');
-          this.loading = false;
+          this.saved();
+          console.log('SUCCESS'+this.isEditing);
+          if (!this.isEditing) 
+            this.clearForm();
         })
         .catch(() => {
-          this.loading = false;
-          //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/education' });
+          this.isEditing = false;
         });
 
-        this.clearForm()
+        this.loading = false;
         this.close()
       }
     },
-    close () {
-      this.$emit('close')
+    close() {
+      this.$emit('close');
       this.isEditing = false;
     },
-    saved () {
+    saved() {
       if (!this.education.empty) {
-        this.populateWith.educationName =  this.education.educationName;
+        this.populateWith.educationName = this.education.educationName;
       }
-    },
+    }
   },
-  created () {
+  created() {
     if (!this.populateWith.empty) {
-      this.education =  Object.assign({}, this.populateWith);
+      this.education = Object.assign({}, this.populateWith);
       //this.education = this.populateWith
     }
   }
@@ -98,6 +91,6 @@ export default {
 
 <style scoped>
 .border-3 {
-    border-width:2px !important;
+  border-width: 2px !important;
 }
 </style>

@@ -4,7 +4,6 @@ import axios from 'axios';
 
 const headers = {
   'Content-Type': 'application/json',
-
 };
 
 export default {
@@ -23,8 +22,8 @@ export default {
     },
     deleteKulamList(state, deleteKulam) {
       state.kulams = state.kulams.filter
-      (kulam => ( (kulam.kulamName !== deleteKulam.kulamName) &&
-      (kulam.id !== deleteKulam.id)) );
+        (kulam => ((kulam.kulamName !== deleteKulam.kulamName) &&
+        (kulam.id !== deleteKulam.id)));
     },
     SET_KulamList: (state, data) => {
       console.log("kulams in MUT" + data)
@@ -33,23 +32,26 @@ export default {
   },
   actions: {
     addKulam({ commit }, kulam) {
-      let id= kulam.id;
+      let id = kulam.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addKulam', kulam,
          { headers }).then(response => {
-          commit('SET_MESSAGE', response.data.message, true);
-          if(id==0 || id===undefined){
-             commit('addKulamList', response.data.obj);
+          console.log(response.data.success);
+          commit('SET_MESSAGE', response.data.message);
+          commit('SET_SUCCESS', response.data.success);
+          if (id == 0 || id === undefined) {
+            commit('addKulamList', response.data.obj);
           }
           resolve(response);
         })
           .catch(error => {
-            commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
+            commit('SET_MESSAGE', error.response.data.message);
+            commit('SET_SUCCESS', error.response.data.success);
             reject(error);
           });
       });
     },
-    async  getKulam({ commit }) {
+    async getKulam({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getKulams', '', { headers }).then(response => {
           commit('SET_KulamList', response.data);
@@ -61,24 +63,23 @@ export default {
       });
     },
     deleteKulam({ commit }, kulam) {
-
       return new Promise((resolve, reject) => {
         let id = kulam.id;
         return axios.delete(API_URL + 'gws/deleteKulam/' + id, 
         '', { headers }).then(response => {
-        commit('SET_MESSAGE', response.data.message, response.data.success);    
-        commit('deleteKulamList', kulam);
-       
-        resolve(response);
+          commit('SET_MESSAGE', response.data.message);
+          commit('SET_SUCCESS', response.data.success);
+          commit('deleteKulamList', kulam);
+          resolve(response);
         })
-          .catch(error => {
-             console.log(error.response.data.message);
-             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
+        .catch(error => {
+            console.log(error.response.data.message);
+            commit('SET_MESSAGE', error.response.data.message);
+            commit('SET_SUCCESS', error.response.data.success);
             reject(error);
-          });
+        });
       });
-    
-    //  dispatch('saveToKulams')
+  //  dispatch('saveToKulams')
     }
   }
 }

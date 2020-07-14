@@ -4,7 +4,6 @@ import axios from 'axios';
 
 const headers = {
   'Content-Type': 'application/json',
-
 };
 
 export default {
@@ -22,8 +21,8 @@ export default {
     },
     deleteDeityList(state, deleteDeity) {
       state.deitys = state.deitys.filter
-      (deity => ( (deity.deityName !== deleteDeity.deityName) &&
-      (deity.id !== deleteDeity.id)) );
+        (deity => ((deity.deityName !== deleteDeity.deityName) &&
+        (deity.id !== deleteDeity.id)));
     },
     SET_DeityList: (state, data) => {
       state.deitys = data;
@@ -31,23 +30,26 @@ export default {
   },
   actions: {
     addDeity({ commit }, deity) {
-      let id= deity.id;
+      let id = deity.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addDeitys', deity,
          { headers }).then(response => {
-          commit('SET_MESSAGE', response.data.message, true);
-          if(id==0 || id===undefined){
-             commit('addDeityList', response.data.obj);
+            console.log(response.data.success);
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            if (id == 0 || id === undefined) {
+              commit('addDeityList', response.data.obj);
           }
           resolve(response);
         })
           .catch(error => {
-            commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
+            commit('SET_MESSAGE', error.response.data.message);
+            commit('SET_SUCCESS', error.response.data.success);
             reject(error);
           });
       });
     },
-    async  getDeity({ commit }) {
+    async getDeity({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getDeitys', '', { headers }).then(response => {
           commit('SET_DeityList', response.data);
@@ -59,24 +61,23 @@ export default {
       });
     },
     deleteDeity({ commit }, deity) {
-
       return new Promise((resolve, reject) => {
         let id = deity.id;
         return axios.delete(API_URL + 'gws/deleteDeity/' + id, 
         '', { headers }).then(response => {
-        commit('SET_MESSAGE', response.data.message, response.data.success);    
-        commit('deleteDeityList', deity);
-       
-        resolve(response);
+          commit('SET_MESSAGE', response.data.message);
+          commit('SET_SUCCESS', response.data.success);
+          commit('deleteDeityList', deity);
+          resolve(response);
         })
           .catch(error => {
              console.log(error.response.data.message);
-             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-            reject(error);
+             commit('SET_MESSAGE', error.response.data.message);
+             commit('SET_SUCCESS', error.response.data.success);
+             reject(error);
           });
       });
-    
-    //  dispatch('saveToKulams')
+  //  dispatch('saveToKulams')
     }
   }
 }

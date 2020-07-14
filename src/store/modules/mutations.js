@@ -17,18 +17,13 @@ const mutations = {
     console.log('Operator' + state.operator)
     JwtService.saveToken(state.operator.accessToken);
   },
- /* SET_KULAMS: (state, data) => {
-    console.log("kulams in MUT" + data)
-    state.kulams = data;
-  },*/
-  // SET_EDUCATIONS: (state, data) => {
-  //   console.log("education in MUT" + data)
-  //   state.kulams = data;
-  // },
-  SET_MESSAGE: (state, msg, success) => {
-    state.success = success;
-    console.log(msg)
+   SET_MESSAGE: (state, msg) => {
     state.message = msg;
+  },
+  SET_SUCCESS: (state, success) => {
+    state.success = success;
+  
+    console.log("SET_SUCESS :: "+success)
   },
   PURGE_AUTH: (state) => {
     state.isAuthenticated = false;
