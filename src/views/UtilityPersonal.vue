@@ -1,12 +1,5 @@
 <template>
-<div >
-    <div >
-      <p>
-        <label v-if="isSuccess" class="alert alert-success" role="alert">{{getMessage}}</label>
-        <label v-else-if="getMessage" class="alert alert-danger" role="alert">{{getMessage}}</label>
-      </p>
-    </div>
-   
+
     <div>
       <b-card no-body>
         
@@ -16,6 +9,20 @@
               :key="tab.id" 
               :title="tab.title" 
               @click="selectedComponent = tab.selectedComponent">
+               <div>
+              <p>
+                <label
+                  v-if="isSuccess && !getMessage==''"
+                  class="alert alert-success"
+                  role="alert"
+                >{{getMessage}}</label>
+                <label
+                  v-if="!isSuccess && !getMessage==''"
+                  class="alert alert-danger"
+                  role="alert"
+                >{{getMessage}}</label>
+              </p>
+            </div>
               <div >
                 <!-- <p>{{ selectedComponent }}</p> -->
                 <keep-alive>
@@ -29,7 +36,6 @@
       </b-card>
     </div>
     
-  </div>
 </template>
 
 <script>
@@ -79,6 +85,9 @@ tabs: [
 </script>   
 
 <style scoped>
+p {
+  text-align: center;
+}
 .entry-container.card {
   width: 70%;
   height:100%;
