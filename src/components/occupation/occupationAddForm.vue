@@ -1,14 +1,12 @@
-
 <template>
 
 <form @submit.prevent="submitOccupation" >
-
   <div  class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }" >
      &nbsp;&nbsp;
       <input  class=" w-75 p-3 rounded border border-success justify-center "
         placeholder="Add Occupation..."
         v-model.trim="occupation.occupationName"
-      >
+      />
     &nbsp;&nbsp;
 
     <button 
@@ -32,7 +30,6 @@
 </form>
 </template>
 
-
 <script>
 export default {
   name: 'occupationAddForm',
@@ -42,54 +39,50 @@ export default {
       default: () => ({ empty: true })
     }
   },
-  data () {
+  data() {
     return {
       occupation: {
-        occupationName: '',
-        
-      }
-    }
-  },
-  methods: {
-    clearForm () {
-      this.occupation = {
         occupationName: ''
       }
+    };
+  },
+  methods: {
+    clearForm() {
+      this.occupation = {
+        occupationName: ''
+      };
     },
-    submitOccupation () {
+    submitOccupation() {
       if (this.occupation.occupationName !== '') {
-        //this.$emit('submit', this.occupation)
- 
-        this.saved();
         this.$store
         .dispatch('addOccupation', this.occupation)
         .then(() => {
-          console.log('SUCCESS');
-          this.loading = false;
+          this.saved();
+          console.log('SUCCESS'+this.isEditing);
+          if (!this.isEditing) 
+            this.clearForm();
         })
         .catch(() => {
-          this.loading = false;
-          //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/occupation' });
+          this.isEditing = false;
         });
 
-        this.clearForm()
+        this.loading = false;
         this.close()
       }
     },
-    close () {
-      this.$emit('close')
+    close() {
+      this.$emit('close');
       this.isEditing = false;
     },
-    saved () {
+    saved() {
       if (!this.occupation.empty) {
-        this.populateWith.occupationName =  this.occupation.occupationName;
+        this.populateWith.occupationName = this.occupation.occupationName;
       }
     },
   },
-  created () {
+  created() {
     if (!this.populateWith.empty) {
-      this.occupation =  Object.assign({}, this.populateWith);
+      this.occupation = Object.assign({}, this.populateWith);
       //this.occupation = this.populateWith
     }
   }
@@ -98,6 +91,6 @@ export default {
 
 <style scoped>
 .border-3 {
-    border-width:2px !important;
+  border-width: 2px !important;
 }
 </style>

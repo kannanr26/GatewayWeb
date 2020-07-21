@@ -4,7 +4,6 @@ import axios from 'axios';
 
 const headers = {
   'Content-Type': 'application/json',
-
 };
 
 export default {
@@ -22,8 +21,8 @@ export default {
     },
     deleteEducationList(state, deleteEducation) {
       state.educations = state.educations.filter
-      (education => ( (education.educationName !== deleteEducation.educationName) &&
-      (education.id !== deleteEducation.id)) );
+        (education => ((education.educationName !== deleteEducation.educationName) &&
+        (education.id !== deleteEducation.id)));
     },
     SET_EducationList: (state, data) => {
       state.educations = data;
@@ -31,23 +30,26 @@ export default {
   },
   actions: {
     addEducation({ commit }, education) {
-      let id= education.id;
+      let id = education.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addEducation', education,
          { headers }).then(response => {
-          commit('SET_MESSAGE', response.data.message, true);
-          if(id==0 || id===undefined){
-             commit('addEducationList', response.data.obj);
+            console.log(response.data.success);
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            if (id == 0 || id === undefined) {
+              commit('addEducationList', response.data.obj);
           }
           resolve(response);
         })
           .catch(error => {
-            commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
+            commit('SET_MESSAGE', error.response.data.message);
+            commit('SET_SUCCESS', error.response.data.success);
             reject(error);
           });
       });
     },
-    async  getEducations({ commit }) {
+    async getEducations({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getEducations', '', { headers }).then(response => {
           commit('SET_EducationList', response.data);
@@ -59,24 +61,23 @@ export default {
       });
     },
     deleteEducation({ commit }, education) {
-
       return new Promise((resolve, reject) => {
         let id = education.id;
         return axios.delete(API_URL + 'gws/deleteEducation/' + id, 
         '', { headers }).then(response => {
-        commit('SET_MESSAGE', response.data.message, response.data.success);    
-        commit('deleteEducationList', education);
-       
-        resolve(response);
+          commit('SET_MESSAGE', response.data.message);
+          commit('SET_SUCCESS', response.data.success);
+          commit('deleteEducationList', education);
+          resolve(response);
         })
-          .catch(error => {
-             console.log(error.response.data.message);
-             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
-            reject(error);
-          });
+        .catch(error => {
+          console.log(error.response.data.message);
+          commit('SET_MESSAGE', error.response.data.message);
+          commit('SET_SUCCESS', error.response.data.success);
+          reject(error);
+        });
       });
-    
-    //  dispatch('saveToKulams')
+  //  dispatch('saveToKulams')
     }
   }
 }

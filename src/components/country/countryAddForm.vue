@@ -1,14 +1,12 @@
-
 <template>
 
 <form @submit.prevent="submitCountry" >
-
   <div  class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }" >
      &nbsp;&nbsp;
       <input  class=" w-75 p-3 rounded border border-success justify-center "
         placeholder="Add Country..."
         v-model.trim="country.countryName"
-      >
+      />
     &nbsp;&nbsp;
 
     <button 
@@ -42,54 +40,51 @@ export default {
       default: () => ({ empty: true })
     }
   },
-  data () {
+  data() {
     return {
       country: {
-        countryName: '',
-        
-      }
-    }
-  },
-  methods: {
-    clearForm () {
-      this.country = {
         countryName: ''
       }
+    };
+  },
+  methods: {
+    clearForm() {
+      this.country = {
+        countryName: ''
+      };
     },
-    submitCountry () {
+    submitCountry() {
+       this.loading = true;
       if (this.country.countryName !== '') {
-        //this.$emit('submit', this.country)
- 
-        this.saved();
         this.$store
         .dispatch('addCountry', this.country)
         .then(() => {
-          console.log('SUCCESS');
-          this.loading = false;
+          this.saved();
+          console.log('SUCCESS'+this.isEditing);
+          if (!this.isEditing) 
+            this.clearForm();
         })
         .catch(() => {
-          this.loading = false;
-          //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/country' });
+          this.isEditing = false;
         });
 
-        this.clearForm()
+        this.loading = false;
         this.close()
       }
     },
-    close () {
-      this.$emit('close')
+    close() {
+      this.$emit('close');
       this.isEditing = false;
     },
-    saved () {
+    saved() {
       if (!this.country.empty) {
-        this.populateWith.countryName =  this.country.countryName;
+        this.populateWith.countryName = this.country.countryName;
       }
-    },
+    }
   },
-  created () {
+  created() {
     if (!this.populateWith.empty) {
-      this.country =  Object.assign({}, this.populateWith);
+      this.country = Object.assign({}, this.populateWith);
       //this.country = this.populateWith
     }
   }
@@ -98,6 +93,6 @@ export default {
 
 <style scoped>
 .border-3 {
-    border-width:2px !important;
+  border-width: 2px !important;
 }
 </style>

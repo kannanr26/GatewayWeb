@@ -1,14 +1,12 @@
-
 <template>
 
 <form @submit.prevent="submitPermission" >
-
   <div  class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }" >
      &nbsp;&nbsp;
       <input  class=" w-75 p-3 rounded border border-success justify-center "
         placeholder="Add Permission..."
         v-model.trim="permission.permissionName"
-      >
+      />
     &nbsp;&nbsp;
 
     <button 
@@ -32,7 +30,6 @@
 </form>
 </template>
 
-
 <script>
 export default {
   name: 'permissionAddForm',
@@ -42,54 +39,50 @@ export default {
       default: () => ({ empty: true })
     }
   },
-  data () {
+  data() {
     return {
       permission: {
-        permissionName: '',
-        
-      }
-    }
-  },
-  methods: {
-    clearForm () {
-      this.permission = {
         permissionName: ''
       }
+    };
+  },
+  methods: {
+    clearForm() {
+      this.permission = {
+        permissionName: ''
+      };
     },
-    submitPermission () {
+    submitPermission() {
       if (this.permission.permissionName !== '') {
-        //this.$emit('submit', this.permission)
- 
-        this.saved();
         this.$store
         .dispatch('addPermission', this.permission)
         .then(() => {
-          console.log('SUCCESS');
-          this.loading = false;
+          this.saved();
+          console.log('SUCCESS'+this.isEditing);
+          if (!this.isEditing) 
+            this.clearForm();
         })
         .catch(() => {
-          this.loading = false;
-          //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/permission' });
+          this.isEditing = false;
         });
 
-        this.clearForm()
+        this.loading = false;
         this.close()
       }
     },
-    close () {
-      this.$emit('close')
+    close() {
+      this.$emit('close');
       this.isEditing = false;
     },
-    saved () {
+    saved() {
       if (!this.permission.empty) {
-        this.populateWith.permissionName =  this.permission.permissionName;
+        this.populateWith.permissionName = this.permission.permissionName;
       }
-    },
+    }
   },
-  created () {
+  created() {
     if (!this.populateWith.empty) {
-      this.permission =  Object.assign({}, this.populateWith);
+      this.permission = Object.assign({}, this.populateWith);
       //this.permission = this.populateWith
     }
   }
@@ -98,6 +91,6 @@ export default {
 
 <style scoped>
 .border-3 {
-    border-width:2px !important;
+  border-width: 2px !important;
 }
 </style>

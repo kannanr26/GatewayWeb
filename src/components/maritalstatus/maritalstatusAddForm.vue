@@ -1,14 +1,12 @@
-
 <template>
 
 <form @submit.prevent="submitMaritalStatus" >
-
   <div  class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }" >
      &nbsp;&nbsp;
       <input  class=" w-75 p-3 rounded border border-success justify-center "
         placeholder="Add MaritalStatus..."
         v-model.trim="maritalStatus.maritalStatusName"
-      >
+      />
     &nbsp;&nbsp;
 
     <button 
@@ -32,7 +30,6 @@
 </form>
 </template>
 
-
 <script>
 export default {
   name: 'maritalStatusAddForm',
@@ -42,54 +39,50 @@ export default {
       default: () => ({ empty: true })
     }
   },
-  data () {
+  data() {
     return {
       maritalStatus: {
-        maritalStatusName: '',
-        
-      }
-    }
-  },
-  methods: {
-    clearForm () {
-      this.maritalStatus = {
         maritalStatusName: ''
       }
+    };
+  },
+  methods: {
+    clearForm() {
+      this.maritalStatus = {
+        maritalStatusName: ''
+      };
     },
-    submitMaritalStatus () {
+    submitMaritalStatus() {
       if (this.maritalStatus.maritalStatusName !== '') {
-        //this.$emit('submit', this.maritalStatus)
- 
-        this.saved();
         this.$store
         .dispatch('addMaritalStatus', this.maritalStatus)
         .then(() => {
-          console.log('SUCCESS');
-          this.loading = false;
+          this.saved();
+          console.log('SUCCESS'+this.isEditing);
+          if (!this.isEditing) 
+            this.clearForm();
         })
         .catch(() => {
-          this.loading = false;
-          //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/maritalStatus' });
+          this.isEditing = false;
         });
 
-        this.clearForm()
+        this.loading = false;
         this.close()
       }
     },
-    close () {
-      this.$emit('close')
+    close() {
+      this.$emit('close');
       this.isEditing = false;
     },
-    saved () {
+    saved() {
       if (!this.maritalStatus.empty) {
-        this.populateWith.maritalStatusName =  this.maritalStatus.maritalStatusName;
+        this.populateWith.maritalStatusName = this.maritalStatus.maritalStatusName;
       }
-    },
+    }
   },
-  created () {
+  created() {
     if (!this.populateWith.empty) {
-      this.maritalStatus =  Object.assign({}, this.populateWith);
+      this.maritalStatus = Object.assign({}, this.populateWith);
       //this.maritalStatus = this.populateWith
     }
   }
@@ -98,6 +91,6 @@ export default {
 
 <style scoped>
 .border-3 {
-    border-width:2px !important;
+  border-width: 2px !important;
 }
 </style>

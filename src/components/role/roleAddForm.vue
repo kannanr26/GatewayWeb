@@ -1,14 +1,12 @@
-
 <template>
 
 <form @submit.prevent="submitRole" >
-
   <div  class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }" >
      &nbsp;&nbsp;
       <input  class=" w-75 p-3 rounded border border-success justify-center "
         placeholder="Add Role..."
         v-model.trim="role.roleName"
-      >
+      />
     &nbsp;&nbsp;
 
     <button 
@@ -32,7 +30,6 @@
 </form>
 </template>
 
-
 <script>
 export default {
   name: 'roleAddForm',
@@ -42,54 +39,50 @@ export default {
       default: () => ({ empty: true })
     }
   },
-  data () {
+  data() {
     return {
       role: {
-        roleName: '',
-        
-      }
-    }
-  },
-  methods: {
-    clearForm () {
-      this.role = {
         roleName: ''
       }
+    };
+  },
+  methods: {
+    clearForm() {
+      this.role = {
+        roleName: ''
+      };
     },
-    submitRole () {
+    submitRole() {
       if (this.role.roleName !== '') {
-        //this.$emit('submit', this.role)
- 
-        this.saved();
         this.$store
         .dispatch('addRole', this.role)
         .then(() => {
-          console.log('SUCCESS');
-          this.loading = false;
+          this.saved();
+          console.log('SUCCESS'+this.isEditing);
+          if (!this.isEditing) 
+            this.clearForm();
         })
         .catch(() => {
-          this.loading = false;
-          //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/role' });
+          this.isEditing = false;
         });
 
-        this.clearForm()
+        this.loading = false;
         this.close()
       }
     },
-    close () {
-      this.$emit('close')
+    close() {
+      this.$emit('close');
       this.isEditing = false;
     },
-    saved () {
+    saved() {
       if (!this.role.empty) {
-        this.populateWith.roleName =  this.role.roleName;
+        this.populateWith.roleName = this.role.roleName;
       }
-    },
+    }
   },
-  created () {
+  created() {
     if (!this.populateWith.empty) {
-      this.role =  Object.assign({}, this.populateWith);
+      this.role = Object.assign({}, this.populateWith);
       //this.role = this.populateWith
     }
   }
@@ -98,6 +91,6 @@ export default {
 
 <style scoped>
 .border-3 {
-    border-width:2px !important;
+  border-width: 2px !important;
 }
 </style>

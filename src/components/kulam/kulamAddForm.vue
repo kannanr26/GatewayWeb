@@ -1,17 +1,14 @@
 <template>
+
 <form @submit.prevent="submitKulam">
+  <div  class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }" >
+     &nbsp;&nbsp;
+      <input  class=" w-75 p-3 rounded border border-success justify-center "
+        placeholder="Add Kulam..."
+        v-model.trim="kulam.kulamName"
+      />
+    &nbsp;&nbsp;
 
-
-
-
-
-  <div class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }">
-&nbsp;&nbsp;    <input class="w-75 p-3 rounded border border-success justify-center"
-
-      placeholder="Add Kulam..."
-      v-model.trim="kulam.kulamName"
-    >
-  &nbsp;&nbsp;
     <button
       type="submit"
       title="save"
@@ -42,51 +39,50 @@ export default {
       default: () => ({ empty: true })
     }
   },
-  data () {
+  data() {
     return {
       kulam: {
-        kulamName: '',
-        
-      }
-    }
-  },
-  methods: {
-    clearForm () {
-      this.kulam = {
         kulamName: ''
       }
+    };
+  },
+  methods: {
+    clearForm() {
+      this.kulam = {
+        kulamName: ''
+      };
     },
-    submitKulam () {
+    submitKulam() {
       if (this.kulam.kulamName !== '') {
-
-        this.saved();
         this.$store
         .dispatch('addKulam', this.kulam)
         .then(() => {
-          console.log('SUCCESS');
-          this.loading = false;
+          this.saved();
+          console.log('SUCCESS'+this.isEditing);
+          if (!this.isEditing) 
+            this.clearForm();
         })
         .catch(() => {
-          this.loading = false;
-          });
+          this.isEditing = false;
+        });
 
-        this.clearForm()
+        this.loading = false;
         this.close()
       }
     },
-    close () {
-      this.$emit('close')
+    close() {
+      this.$emit('close');
       this.isEditing = false;
     },
-    saved () {
+    saved() {
       if (!this.kulam.empty) {
-        this.populateWith.kulamName =  this.kulam.kulamName;
+        this.populateWith.kulamName = this.kulam.kulamName;
       }
-    },
+    }
   },
-  created () {
+  created() {
     if (!this.populateWith.empty) {
-      this.kulam =  Object.assign({}, this.populateWith);
+      this.kulam = Object.assign({}, this.populateWith);
       //this.kulam = this.populateWith
     }
   }
@@ -96,6 +92,6 @@ export default {
 <style scoped>
 
 .border-3 {
-    border-width:2px !important;
+  border-width: 2px !important;
 }
 </style>

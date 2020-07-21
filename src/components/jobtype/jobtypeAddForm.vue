@@ -1,14 +1,12 @@
-
 <template>
 
 <form @submit.prevent="submitJobtype" >
-
   <div  class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }" >
      &nbsp;&nbsp;
       <input  class=" w-75 p-3 rounded border border-success justify-center "
         placeholder="Add Jobtype..."
         v-model.trim="jobtype.jobName"
-      >
+      />
     &nbsp;&nbsp;
 
     <button 
@@ -32,7 +30,6 @@
 </form>
 </template>
 
-
 <script>
 export default {
   name: 'jobtypeAddForm',
@@ -42,54 +39,50 @@ export default {
       default: () => ({ empty: true })
     }
   },
-  data () {
+  data() {
     return {
       jobtype: {
-        jobName: '',
-        
-      }
-    }
-  },
-  methods: {
-    clearForm () {
-      this.jobtype = {
         jobName: ''
       }
+    };
+  },
+  methods: {
+    clearForm() {
+      this.jobtype = {
+        jobName: ''
+      };
     },
-    submitJobtype () {
+    submitJobtype() {
       if (this.jobtype.jobName !== '') {
-        //this.$emit('submit', this.jobtype)
- 
-        this.saved();
         this.$store
         .dispatch('addJobtype', this.jobtype)
         .then(() => {
-          console.log('SUCCESS');
-          this.loading = false;
+          this.saved();
+          console.log('SUCCESS'+this.isEditing);
+          if (!this.isEditing) 
+            this.clearForm();
         })
         .catch(() => {
-          this.loading = false;
-          //  this.message = err.response.data.message;
-          // this.$router.push({ name: '/jobtype' });
+          this.isEditing = false;
         });
 
-        this.clearForm()
+        this.loading = false;
         this.close()
       }
     },
-    close () {
-      this.$emit('close')
+    close() {
+      this.$emit('close');
       this.isEditing = false;
     },
-    saved () {
+    saved() {
       if (!this.jobtype.empty) {
-        this.populateWith.jobName =  this.jobtype.jobName;
+        this.populateWith.jobName = this.jobtype.jobName;
       }
-    },
+    }
   },
-  created () {
+  created() {
     if (!this.populateWith.empty) {
-      this.jobtype =  Object.assign({}, this.populateWith);
+      this.jobtype = Object.assign({}, this.populateWith);
       //this.jobtype = this.populateWith
     }
   }
@@ -98,6 +91,6 @@ export default {
 
 <style scoped>
 .border-3 {
-    border-width:2px !important;
+  border-width: 2px !important;
 }
 </style>

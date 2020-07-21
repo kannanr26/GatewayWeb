@@ -4,7 +4,6 @@ import axios from 'axios';
 
 const headers = {
   'Content-Type': 'application/json',
-
 };
 
 export default {
@@ -22,8 +21,8 @@ export default {
     },
     deleteDataUpdatorList(state, deleteDataUpdator) {
       state.dataUpdators = state.dataUpdators.filter
-      (dataUpdator => ( (dataUpdator.operatorTypeName !== deleteDataUpdator.operatorTypeName) &&
-      (dataUpdator.id !== deleteDataUpdator.id)) );
+        (dataUpdator => ((dataUpdator.operatorTypeName !== deleteDataUpdator.operatorTypeName) &&
+        (dataUpdator.id !== deleteDataUpdator.id)));
     },
     SET_DataUpdatorList: (state, data) => {
       state.dataUpdators = data;
@@ -31,23 +30,26 @@ export default {
   },
   actions: {
     addDataUpdator({ commit }, dataUpdator) {
-      let id= dataUpdator.id;
+      let id = dataUpdator.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addOperatorType', dataUpdator,
          { headers }).then(response => {
-          commit('SET_MESSAGE', response.data.message, true);
-          if(id==0 || id===undefined){
-             commit('addDataUpdatorList', response.data.obj);
+            console.log(response.data.success);
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            if (id == 0 || id === undefined) {
+              commit('addDataUpdatorList', response.data.obj);
           }
           resolve(response);
         })
           .catch(error => {
-            commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
+            commit('SET_MESSAGE', error.response.data.message);
+            commit('SET_SUCCESS', error.response.data.success);
             reject(error);
           });
       });
     },
-    async  getDataUpdators({ commit }) {
+    async getDataUpdators({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getOperatorTypes', '', { headers }).then(response => {
           commit('SET_DataUpdatorList', response.data);
@@ -59,24 +61,23 @@ export default {
       });
     },
     deleteDataUpdator({ commit }, dataUpdator) {
-
       return new Promise((resolve, reject) => {
         let id = dataUpdator.id;
         return axios.delete(API_URL + 'gws/deleteOperatorType/' + id, 
         '', { headers }).then(response => {
-        commit('SET_MESSAGE', response.data.message, response.data.success);    
-        commit('deleteDataUpdatorList', dataUpdator);
-       
-        resolve(response);
+          commit('SET_MESSAGE', response.data.message);
+          commit('SET_SUCCESS', response.data.success);
+          commit('deleteDataUpdatorList', dataUpdator);
+          resolve(response);
         })
-          .catch(error => {
-             console.log(error.response.data.message);
-             commit('SET_MESSAGE', error.response.data.message, error.response.data.success);
+        .catch(error => {
+            console.log(error.response.data.message);
+            commit('SET_MESSAGE', error.response.data.message);
+            commit('SET_SUCCESS', error.response.data.success);
             reject(error);
-          });
+        });
       });
-    
-    //  dispatch('saveToKulams')
+  //  dispatch('saveToKulams')
     }
   }
 }
