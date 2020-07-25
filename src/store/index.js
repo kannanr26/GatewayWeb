@@ -22,7 +22,7 @@ import permission from './modules/permission';
 import occupation from './modules/occupation';
 import businesstype from './modules/businesstype';
 import deity from './modules/deity';
-
+import wizard from './modules/wizard';
 
 // Load Vuex
 Vue.use(Vuex);
@@ -50,6 +50,7 @@ export default new Vuex.Store({
     businesstype,
     jobtype,
     deity,
+    wizard
 
 
   }
