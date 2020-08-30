@@ -2,11 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from '@/views/Login.vue';
 import Title from '@/views/Title.vue';
-import Utility from '@/views/Utility';
+//import Utility from '@/views/Utility';
 
 import Family from '@/views/family/Family';
 
-import PersonalRegistration from '@/components/family/PersonalRegistration';
+import Personal from '@/views/Personal';
 import UtilityDeity from '@/views/UtilityDeity';
 import UtilityAddress from '@/views/UtilityAddress';
 import UtilityManagement from '@/views/UtilityManagement';
@@ -37,8 +37,8 @@ export default new Router({
       name: "Family"
     },
     {
-      path: '/family1',
-      component: PersonalRegistration,
+      path: '/personal',
+      component: Personal,
       
     },
     {

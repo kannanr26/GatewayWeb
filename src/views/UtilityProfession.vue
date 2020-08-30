@@ -49,7 +49,7 @@ export default {
   name: 'Util',
   data: function() {
     return {
-      kulamTitle: 'Education',
+     // kulamTitle: 'Education',
       selectedComponent: 'appEducation',
       
 tabs: [

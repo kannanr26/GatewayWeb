@@ -41,6 +41,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import UCountry from '@/components/country/UCountry.vue';
+import UState from '@/components/state/UState.vue';
 
 export default {
   name: 'Util',
@@ -54,7 +55,12 @@ export default {
           id: 'country',
           title: 'Country',
           selectedComponent: 'appCountry'
-        }
+        }, {
+          id: 'state',
+          title: 'State',
+          selectedComponent: 'appState'
+        },
+
       ]
     };
   },
@@ -62,7 +68,8 @@ export default {
     ...mapGetters(['getMessage', 'isSuccess'])
   },
   components: {
-    appCountry: UCountry
+    appCountry: UCountry,
+    appState: UState
   }
 };
 </script>   

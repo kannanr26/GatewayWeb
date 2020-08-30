@@ -48,7 +48,7 @@ export default {
   name: 'Util',
   data: function() {
     return {
-      kulamTitle: 'Bloodgroup',
+     // kulamTitle: 'Bloodgroup',
       selectedComponent: 'appBloodgroup',
       
 tabs: [

@@ -80,10 +80,11 @@ export default {
 
         this.$store.dispatch('login', this.operator).then((res) => {
             console.log('SUCCESS');
-            this.$router.push({ name: 'UtilityManagement' });
+            this.$router.push({ name: 'UtilityAddress' });
         }).catch((err) =>{
           this.loading = false;
           this.message = err.response.data.message;
+          console.log('login error'+this.message);
         // this.$router.push({ name: '/kulam' });
         });
       });

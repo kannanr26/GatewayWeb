@@ -1,9 +1,17 @@
 const getters = {
   currentUser(state) {
-    if(state.isAuthenticated==true)
+    console.log('currentUser');
+    if(state.isAuthenticated==true){
+      console.log('currentUser'+state.operator.userName);
       return state.operator;
-    else
-     return null;
+    }
+     
+    else{
+      
+      console.log('state.isAuthenticated is false');
+      return null;
+    }
+     
   },
   isAuthenticated(state) {
     return state.isAuthenticated;

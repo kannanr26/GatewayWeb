@@ -14,7 +14,9 @@ const mutations = {
     operator.roles=data.roles;*/
     state.operator = data;
     state.errors = {};
-    console.log('Operator' + state.operator)
+    console.log('Operator' + state.operator.userName);
+    console.log(' isAuthenticated' + state.isAuthenticated);
+    
     JwtService.saveToken(state.operator.accessToken);
   },
    SET_MESSAGE: (state, msg) => {

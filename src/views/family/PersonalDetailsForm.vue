@@ -39,7 +39,7 @@ export default {
   name: 'Util',
   data: function() {
     return {
-      kulamTitle: 'PersonalRegistration',
+   //   kulamTitle: 'PersonalRegistration',
       selectedComponent: 'appPersonalRegistration',
 
 tabs: [
