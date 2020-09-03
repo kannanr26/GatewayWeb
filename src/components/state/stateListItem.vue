@@ -33,7 +33,7 @@ import stateAddForm  from './stateAddForm.vue'
 export default {
   name: 'ListItem',
   props: {
-    country: {
+    cstates: {
       type: Object,
       required: true
     },

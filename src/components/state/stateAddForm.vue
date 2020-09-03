@@ -1,122 +1,75 @@
 <template>
-  <form @submit.prevent="submitState">
-    <div>
-      <!-- <ul id="country-list" class = "child1">
-      <list-item 
-        v-for="(country) in getCountry"
-        :key="country.id"
-        :country="country"
-       @click="selectedCountry(country)"
-      />
-    </ul>
-      <v-select :options="getCountry" label="country" index="country.id"  />-->
 
-      <select class="browser-default custom-select">
-        <option
-          v-for="item in getCountry"
-          :value="item.countryName"
-          :key="item.countryName"
-        >{{ item.countryName }}</option>
-        @click="selectedCountry(country)
-      </select>
-    </div>
-    <div class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }">
-      &nbsp;&nbsp;
-      <input
-        class="w-75 p-3 rounded border border-success justify-center"
+<form @submit.prevent="submitStates" >
+  <div  class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }" >
+     &nbsp;&nbsp;
+      <input  class=" w-75 p-3 rounded border border-success justify-center "
         placeholder="Add State..."
-        v-model.trim="state.stateName"
+        v-model.trim="cstates.stateName"
       />
+    &nbsp;&nbsp;
 
-      &nbsp;&nbsp;
-      <button
-        type="submit"
-        title="save"
-        class="bg-white flex-grow active:bg-green-800 text-green-500 border-3 border-green-500 mt-2 mb-3 rounded-circle w-10 h-10 self-end font-bold hover:bg-green-500 hover:text-white focus:outline-none"
-        :class="populateWith.empty ? 'sm:flex-grow-0' : 'mr-4'"
-      >{{ populateWith.empty ? 'Add' : 'Save' }}</button>
+    <button 
+      type="submit"
+      title="save"
+      class=" bg-white  flex-grow active:bg-green-800 text-green-500  border-3 border-green-500 mt-2 mb-3 rounded-circle w-10 h-10 self-end font-bold hover:bg-green-500 hover:text-white focus:outline-none"
+      :class="populateWith.empty ? 'sm:flex-grow-0' : 'mr-4'" >
+        {{ populateWith.empty ? 'Add' : 'Save' }}
+    </button>
 
-      <button
-        v-if="!populateWith.empty"
-        @click="close"
-        type="button"
-        title="cancel"
-        class="bg-white active:bg-green-800 text-green-500 border-3 border-green-500 mt-2 mb-3 rounded-circle w-10 h-10 self-end font-bold hover:bg-green-500 hover:text-white focus:outline-none"
-        :class="populateWith.empty ? 'flex-grow-0' : 'flex-grow'"
-      >Cancel</button>
-    </div>
-  </form>
+    <button
+      v-if="!populateWith.empty"
+      @click="close"
+      type="button"
+      title="cancel"
+      class=" bg-white active:bg-green-800 text-green-500  border-3 border-green-500 mt-2 mb-3 rounded-circle w-10 h-10 self-end font-bold hover:bg-green-500 hover:text-white focus:outline-none"
+      :class="populateWith.empty ? 'flex-grow-0' : 'flex-grow'" >
+        Cancel
+    </button>
+</div>
+</form>
 </template>
+
+
 <script>
-import { mapGetters } from 'vuex';
 export default {
-  name: 'stateAddForm',
+  name: 'StateAddForm',
   props: {
     populateWith: {
       type: Object,
-      default: () => ({ empty: true }),
-    },
+      default: () => ({ empty: true })
+    }
   },
   data() {
     return {
-      state: {
-        stateName: '',
-      },
+      cstates: {
+        stateName: ''
+      }
     };
   },
-
-  computed: {
-    ...mapGetters(['getCountry']),
-  },
-  mounted() {
-    console.log(' get Country');
-
-    this.$store
-      .dispatch('getCountry')
-      .then(() => {
-        console.log('get Country');
-        this.loading = false;
-      })
-      .catch(() => {
-        this.loading = false;
-      });
-  },
-
   methods: {
     clearForm() {
-      this.states = {
-        stateName: '',
+      this.cstates = {
+        stateName: ''
       };
     },
-
-    selectedCountry(country) {
-      console.log(' Created get State'+country);
-      this.$store
-        .dispatch('getStates('+country+')')
+    submitState() {
+       this.loading = true;
+      if (this.cstates.stateName !== '') {
+        this.$store
+        .dispatch('addState', this.cstates)
         .then(() => {
-          console.log('Created in get State');
-          this.loading = false;
+          this.saved();
+          console.log('SUCCESS'+this.isEditing);
+          if (!this.isEditing) 
+            this.clearForm();
         })
         .catch(() => {
-          this.loading = false;
+          this.isEditing = false;
         });
-    },
-    submitState() {
-      this.loading = true;
-      if (this.states.stateName !== '') {
-        this.$store
-          .dispatch('addState', this.state)
-          .then(() => {
-            this.saved();
-            console.log('SUCCESS' + this.isEditing);
-            if (!this.isEditing) this.clearForm();
-          })
-          .catch(() => {
-            this.isEditing = false;
-          });
 
         this.loading = false;
-        this.close();
+        this.close()
       }
     },
     close() {
@@ -124,18 +77,18 @@ export default {
       this.isEditing = false;
     },
     saved() {
-      if (!this.states.empty) {
-        this.populateWith.stateName = this.states.stateName;
+      if (!this.cstates.empty) {
+        this.populateWith.stateName = this.cstates.stateName;
       }
-    },
+    }
   },
   created() {
     if (!this.populateWith.empty) {
-      this.states = Object.assign({}, this.populateWith);
+      this.cstates = Object.assign({}, this.populateWith);
       //this.country = this.populateWith
     }
-  },
-};
+  }
+}
 </script>
 
 <style scoped>

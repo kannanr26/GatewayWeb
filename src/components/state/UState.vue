@@ -39,7 +39,7 @@ export default {
     console.log(' Created get State');
 
     this.$store
-      .dispatch('getStates')
+      .dispatch('getStates()')
       .then(() => {
         console.log('Created in get States');
         this.loading = false;
