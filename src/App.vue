@@ -62,11 +62,11 @@
         </li>
       </div>
 
-      <div v-if="(currentUser && currentUser!='' && isAuthenticated)" class="navbar-nav ml-auto">
+      <div v-if="(currentUser && isAuthenticated)" class="navbar-nav ml-auto">
         <li class="nav-item">
           <router-link to="/profile" class="nav-link">
             <font-awesome-icon icon="user" />
-            {{ currentUser.userName }}
+            {{ currentUserName }}
           </router-link>
         </li>
         <li class="nav-item">
@@ -88,7 +88,7 @@ import { mapGetters } from 'vuex';
 export default {
 
   computed: {
-    ...mapGetters(['currentUser', 'isAuthenticated'])
+    ...mapGetters(['currentUser','currentUserName', 'isAuthenticated'])
   },
   methods: {
     logOut() {

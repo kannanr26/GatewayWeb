@@ -5,16 +5,26 @@
       Add State</h1>
 
   <div class="flex flex-col mt-20 mx-4  sm:justify-center">
-    
+
+
+    <select id="select1" v-model="selectedCountry"  class="browser-default custom-select" v-on:change="countrySelected()" >
+        <option v-for="item in getCountry" v-bind:value="item" :key="item.countryName">
+        {{ item.countryName }}</option>
+      </select>
+  
+    <span>Selected: {{ selectedCountry }}</span>
+
+
+
     <stateAddForm submit="addState" />
 
     <ul id="state-list" class = "child1">
       <list-item 
-        v-for="(state) in getStates"
-        :key="state.id"
-        :state="state"
-        @delete="deleteState(state)"
-        @edit="editState"
+        v-for="(states) in getStates"
+        :key="states.id"
+        :states="states"
+        @delete="deleteStates(states)"
+        @edit="editStates"
       />
     </ul>
   </div>
@@ -32,26 +42,63 @@ export default {
     stateAddForm,
     ListItem
   }, 
-  computed: {
-  ...mapGetters(['getStates'])
-    
-  },mounted() {
-    console.log(' Created get State');
+
+computed: {
+    ...mapGetters(['getStates','getCountry'])
+  
+  },
+data(){
+
+return {
+  
+    selectedCountry:''
+}
+ },mounted() {
+  console.log(' Mount State Country');
 
     this.$store
-      .dispatch('getStates()')
+      .dispatch('getCountry')
       .then(() => {
-        console.log('Created in get States');
+        console.log('Created in get Country');
         this.loading = false;
       })
       .catch(() => {
         this.loading = false;
       });
   },
+ 
+ 
   methods: {
-    ...mapActions(['addState','deleteState']),
-editState(){
-}    
+    ...mapActions(['addState','deleteStates']),
+     countrySelected: function (){
+         this.loading = true;
+      console.log('countrySelected :'+  this.selectedCountry.id);
+      this.$store
+      .dispatch('saveCountry',this.selectedCountry)
+      .then(() => {
+        console.log('Created in get isCountrySelected'); 
+       this.getStateUpdate(this.selectedCountry.id);
+      })
+      .catch(() => {
+      
+      });
+     this.loading = false;
+
+    },
+  getStateUpdate(countryId){
+  console.log('Created in get state 1'+countryId);
+   this.$store.dispatch('getStates',countryId)
+      .then(() => {
+        console.log('Created in get state');
+      })
+      .catch(() => {
+       
+      });
+
+  },
+  
+    editStates(){
+    } 
 }
 }
 </script>

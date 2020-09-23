@@ -8,13 +8,10 @@ const mutations = {
   SET_AUTH: (state, data) => {
     console.log(data)
     state.isAuthenticated = true;
-
-    /*operator =new Operator('','','');
-    operator.operatorName=data.operatorName;
-    operator.roles=data.roles;*/
+    state.currentUserName=data.userName;
     state.operator = data;
     state.errors = {};
-    console.log('Operator' + state.operator.userName);
+    console.log('Operator' + state.currentUserName);
     console.log(' isAuthenticated' + state.isAuthenticated);
     
     JwtService.saveToken(state.operator.accessToken);
@@ -24,15 +21,30 @@ const mutations = {
   },
   SET_SUCCESS: (state, success) => {
     state.success = success;
-  
     console.log("SET_SUCESS :: "+success)
+  },
+  set_saveCountry: (state, selectedCountry) => {
+      state.selectedCountry = selectedCountry;
+      console.log("set_saveCountry :: "+state.selectedCountry.id  )
   },
   PURGE_AUTH: (state) => {
     state.isAuthenticated = false;
     state.operator = null;
     state.errors = {};
     JwtService.destroyToken();
-  }
+  },
 
-}
+  addStateList(state, newStates) {
+    state.states.push(newStates)
+  },
+  deleteStateList(state, deleteStates) {
+    state.states = state.states.filter
+      (states => ((states.StateName !== deleteStates.stateName) &&
+      (states.id !== deleteStates.id)));
+  },
+
+  SET_STATELIST: (state, data) => {
+    state.states = data;
+  },
+  }
 export default mutations;

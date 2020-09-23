@@ -4,24 +4,24 @@
   <div 
     v-if="!editing"
   >
-   {{ country.countryName }}
+   {{ states.stateName }}
     <div class="float-sm-right" >
     <button
-      @click="editState()"
+      @click="editStates()"
       class="btn btn-outline-primary border-0 ml-2"
     >
      <span class="fa fa-edit"></span>
     </button>
-    <button @click="deleteState()" class="btn btn-outline-danger border-0">
+    <button @click="deleteStates()" class="btn btn-outline-danger border-0">
      <span class="fa fa-trash"></span>
     </button>
 </div>
 </div>
 
-<countryAddForm
+<stateAddForm
         v-else
         :populateWith="states"
-        @close="editState"
+        @close="editStates"
       />
     </div>
   </li>
@@ -33,7 +33,7 @@ import stateAddForm  from './stateAddForm.vue'
 export default {
   name: 'ListItem',
   props: {
-    cstates: {
+    states: {
       type: Object,
       required: true
     },
@@ -47,10 +47,10 @@ export default {
     }
   },
   methods: {
-    deleteState () {
+    deleteStates () {
       this.$emit('delete');
     },
-    editState () {
+    editStates () {
       this.$emit('edit')
       this.editing = !this.editing;
     }

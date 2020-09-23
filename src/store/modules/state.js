@@ -1,9 +1,12 @@
 import JwtService from "@/common/jwt.service";
-import Operator from '@/models/operator';
 const state = {
   message: null,
   success: false,
-  operator: new Operator('', '','','',''),
+  operator: null,
+  currentUserName:'',
+  states:[],
+  selectedCountry:'',
+
   //kulams:[],
   //educations:[],
   isAuthenticated: !!JwtService.getToken()

@@ -50,7 +50,8 @@ export default new Vuex.Store({
     occupation,
     businesstype,
     //jobTitletype,
-    deity
+    deity,
+   // states
 
 
   }
