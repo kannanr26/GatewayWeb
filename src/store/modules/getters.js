@@ -1,4 +1,4 @@
-import state from "./state";
+//import state from "./state";
 
 const getters = {
   currentUser(state) {
@@ -27,9 +27,12 @@ const getters = {
     
     return state.selectedCountry;
   },
-  getStates(state) {
-    return state.states;
+  getStateSelected(state){
+    console.log('StateSelected'+state.selectedState.id);
+    
+    return state.selectedState;
   },
+
   /*getKulams(state) {
     console.log('get Kulam');
     return state.kulams;

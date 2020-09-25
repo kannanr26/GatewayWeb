@@ -10,41 +10,41 @@ const headers = {
 export default {
   state: {
   
-    states:[],
+    district:[],
 
   },
   getters: {
-    getStates(state) {
-      return state.states;
+    getDistrict(state) {
+      return state.district;
     },
   },
   mutations: {
-    addStateList(state, newStates) {
-      state.states.push(newStates)
+    addDistrictList(state, newDistrict) {
+      state.district.push(newDistrict)
     },
-    deleteStateList(state, deleteStates) {
-      state.states = state.states.filter
-        (states => ((states.StateName !== deleteStates.stateName) &&
-        (states.id !== deleteStates.id)));
+    deleteDistrictList(state, deleteDistrict) {
+      state.district = state.district.filter
+        (district => ((district.districtName !== deleteDistrict.districtName) &&
+        (district.id !== deleteDistrict.id)));
     },
   
-    SET_STATELIST: (state, data) => {
-      state.states = data;
+    SET_DISTRICTLIST: (state, data) => {
+      state.district = data;
     } 
 
   },
   actions: {
    
-    addStates({ commit },state) {
-      let id = state.id;
+    addDistrict({ commit },district) {
+      let id = district.id;
       return new Promise((resolve, reject) => {
-        return axios.post(API_URL + 'gws/addState', state,
+        return axios.post(API_URL + 'gws/addDistrict', district,
           { headers }).then(response => {
             console.log(response.data.success);
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);
             if (id == 0 || id === undefined) {
-              commit('addStateList', response.data.obj);
+              commit('addDistrictList', response.data.obj);
             }
             resolve(response);
           })
@@ -55,14 +55,13 @@ export default {
           });
       });
     },
-    async getStates({commit},countrySelected) {
+    async getDistricts({commit},stateSelected) {
      
-      console.log("in getStates:");
-      var countryId=countrySelected;
-      console.log("in getStates:"+countryId);
+      var stateId=stateSelected;
+      console.log("in getDistrict:"+stateId);
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getStates/'+countryId, '', { headers }).then(response => {
-          commit('SET_STATELIST', response.data);
+        return axios.get(API_URL + 'gws/getDistricts/'+stateId, '', { headers }).then(response => {
+          commit('SET_DISTRICTLIST', response.data);
           resolve(response);
         })
           .catch(error => {
@@ -70,12 +69,12 @@ export default {
           });
       });
     },
-    deleteStates({ commit }, state) {
+    deleteDistrict({ commit }, district) {
       return new Promise((resolve, reject) => {
-        let id = state.id;
-        return axios.delete(API_URL + 'gws/deleteState/' + id,
+        let id = district.id;
+        return axios.delete(API_URL + 'gws/deleteDistrict/' + id,
           '', { headers }).then(response => {
-            commit('deleteStateList', state);
+            commit('deleteDistrictList', district);
   
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);

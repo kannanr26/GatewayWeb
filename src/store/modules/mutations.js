@@ -27,6 +27,10 @@ const mutations = {
       state.selectedCountry = selectedCountry;
       console.log("set_saveCountry :: "+state.selectedCountry.id  )
   },
+  set_saveState: (state, selectedState) => {
+    state.selectedState = selectedState;
+    console.log("set_saveState :: "+state.selectedState.id  )
+},
   PURGE_AUTH: (state) => {
     state.isAuthenticated = false;
     state.operator = null;
@@ -34,17 +38,5 @@ const mutations = {
     JwtService.destroyToken();
   },
 
-  addStateList(state, newStates) {
-    state.states.push(newStates)
-  },
-  deleteStateList(state, deleteStates) {
-    state.states = state.states.filter
-      (states => ((states.StateName !== deleteStates.stateName) &&
-      (states.id !== deleteStates.id)));
-  },
-
-  SET_STATELIST: (state, data) => {
-    state.states = data;
-  },
   }
 export default mutations;

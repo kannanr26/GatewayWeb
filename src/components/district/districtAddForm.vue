@@ -1,11 +1,11 @@
 <template>
-  <form @submit.prevent="submitStates">
+  <form @submit.prevent="submitDistrict">
     <div class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }">
       &nbsp;&nbsp;
       <input
         class="w-75 p-3 rounded border border-success justify-center"
-        placeholder="Add State..."
-        v-model.trim="cstates.stateName"
+        placeholder="Add District.."
+        v-model.trim="district.districtName"
       />
 
       &nbsp;&nbsp;
@@ -33,7 +33,7 @@
 import {  mapGetters } from 'vuex';
 
 export default {
-  name: 'StateAddForm',
+  name: 'districtAddForm',
   props: {
     populateWith: {
       type: Object,
@@ -41,25 +41,25 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getCountrySelected'])
+    ...mapGetters(['getStateSelected'])
   
   },
   data() {
     return {
-      cstates: {
-        stateName: ''
+      district: {
+        districtName: ''
       },
     };
   },
 
  methods: {
     
-    submitStates() {
+    submitDistrict() {
       this.loading = true;
-      this.cstates.countryId= this.$store.getters.getCountrySelected.id;
-      if (this.cstates.stateName !== '') {
+      this.district.stateId= this.$store.getters.getStateSelected.id;
+      if (this.district.districtName !== '') {
         this.$store
-        .dispatch('addStates', this.cstates)
+        .dispatch('addDistrict', this.district)
         .then(() => {
           this.saved();
           if (!this.isEditing) 
@@ -74,8 +74,8 @@ export default {
       }
     },
     clearForm() {
-      this.cstates = {
-        stateName: ''
+      this.district = {
+        districtName: ''
       };
 //      this.isCountrySelected=false;
     },
@@ -85,14 +85,14 @@ export default {
       this.isEditing = false;
     },
     saved() {
-      if (!this.cstates.empty) {
-        this.populateWith.stateName = this.cstates.stateName;
+      if (!this.district.empty) {
+        this.populateWith.districtName = this.district.districtName;
       }
     }
   },
   created() {
     if (!this.populateWith.empty) {
-      this.cstates = Object.assign({}, this.populateWith);
+      this.district = Object.assign({}, this.populateWith);
       //this.country = this.populateWith
     }
   }

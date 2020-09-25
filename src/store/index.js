@@ -23,6 +23,9 @@ import occupation from './modules/occupation';
 import businesstype from './modules/businesstype';
 import deity from './modules/deity';
 import states from './modules/states';
+import district from './modules/district';
+
+
 
 // Load Vuex
 Vue.use(Vuex);
@@ -51,7 +54,8 @@ export default new Vuex.Store({
     businesstype,
     //jobTitletype,
     deity,
-   // states
+    
+    district
 
 
   }

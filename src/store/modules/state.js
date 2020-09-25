@@ -4,9 +4,9 @@ const state = {
   success: false,
   operator: null,
   currentUserName:'',
-  states:[],
+ 
   selectedCountry:'',
-
+  selectedState:'',
   //kulams:[],
   //educations:[],
   isAuthenticated: !!JwtService.getToken()

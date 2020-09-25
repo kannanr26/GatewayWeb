@@ -42,7 +42,7 @@
 import { mapGetters } from 'vuex';
 import UCountry from '@/components/country/UCountry.vue';
 import UState from '@/components/state/UState.vue';
-
+import UDistrict from '@/components/district/UDistrict.vue';
 export default {
   name: 'Util',
   data: function() {
@@ -59,7 +59,11 @@ export default {
           id: 'state',
           title: 'State',
           selectedComponent: 'appState'
-        },
+        },{
+          id: 'district',
+          title: 'District',
+          selectedComponent: 'appDistrict'
+        }
 
       ]
     };
@@ -69,7 +73,8 @@ export default {
   },
   components: {
     appCountry: UCountry,
-    appState: UState
+    appState: UState,
+    appDistrict: UDistrict,
   }
 };
 </script>   
