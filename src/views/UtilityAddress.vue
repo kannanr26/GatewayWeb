@@ -43,11 +43,12 @@ import { mapGetters } from 'vuex';
 import UCountry from '@/components/country/UCountry.vue';
 import UState from '@/components/state/UState.vue';
 import UDistrict from '@/components/district/UDistrict.vue';
+import UCity from '@/components/city/UCity.vue';
 export default {
   name: 'Util',
   data: function() {
     return {
-      kulamTitle: 'Country',
+     
       selectedComponent: 'appCountry',
 
       tabs: [
@@ -63,6 +64,10 @@ export default {
           id: 'district',
           title: 'District',
           selectedComponent: 'appDistrict'
+        },{
+          id: 'city',
+          title: 'City',
+          selectedComponent: 'appCity'
         }
 
       ]
@@ -75,6 +80,7 @@ export default {
     appCountry: UCountry,
     appState: UState,
     appDistrict: UDistrict,
+    appCity: UCity,
   }
 };
 </script>   

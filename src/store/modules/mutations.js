@@ -21,16 +21,18 @@ const mutations = {
   },
   SET_SUCCESS: (state, success) => {
     state.success = success;
-    console.log("SET_SUCESS :: "+success)
   },
   set_saveCountry: (state, selectedCountry) => {
       state.selectedCountry = selectedCountry;
-      console.log("set_saveCountry :: "+state.selectedCountry.id  )
   },
   set_saveState: (state, selectedState) => {
     state.selectedState = selectedState;
-    console.log("set_saveState :: "+state.selectedState.id  )
-},
+  },
+  set_saveDistrit: (state, selectedDistrict) => {
+    state.selectedDistrict = selectedDistrict;
+    console.log("set_saveDistricts :: "+state.selectedDistrict.id  )
+  },
+
   PURGE_AUTH: (state) => {
     state.isAuthenticated = false;
     state.operator = null;

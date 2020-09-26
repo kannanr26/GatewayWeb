@@ -32,7 +32,11 @@ const getters = {
     
     return state.selectedState;
   },
-
+  getDistrictSelected(state){
+    console.log('StateSelected'+state.selectedDistrict.id);
+    
+    return state.selectedDistrict;
+  },
   /*getKulams(state) {
     console.log('get Kulam');
     return state.kulams;

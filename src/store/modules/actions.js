@@ -37,6 +37,12 @@ const actions = {
     commit('set_saveState', saveState);
   },
 
+  async saveDistrict({ commit }, saveDistrict) {
+    commit('set_saveDistrit', saveDistrict);
+  },
+
+  
+
   
   LOGOUT(context) {
     console.log('logout action')

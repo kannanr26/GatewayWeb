@@ -7,6 +7,8 @@ const state = {
  
   selectedCountry:'',
   selectedState:'',
+  selectedDistrict:'',
+  selectedCity:'',
   //kulams:[],
   //educations:[],
   isAuthenticated: !!JwtService.getToken()
