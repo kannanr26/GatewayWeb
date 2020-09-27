@@ -4,9 +4,20 @@
       &nbsp;&nbsp;
       <input
         class="w-75 p-3 rounded border border-success justify-center"
-        placeholder="Add City.."
+        placeholder="Add Area.."
         v-model.trim="city.cityName"
       />
+
+      <input
+        class="w-75 p-3 rounded border border-success justify-center"
+        placeholder="Add Pincode.." list="pinlist"
+        v-model.trim="city.pincode"
+      />
+
+          <datalist id="pinlist">
+             <option v-for="item in getPincodes" :key="item" :value="item" />
+    </datalist>
+
 
       &nbsp;&nbsp;
       <button
@@ -41,23 +52,40 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getDistrictSelected'])
+    ...mapGetters(['getDistrictSelected','getPincodes'])
   
   },
   data() {
     return {
       city: {
-        cityName: ''
+        cityName: '',
+        pincode:''
       },
     };
   },
+mounted() {
+  console.log(' Mount City ');
 
+      this.$store
+      .dispatch('getPincode')
+      .then(() => {
+        console.log('Created in get pin');       
+      })
+      .catch(() => {
+        this.loading = false;
+      });
+       this.loading = false;
+  },
+ 
+ 
  methods: {
     
     submitCity() {
       this.loading = true;
-      this.city.districtId= this.$store.getters.getDistrictSelected.id;
-      if (this.city.cityName !== '') {
+      this.city.district= this.$store.getters.getDistrictSelected;
+      this.city.state= this.$store.getters.getStateSelected;
+      this.city.country= this.$store.getters.getCountrySelected;
+      if (this.city.cityName !== '' && this.city.pincode !== '') {
         this.$store
         .dispatch('addCity', this.city)
         .then(() => {

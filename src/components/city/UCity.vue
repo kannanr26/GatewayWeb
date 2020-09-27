@@ -2,7 +2,7 @@
 <template>
   <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
     <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
-      Add District </h1>
+      Add Area </h1>
 
   <div class="flex flex-col mt-20 mx-4  sm:justify-center">
 
@@ -64,20 +64,20 @@ return {
   
     selectedCountry:'',
     selectedState:'',
-    selectedDistrict:''
+    selectedDistrict:'',
 }
  },mounted() {
   console.log(' Mount City ');
-
+    this.loading = true;
     this.$store
       .dispatch('getCountry')
       .then(() => {
-        console.log('Created in get Country');
-        this.loading = false;
+        console.log('Created in get Country');       
       })
       .catch(() => {
         this.loading = false;
       });
+       this.loading = false;
   },
  
  

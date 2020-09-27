@@ -65,8 +65,8 @@ export default {
           title: 'District',
           selectedComponent: 'appDistrict'
         },{
-          id: 'city',
-          title: 'City',
+          id: 'area',
+          title: 'Area',
           selectedComponent: 'appCity'
         }
 

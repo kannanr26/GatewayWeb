@@ -1,6 +1,7 @@
 
 import { API_URL } from "@/common/config";
 import axios from 'axios';
+import state from "./state";
 
 const headers = {
   'Content-Type': 'application/json',
@@ -10,12 +11,15 @@ export default {
   state: {
   
    city:[],
-
+    pincode:[],
   },
   getters: {
     getCities(state) {
       return state.city;
     },
+    getPincodes(state){
+      return state.pincode;
+    }
   },
   mutations: {
     addCityList(state, newCity) {
@@ -29,15 +33,31 @@ export default {
   
     SET_CITYLIST: (state, data) => {
       state.city = data;
-    } 
+    } ,
+    SET_PINCODE: (state, data) =>{
+      console.log(data);
+      state.pincode=data;
+    }
 
   },
   actions: {
    
+    async getPincode({ commit }) {
+      return new Promise((resolve, reject) => {
+        return axios.get(API_URL + 'gws/getPincode', '', { headers }).then(response => {
+          console.log(response.data);
+          commit('SET_PINCODE', response.data);
+          resolve(response);
+        })
+          .catch(error => {
+            reject(error);
+          });
+      });
+},
     addCity({ commit },city) {
       let id = city.id;
       return new Promise((resolve, reject) => {
-        return axios.post(API_URL + 'gws/addCity', city,
+          return axios.post(API_URL + 'gws/addCity', city,
           { headers }).then(response => {
             console.log(response.data.success);
             commit('SET_MESSAGE', response.data.message);
