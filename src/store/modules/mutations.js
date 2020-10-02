@@ -31,6 +31,12 @@ const mutations = {
   set_saveDistrit: (state, selectedDistrict) => {
     state.selectedDistrict = selectedDistrict;
     console.log("set_saveDistricts :: "+state.selectedDistrict.id  )
+  },set_savePincode: (state, selectedPincode) => {
+    state.selectedPincode = selectedPincode;
+    console.log("set_Pincode :: "+state.selectedPincode  )
+  },set_saveCity: (state, selectedCity) => {
+    state.selectedCity = selectedCity;
+    console.log("set_saveCity :: "+state.selectedCity  )
   },
 
   PURGE_AUTH: (state) => {

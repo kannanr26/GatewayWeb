@@ -9,6 +9,7 @@ const state = {
   selectedState:'',
   selectedDistrict:'',
   selectedCity:'',
+  selectedPincode:'',
   //kulams:[],
   //educations:[],
   isAuthenticated: !!JwtService.getToken()

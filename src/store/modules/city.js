@@ -1,7 +1,7 @@
 
 import { API_URL } from "@/common/config";
 import axios from 'axios';
-import state from "./state";
+//import state from "./state";
 
 const headers = {
   'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export default {
    
     async getPincode({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getPincode', '', { headers }).then(response => {
+        return axios.get(API_URL + 'gws/getPincodes', '', { headers }).then(response => {
           console.log(response.data);
           commit('SET_PINCODE', response.data);
           resolve(response);
@@ -88,6 +88,20 @@ export default {
           });
       });
     },
+
+    async getCityByPincode({commit},pincode) {
+    
+      return new Promise((resolve, reject) => {
+        return axios.get(API_URL + 'gws/getCitysByPincode/'+pincode, '', { headers }).then(response => {
+          commit('SET_CITYLIST', response.data);
+          resolve(response);
+        })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    },
+
     deleteCity({ commit }, city) {
       return new Promise((resolve, reject) => {
         let id = city.id;

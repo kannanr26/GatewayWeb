@@ -1,4 +1,4 @@
-import Vue from 'vue'
+//  import Vue from 'vue'
 import { API_URL } from "@/common/config";
 import axios from 'axios';
 
@@ -32,7 +32,7 @@ export default {
     addDeity({ commit }, deity) {
       let id = deity.id;
       return new Promise((resolve, reject) => {
-        return axios.post(API_URL + 'gws/addDeitys', deity,
+        return axios.post(API_URL + 'gws/addDeity', deity,
          { headers }).then(response => {
             console.log(response.data.success);
             commit('SET_MESSAGE', response.data.message);
@@ -48,10 +48,10 @@ export default {
             reject(error);
           });
       });
-    },
-    async getDeity({ commit }) {
+    },    
+    async getDeityByCity({ commit },id) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getDeitys', '', { headers }).then(response => {
+        return axios.get(API_URL + 'gws/getDeitysByCity/'+ id,'', { headers }).then(response => {
           commit('SET_DeityList', response.data);
           resolve(response);
         })

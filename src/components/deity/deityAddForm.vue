@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import {  mapGetters } from 'vuex';
+
 export default {
   name: 'deityAddForm',
   props: {
@@ -38,7 +40,11 @@ export default {
       type: Object,
       default: () => ({ empty: true })
     }
+  },  computed: {
+    ...mapGetters(['getCitySelected'])
+  
   },
+
   data() {
     return {
       deity: {
@@ -53,6 +59,8 @@ export default {
       };
     },
     submitDeity() {
+      this.loading = true;
+      this.deity.cityId=this.$store.getters.getCitySelected.id;
       if (this.deity.deityName !== '') {
         this.$store
         .dispatch('addDeity', this.deity)

@@ -37,6 +37,16 @@ const getters = {
     
     return state.selectedDistrict;
   },
+  getPincodeSelected(state){
+    console.log('selectedPincode'+state.selectedPincode);
+    
+    return state.selectedPincode;
+  },
+  getCitySelected(state){
+    console.log('selectedCity'+state.selectedCity);
+    
+    return state.selectedCity;
+  },
   /*getKulams(state) {
     console.log('get Kulam');
     return state.kulams;

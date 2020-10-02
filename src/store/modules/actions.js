@@ -41,8 +41,12 @@ const actions = {
   async saveDistrict({ commit }, saveDistrict) {
     commit('set_saveDistrit', saveDistrict);
   },
-
-  
+  async savePincode({ commit }, savePincode) {
+    commit('set_savePincode', savePincode);
+  },
+  async saveCity({ commit }, saveCity) {
+    commit('set_saveCity', saveCity);
+  },
 
   
   LOGOUT(context) {
