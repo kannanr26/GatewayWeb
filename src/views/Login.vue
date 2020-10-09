@@ -53,7 +53,7 @@
 </template>
 
 <script>
- /* eslint-disable */
+/* eslint-disable */
 import Operator from '@/models/operator';
 import { mapGetters } from 'vuex';
 export default {
@@ -62,34 +62,34 @@ export default {
     return {
       operator: new Operator('', ''),
       loading: false,
-      message: ''
+      message: '',
     };
   },
   computed: {
-    ...mapGetters(['getMessage', 'isSuccess' ])
+    ...mapGetters(['getMessage', 'isSuccess']),
   },
   methods: {
     handleLogin() {
-      //console.log('login method');
       this.loading = true;
-      this.$validator.validateAll().then(isValid => {
+      this.$validator.validateAll().then((isValid) => {
         if (!isValid) {
           this.loading = false;
           return;
         }
 
-        this.$store.dispatch('login', this.operator).then((res) => {
-            console.log('SUCCESS');
+        this.$store
+          .dispatch('login', this.operator)
+          .then((res) => {
             this.$router.push({ name: 'UtilityAddress' });
-        }).catch((err) =>{
-          this.loading = false;
-          this.message = err.response.data.message;
-          console.log('login error'+this.message);
-        // this.$router.push({ name: '/kulam' });
-        });
+          })
+          .catch((err) => {
+            this.loading = false;
+            this.message = err.response.data.message;
+            // this.$router.push({ name: '/kulam' });
+          });
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

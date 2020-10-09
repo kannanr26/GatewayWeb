@@ -1,4 +1,4 @@
-import Vue from 'vue'
+//import Vue from 'vue'
 import { API_URL } from "@/common/config";
 import axios from 'axios';
 
@@ -22,7 +22,7 @@ export default {
     deleteDataUpdatorList(state, deleteDataUpdator) {
       state.dataUpdators = state.dataUpdators.filter
         (dataUpdator => ((dataUpdator.operatorTypeName !== deleteDataUpdator.operatorTypeName) &&
-        (dataUpdator.id !== deleteDataUpdator.id)));
+          (dataUpdator.id !== deleteDataUpdator.id)));
     },
     SET_DataUpdatorList: (state, data) => {
       state.dataUpdators = data;
@@ -33,15 +33,14 @@ export default {
       let id = dataUpdator.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addOperatorType', dataUpdator,
-         { headers }).then(response => {
-            console.log(response.data.success);
+          { headers }).then(response => {
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);
             if (id == 0 || id === undefined) {
               commit('addDataUpdatorList', response.data.obj);
-          }
-          resolve(response);
-        })
+            }
+            resolve(response);
+          })
           .catch(error => {
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
@@ -63,21 +62,20 @@ export default {
     deleteDataUpdator({ commit }, dataUpdator) {
       return new Promise((resolve, reject) => {
         let id = dataUpdator.id;
-        return axios.delete(API_URL + 'gws/deleteOperatorType/' + id, 
-        '', { headers }).then(response => {
-          commit('SET_MESSAGE', response.data.message);
-          commit('SET_SUCCESS', response.data.success);
-          commit('deleteDataUpdatorList', dataUpdator);
-          resolve(response);
-        })
-        .catch(error => {
-            console.log(error.response.data.message);
+        return axios.delete(API_URL + 'gws/deleteOperatorType/' + id,
+          '', { headers }).then(response => {
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            commit('deleteDataUpdatorList', dataUpdator);
+            resolve(response);
+          })
+          .catch(error => {
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
             reject(error);
-        });
+          });
       });
-  //  dispatch('saveToKulams')
+      //  dispatch('saveToKulams')
     }
   }
 }

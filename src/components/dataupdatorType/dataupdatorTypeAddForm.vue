@@ -1,11 +1,11 @@
 <template>
-  <form @submit.prevent="submitBloodgroup">
+  <form @submit.prevent="submitDataUpdator">
     <div class="flex flex-grow justify-center" :class="{ 'sm:flex-grow-1': populateWith.empty }">
       &nbsp;&nbsp;
       <input
         class="w-75 p-3 rounded border border-success justify-center"
-        placeholder="Add Bloodgroup..."
-        v-model.trim="bloodgroup.bloodGroupName"
+        placeholder="Add DataUpdator..."
+        v-model.trim="dataUpdatorType.operatorTypeName"
       />
 
       &nbsp;&nbsp;
@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: 'bloodgroupAddForm',
+  name: 'dataUpdatorTypeAddForm',
   props: {
     populateWith: {
       type: Object,
@@ -39,21 +39,21 @@ export default {
   },
   data() {
     return {
-      bloodgroup: {
-        bloodGroupName: '',
+      dataUpdatorType: {
+        operatorTypeName: '',
       },
     };
   },
   methods: {
     clearForm() {
-      this.bloodgroup = {
-        bloodGroupName: '',
+      this.dataUpdatorType = {
+        operatorTypeName: '',
       };
     },
-    submitBloodgroup() {
-      if (this.bloodgroup.bloodGroupName !== '') {
+    submitDataUpdator() {
+      if (this.dataUpdatorType.operatorTypeName !== '') {
         this.$store
-          .dispatch('addBloodgroup', this.bloodgroup)
+          .dispatch('addDataUpdatorType', this.dataUpdatorType)
           .then(() => {
             this.saved();
             if (!this.isEditing) this.clearForm();
@@ -71,15 +71,15 @@ export default {
       this.isEditing = false;
     },
     saved() {
-      if (!this.bloodgroup.empty) {
-        this.populateWith.bloodGroupName = this.bloodgroup.bloodGroupName;
+      if (!this.dataUpdatorType.empty) {
+        this.populateWith.operatorTypeName = this.dataUpdatorType.operatorTypeName;
       }
     },
   },
   created() {
     if (!this.populateWith.empty) {
-      this.bloodgroup = Object.assign({}, this.populateWith);
-      //this.bloodgroup = this.populateWith
+      this.dataUpdatorType = Object.assign({}, this.populateWith);
+      //this.dataUpdator = this.populateWith
     }
   },
 };

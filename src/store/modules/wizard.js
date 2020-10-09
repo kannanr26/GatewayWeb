@@ -6,21 +6,20 @@ const headers = {
 
 export default {
   state: {
-    family:'',
+    family: '',
   },
   getters: {
     getFamilyDetails(state) {
-      console.log('get family');
       return state.family;
     },
   },
   mutations: {
     SET_FAMILY(state, family) {
-      state.family=family;
+      state.family = family;
     },
     deletePersonList(state, deletePerson) {
       state.family.persons = state.family.persons.filter
-        (person => ( (person.id !== deletePerson.id)));
+        (person => ((person.id !== deletePerson.id)));
     }/*,
     SET_WIZARD(state, wizardObj) {
       state.wizardObj=wizardObj;
@@ -30,30 +29,28 @@ export default {
     addFamily({ commit }, family) {
       //let id = family.id;
       return new Promise((resolve, reject) => {
-        return axios.post(API_URL + 'gws/addFamily',family,
-         { headers }).then(response => {
-          console.log(response.data.success);
-          commit('addFamily',response.data);
-          commit('SET_MESSAGE', response.data.message);
-          commit('SET_SUCCESS', response.data.success);
-          resolve(response);
-        })
+        return axios.post(API_URL + 'gws/addFamily', family,
+          { headers }).then(response => {
+            commit('addFamily', response.data);
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            resolve(response);
+          })
           .catch(error => {
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
             reject(error);
           });
       });
-    },addPerson({ commit },groupId, person) {
+    }, addPerson({ commit }, groupId, person) {
       //let id = family.id;
       return new Promise((resolve, reject) => {
-        return axios.post(API_URL + 'gws/addGroupPerson'+groupId,person,
-         { headers }).then(response => {
-          console.log(response.data.success);
-          commit('SET_MESSAGE', response.data.message);
-          commit('SET_SUCCESS', response.data.success);
-          resolve(response);
-        })
+        return axios.post(API_URL + 'gws/addGroupPerson' + groupId, person,
+          { headers }).then(response => {
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            resolve(response);
+          })
           .catch(error => {
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
@@ -61,11 +58,10 @@ export default {
           });
       });
     },
-    
+
     async getinitializeWizard({ commit }) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getWizard', '', { headers }).then(response => {
-          console.log( response.data);
           commit('SET_FAMILY', response.data);
           resolve(response.data);
         })
@@ -74,9 +70,9 @@ export default {
           });
       });
     },
-    async getFamilyWithRegistrationNumber({ commit },registrationNumber) {
+    async getFamilyWithRegistrationNumber({ commit }, registrationNumber) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getFamilyWithRegistrationNumber/'+registrationNumber, '', { headers }).then(response => {
+        return axios.get(API_URL + 'gws/getFamilyWithRegistrationNumber/' + registrationNumber, '', { headers }).then(response => {
           commit('SET_FAMILY', response.data);
           resolve(response);
         })
@@ -85,24 +81,23 @@ export default {
           });
       });
     },
-    deletePerson({ commit },groupId, person) {
+    deletePerson({ commit }, groupId, person) {
       return new Promise((resolve, reject) => {
         let personId = person.id;
-        return axios.delete(API_URL + 'gws/deletePerson/' + groupId+'/'+personId, 
-        '', { headers }).then(response => {
-          commit('SET_MESSAGE', response.data.message);
-          commit('SET_SUCCESS', response.data.success);
-          commit('deletePersonList', personId);
-          resolve(response);
-        })
-        .catch(error => {
-            console.log(error.response.data.message);
+        return axios.delete(API_URL + 'gws/deletePerson/' + groupId + '/' + personId,
+          '', { headers }).then(response => {
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            commit('deletePersonList', personId);
+            resolve(response);
+          })
+          .catch(error => {
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
             reject(error);
-        });
+          });
       });
-  //  dispatch('saveToKulams')
+      //  dispatch('saveToKulams')
     }
   }
 }

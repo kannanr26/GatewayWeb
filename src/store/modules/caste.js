@@ -22,7 +22,7 @@ export default {
     deleteCasteList(state, deleteCaste) {
       state.castes = state.castes.filter
         (caste => ((caste.casteName !== deleteCaste.casteName) &&
-        (caste.id !== deleteCaste.id)));
+          (caste.id !== deleteCaste.id)));
     },
     SET_CasteList: (state, data) => {
       state.castes = data;
@@ -33,15 +33,14 @@ export default {
       let id = caste.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addCaste', caste,
-         { headers }).then(response => {
-            console.log(response.data.success);
+          { headers }).then(response => {
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);
             if (id == 0 || id === undefined) {
               commit('addCasteList', response.data.obj);
-          }
-          resolve(response);
-        })
+            }
+            resolve(response);
+          })
           .catch(error => {
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
@@ -63,21 +62,20 @@ export default {
     deleteCaste({ commit }, caste) {
       return new Promise((resolve, reject) => {
         let id = caste.id;
-        return axios.delete(API_URL + 'gws/deleteCaste/' + id, 
-        '', { headers }).then(response => {
-          commit('SET_MESSAGE', response.data.message);
-          commit('SET_SUCCESS', response.data.success);
-          commit('deleteCasteList', caste);
-          resolve(response);
-        })
+        return axios.delete(API_URL + 'gws/deleteCaste/' + id,
+          '', { headers }).then(response => {
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            commit('deleteCasteList', caste);
+            resolve(response);
+          })
           .catch(error => {
-             console.log(error.response.data.message);
-             commit('SET_MESSAGE', error.response.data.message);
-             commit('SET_SUCCESS', error.response.data.success);
-             reject(error);
+            commit('SET_MESSAGE', error.response.data.message);
+            commit('SET_SUCCESS', error.response.data.success);
+            reject(error);
           });
       });
-  //  dispatch('saveToKulams')
+      //  dispatch('saveToKulams')
     }
   }
 }

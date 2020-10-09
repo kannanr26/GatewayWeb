@@ -24,7 +24,7 @@
             </div>
 
               <div >
-                <!-- <p>{{ selectedComponent }}</p> -->
+                 <!-- <p>{{ selectedComponent }}</p>  -->
                 <keep-alive>
                   <component :is="selectedComponent" >
                     <p>Default Content</p>
@@ -42,6 +42,7 @@
 import { mapGetters } from 'vuex';
 import UAssociationcommittee from '@/components/associationcommittee/UAssociationcommittee.vue';
 import UDataupdator from '@/components/dataupdator/UDataupdator.vue';
+import UDataupdatorType from '@/components/dataupdatorType/UDataupdatorType.vue';
 import URole from '@/components/role/URole.vue';
 import UPermission from '@/components/permission/UPermission.vue';
 
@@ -49,8 +50,7 @@ export default {
   name: 'Util',
   data: function() {
     return {
-     // kulamTitle: 'Role',
-      selectedComponent: 'appRole',
+      selectedComponent: 'appDataUpdator',
       
 tabs: [
         {
@@ -59,9 +59,9 @@ tabs: [
           selectedComponent: 'appRole'
         },
         {
-          id: 'associationCommittee',
-          title: 'AssociationCommittee',
-          selectedComponent: 'appAssociationCommittee'
+          id: 'dataUpdatorType',
+          title: 'DataUpdator Type',
+          selectedComponent: 'appDataUpdatorType'
         },
         {
           id: 'dataUpdator',
@@ -69,10 +69,15 @@ tabs: [
           selectedComponent: 'appDataUpdator'
         },
         {
+          id: 'associationCommittee',
+          title: 'AssociationCommittee',
+          selectedComponent: 'appAssociationCommittee'
+        }
+      /*  {
           id: 'permission',
           title: 'Permission',
           selectedComponent: 'appPermission'
-        },
+        },*/
 
         ]
 
@@ -82,8 +87,9 @@ tabs: [
     ...mapGetters(['getMessage', 'isSuccess'])
   },
   components: {
-    appAssociationcommittee: UAssociationcommittee,
-    appDataupdator: UDataupdator,
+    appAssociationCommittee: UAssociationcommittee,
+    appDataUpdator: UDataupdator,
+    appDataUpdatorType: UDataupdatorType,
     appRole: URole,
     appPermission: UPermission,
 

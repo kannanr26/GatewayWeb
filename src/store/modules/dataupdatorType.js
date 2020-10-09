@@ -1,4 +1,4 @@
-import Vue from 'vue'
+//import Vue from 'vue'
 import { API_URL } from "@/common/config";
 import axios from 'axios';
 
@@ -8,36 +8,37 @@ const headers = {
 
 export default {
   state: {
-    relationships: []
+    dataUpdatorType: []
   },
   getters: {
-    getRelationship(state) {
-      return state.relationships;
+    getDataUpdatorType(state) {
+      return state.dataUpdatorType;
     },
   },
   mutations: {
-    addRelationshipList(state, newRelationship) {
-      state.relationships.push(newRelationship)
+    addDataUpdatorTypeList(state, newDataUpdatorType) {
+      state.dataUpdatorType.push(newDataUpdatorType)
     },
-    deleteRelationshipList(state, deleteRelationship) {
-      state.relationships = state.relationships.filter
-        (relationship => ((relationship.relationshipName !== deleteRelationship.relationshipName) &&
-          (relationship.id !== deleteRelationship.id)));
+    deleteDataUpdatorTypeList(state, deleteDataUpdatorType) {
+      state.dataUpdatorType = state.dataUpdatorType.filter
+        (dataUpdatorType => ((dataUpdatorType.operatorTypeName !== deleteDataUpdatorType.operatorTypeName) &&
+          (dataUpdatorType.id !== deleteDataUpdatorType.id)));
     },
-    SET_RelationshipList: (state, data) => {
-      state.relationships = data;
+    SET_DataUpdatorTypeList: (state, data) => {
+      state.dataUpdatorType = data;
     },
   },
   actions: {
-    addRelationship({ commit }, relationship) {
-      let id = relationship.id;
+    addDataUpdatorType({ commit }, dataUpdatorType) {
+      let id = dataUpdatorType.id;
       return new Promise((resolve, reject) => {
-        return axios.post(API_URL + 'gws/addRelationShipName', relationship,
+      //  console.log()
+        return axios.post(API_URL + 'gws/addOperatorType', dataUpdatorType,
           { headers }).then(response => {
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);
             if (id == 0 || id === undefined) {
-              commit('addRelationshipList', response.data.obj);
+              commit('addDataUpdatorTypeList', response.data.obj);
             }
             resolve(response);
           })
@@ -48,10 +49,10 @@ export default {
           });
       });
     },
-    async getRelationships({ commit }) {
+    async getDataUpdatorTypes({ commit }) {
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getRelationShipNames', '', { headers }).then(response => {
-          commit('SET_RelationshipList', response.data);
+        return axios.get(API_URL + 'gws/getOperatorTypes', '', { headers }).then(response => {
+          commit('SET_DataUpdatorTypeList', response.data);
           resolve(response);
         })
           .catch(error => {
@@ -59,14 +60,14 @@ export default {
           });
       });
     },
-    deleteRelationship({ commit }, relationship) {
+    deleteDataUpdatorType({ commit }, dataUpdatorType) {
       return new Promise((resolve, reject) => {
-        let id = relationship.id;
-        return axios.delete(API_URL + 'gws/deleteRelationShipName/' + id,
+        let id = dataUpdatorType.id;
+        return axios.delete(API_URL + 'gws/deleteOperatorType/' + id,
           '', { headers }).then(response => {
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);
-            commit('deleteRelationshipList', relationship);
+            commit('deleteDataUpdatorTypeList', dataUpdatorType);
             resolve(response);
           })
           .catch(error => {

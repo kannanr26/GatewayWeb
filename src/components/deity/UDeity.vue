@@ -23,7 +23,9 @@
         <option v-for="item in getCities" v-bind:value="item" :key="item">{{ item.cityName }}</option>
       </select>
 
-      <span v-if="selectedCity!=''">Country: {{ country }}  State: {{ cstate }} District: {{district}}</span>
+      <span
+        v-if="selectedCity!=''"
+      >Country: {{ country }} State: {{ cstate }} District: {{district}}</span>
 
       <deityAddForm submit="addDeity" />
 
@@ -56,34 +58,19 @@ export default {
     return {
       selectedPincode: '',
       selectedCity: '',
-      country:'',
-      cstate:'',
-      district:'',
-
+      country: '',
+      cstate: '',
+      district: '',
     };
   },
   mounted() {
-    console.log(' Mount City ');
     this.loading = true;
     this.$store
       .dispatch('getPincode')
-      .then(() => {
-        console.log('Created in get pin');
-      })
+      .then(() => {})
       .catch(() => {
         this.loading = false;
       });
-
-    /*    this.$store
-      .dispatch('getDeitys')
-      .then(() => {
-        console.log('Created in get Deity');
-        this.loading = false;
-      })
-      .catch(() => {
-        this.loading = false;
-      });
-       this.loading = false;*/
   },
 
   computed: {
@@ -95,10 +82,7 @@ export default {
       this.loading = true;
       this.$store
         .dispatch('getCityByPincode', this.selectedPincode)
-        .then(() => {
-
-
-        })
+        .then(() => {})
         .catch(() => {
           this.loading = false;
         });
@@ -106,19 +90,19 @@ export default {
     },
     citySelected: function () {
       this.loading = true;
-      this.country=this.selectedCity.country.countryName;
-      this.cstate=this.selectedCity.state.stateName;
-      this.district=this.selectedCity.district.districtName;
+      this.country = this.selectedCity.country.countryName;
+      this.cstate = this.selectedCity.state.stateName;
+      this.district = this.selectedCity.district.districtName;
 
-       this.$store
-      .dispatch('saveCity',this.selectedCity)
-      .then(() => {
       this.$store
-        .dispatch('getDeityByCity', this.selectedCity.id)
-        .then(() => {})
-        .catch(() => {
-          this.loading = false;
-        });
+        .dispatch('saveCity', this.selectedCity)
+        .then(() => {
+          this.$store
+            .dispatch('getDeityByCity', this.selectedCity.id)
+            .then(() => {})
+            .catch(() => {
+              this.loading = false;
+            });
         })
         .catch(() => {
           this.loading = false;

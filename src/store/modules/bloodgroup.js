@@ -22,7 +22,7 @@ export default {
     deleteBloodgroupList(state, deleteBloodgroup) {
       state.bloodgroups = state.bloodgroups.filter
         (bloodgroup => ((bloodgroup.bloodGroupName !== deleteBloodgroup.bloodGroupName) &&
-        (bloodgroup.id !== deleteBloodgroup.id)));
+          (bloodgroup.id !== deleteBloodgroup.id)));
     },
     SET_BloodgroupList: (state, data) => {
       state.bloodgroups = data;
@@ -33,15 +33,14 @@ export default {
       let id = bloodgroup.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addBloodgroup', bloodgroup,
-         { headers }).then(response => {
-            console.log(response.data.success);
+          { headers }).then(response => {
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);
             if (id == 0 || id === undefined) {
               commit('addBloodgroupList', response.data.obj);
-          }
-          resolve(response);
-        })
+            }
+            resolve(response);
+          })
           .catch(error => {
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
@@ -63,21 +62,20 @@ export default {
     deleteBloodgroup({ commit }, bloodgroup) {
       return new Promise((resolve, reject) => {
         let id = bloodgroup.id;
-        return axios.delete(API_URL + 'gws/deleteBloodgroup/' + id, 
-        '', { headers }).then(response => {
-          commit('SET_MESSAGE', response.data.message);
-          commit('SET_SUCCESS', response.data.success);
-          commit('deleteBloodgroupList', bloodgroup);
-          resolve(response);
-        })
+        return axios.delete(API_URL + 'gws/deleteBloodgroup/' + id,
+          '', { headers }).then(response => {
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            commit('deleteBloodgroupList', bloodgroup);
+            resolve(response);
+          })
           .catch(error => {
-            console.log(error.response.data.message);
             commit('SET_MESSAGE', error.response.data.message);
-             commit('SET_SUCCESS', error.response.data.success);
-             reject(error);
+            commit('SET_SUCCESS', error.response.data.success);
+            reject(error);
           });
       });
-  //  dispatch('saveToKulams')
+      //  dispatch('saveToKulams')
     }
   }
 }

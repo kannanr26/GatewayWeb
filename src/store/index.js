@@ -13,6 +13,7 @@ import bloodgroup from './modules/bloodgroup';
 import associationcommittee from './modules/associationcommittee';
 import caste from './modules/caste';
 import dataupdator from './modules/dataupdator';
+import dataupdatorType from './modules/dataupdatorType';
 import role from './modules/role';
 import maritalstatus from './modules/maritalstatus';
 import course from './modules/course';
@@ -56,7 +57,8 @@ export default new Vuex.Store({
     //jobTitletype,
     deity,
     city,
-    district
+    district,
+    dataupdatorType
 
 
   }

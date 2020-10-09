@@ -7,6 +7,8 @@ import { DropdownPlugin, TablePlugin } from 'bootstrap-vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+// import Vuetify from 'vuetify'
+import vuetify from '@/plugins/vuetify' // path to vuetify export
 
 
 import VeeValidate from 'vee-validate';
@@ -21,7 +23,7 @@ import {
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 
-import VueWizard from '@/components/wizard';
+//import VueWizard from '@/components/wizard';
 
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
@@ -34,10 +36,12 @@ Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(DropdownPlugin)
 Vue.use(TablePlugin)
-
-Vue.use(VueWizard);
+// Vue.use(vuetify);
+//Vue.use(VueWizard);
 new Vue({
+  vuetify,
   router,
   store,
+ // vuetify: new Vuetify(),
   render: h => h(App)
 }).$mount('#app');

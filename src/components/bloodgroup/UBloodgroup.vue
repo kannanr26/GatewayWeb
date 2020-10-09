@@ -1,48 +1,43 @@
 
 <template>
-  <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
-    <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
-      Add Bloodgroup</h1>
+  <div class="flex flex-col mt-20 mx-4 border border-info sm:justify-center">
+    <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">Add Bloodgroup</h1>
 
-  <div class="flex flex-col mt-20 mx-4  sm:justify-center">
-    
-    <bloodgroupAddForm submit="addBloodgroup" />
+    <div class="flex flex-col mt-20 mx-4 sm:justify-center">
+      <bloodgroupAddForm submit="addBloodgroup" />
 
-    <ul id="bloodgroup-list" class = "child1">
-      <list-item 
-        v-for="(bloodgroup) in getBloodgroup"
-        :key="bloodgroup.id"
-        :bloodgroup="bloodgroup"
-        @delete="deleteBloodgroup(bloodgroup)"
-        @edit="editBloodgroup"
-      />
-    </ul>
-  </div>
+      <ul id="bloodgroup-list" class="child1">
+        <list-item
+          v-for="(bloodgroup) in getBloodgroup"
+          :key="bloodgroup.id"
+          :bloodgroup="bloodgroup"
+          @delete="deleteBloodgroup(bloodgroup)"
+          @edit="editBloodgroup"
+        />
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-import {  mapActions,mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 
-import bloodgroupAddForm from './bloodgroupAddForm.vue'
-import ListItem from './bloodgroupListItem.vue'
+import bloodgroupAddForm from './bloodgroupAddForm.vue';
+import ListItem from './bloodgroupListItem.vue';
 
 export default {
   name: 'BloodgroupList',
   components: {
     bloodgroupAddForm,
-    ListItem
-  }, 
+    ListItem,
+  },
   computed: {
-    ...mapGetters(['getBloodgroup'])
-    
-  },mounted() {
-    console.log(' Created get Bloodgroup');
-
+    ...mapGetters(['getBloodgroup']),
+  },
+  mounted() {
     this.$store
       .dispatch('getBloodgroups')
       .then(() => {
-        console.log('Created in get Bloodgroup');
         this.loading = false;
       })
       .catch(() => {
@@ -50,25 +45,18 @@ export default {
       });
   },
   methods: {
-    ...mapActions(['addBloodgroup','deleteBloodgroup']),
-editBloodgroup(){
-}    
-}
-}
+    ...mapActions(['addBloodgroup', 'deleteBloodgroup']),
+    editBloodgroup() {},
+  },
+};
 </script>
 
 <style scoped>
-
-
-.child1{
+.child1 {
   border: 2px;
   width: 100%;
-  padding:10px;  
+  padding: 10px;
   max-height: 200px;
-   overflow-y: scroll;
-   
+  overflow-y: scroll;
 }
-
-
-
 </style>

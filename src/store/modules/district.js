@@ -9,8 +9,8 @@ const headers = {
 
 export default {
   state: {
-  
-    district:[],
+
+    district: [],
 
   },
   getters: {
@@ -25,22 +25,21 @@ export default {
     deleteDistrictList(state, deleteDistrict) {
       state.district = state.district.filter
         (district => ((district.districtName !== deleteDistrict.districtName) &&
-        (district.id !== deleteDistrict.id)));
+          (district.id !== deleteDistrict.id)));
     },
-  
+
     SET_DISTRICTLIST: (state, data) => {
       state.district = data;
-    } 
+    }
 
   },
   actions: {
-   
-    addDistrict({ commit },district) {
+
+    addDistrict({ commit }, district) {
       let id = district.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addDistrict', district,
           { headers }).then(response => {
-            console.log(response.data.success);
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);
             if (id == 0 || id === undefined) {
@@ -55,12 +54,11 @@ export default {
           });
       });
     },
-    async getDistricts({commit},stateSelected) {
-     
-      var stateId=stateSelected;
-      console.log("in getDistrict:"+stateId);
+    async getDistricts({ commit }, stateSelected) {
+
+      var stateId = stateSelected;
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getDistricts/'+stateId, '', { headers }).then(response => {
+        return axios.get(API_URL + 'gws/getDistricts/' + stateId, '', { headers }).then(response => {
           commit('SET_DISTRICTLIST', response.data);
           resolve(response);
         })
@@ -75,19 +73,18 @@ export default {
         return axios.delete(API_URL + 'gws/deleteDistrict/' + id,
           '', { headers }).then(response => {
             commit('deleteDistrictList', district);
-  
+
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);
             resolve(response);
           })
           .catch(error => {
-            console.log(error.response.data.message);
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
             reject(error);
           });
       });
-  //  dispatch('saveToKulams')
+      //  dispatch('saveToKulams')
     },
   }
 }

@@ -59,7 +59,7 @@ export default new Router({
     {
       path: '/utilityPersonal',
       component: UtilityPersonal,
-      name: "UtilityDeity"
+      name: "UtilityPersonal"
     },
     {
       path: '/utilityProfession',

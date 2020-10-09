@@ -22,7 +22,7 @@ export default {
     deleteMaritalStatusList(state, deleteMaritalStatus) {
       state.maritalStatuss = state.maritalStatuss.filter
         (maritalStatus => ((maritalStatus.maritalStatusName !== deleteMaritalStatus.maritalStatusName) &&
-        (maritalStatus.id !== deleteMaritalStatus.id)));
+          (maritalStatus.id !== deleteMaritalStatus.id)));
     },
     SET_MaritalStatusList: (state, data) => {
       state.maritalStatuss = data;
@@ -33,15 +33,14 @@ export default {
       let id = maritalStatus.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addMaritalStatus', maritalStatus,
-         { headers }).then(response => {
-          console.log(response.data.success);
-          commit('SET_MESSAGE', response.data.message);
-          commit('SET_SUCCESS', response.data.success);
-          if (id == 0 || id === undefined) {
-            commit('addMaritalStatusList', response.data.obj);
-          }
-          resolve(response);
-        })
+          { headers }).then(response => {
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            if (id == 0 || id === undefined) {
+              commit('addMaritalStatusList', response.data.obj);
+            }
+            resolve(response);
+          })
           .catch(error => {
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
@@ -63,21 +62,20 @@ export default {
     deleteMaritalStatus({ commit }, maritalStatus) {
       return new Promise((resolve, reject) => {
         let id = maritalStatus.id;
-        return axios.delete(API_URL + 'gws/deleteMaritalStatus/' + id, 
-        '', { headers }).then(response => {
-          commit('SET_MESSAGE', response.data.message);
-          commit('SET_SUCCESS', response.data.success);
-          commit('deleteMaritalStatusList', maritalStatus);
-          resolve(response);
-        })
-        .catch(error => {
-          console.log(error.response.data.message);
-          commit('SET_MESSAGE', error.response.data.message);
-          commit('SET_SUCCESS', error.response.data.success);
-          reject(error);
-        });
-    });
-  //  dispatch('saveToKulams')
+        return axios.delete(API_URL + 'gws/deleteMaritalStatus/' + id,
+          '', { headers }).then(response => {
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            commit('deleteMaritalStatusList', maritalStatus);
+            resolve(response);
+          })
+          .catch(error => {
+            commit('SET_MESSAGE', error.response.data.message);
+            commit('SET_SUCCESS', error.response.data.success);
+            reject(error);
+          });
+      });
+      //  dispatch('saveToKulams')
     }
   }
 }

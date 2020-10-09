@@ -9,8 +9,8 @@ const headers = {
 
 export default {
   state: {
-  
-    states:[],
+
+    states: [],
 
   },
   getters: {
@@ -25,22 +25,21 @@ export default {
     deleteStateList(state, deleteStates) {
       state.states = state.states.filter
         (states => ((states.StateName !== deleteStates.stateName) &&
-        (states.id !== deleteStates.id)));
+          (states.id !== deleteStates.id)));
     },
-  
+
     SET_STATELIST: (state, data) => {
       state.states = data;
-    } 
+    }
 
   },
   actions: {
-   
-    addStates({ commit },state) {
+
+    addStates({ commit }, state) {
       let id = state.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addState', state,
           { headers }).then(response => {
-            console.log(response.data.success);
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);
             if (id == 0 || id === undefined) {
@@ -55,13 +54,10 @@ export default {
           });
       });
     },
-    async getStates({commit},countrySelected) {
-     
-      console.log("in getStates:");
-      var countryId=countrySelected;
-      console.log("in getStates:"+countryId);
+    async getStates({ commit }, countrySelected) {
+      var countryId = countrySelected;
       return new Promise((resolve, reject) => {
-        return axios.get(API_URL + 'gws/getStates/'+countryId, '', { headers }).then(response => {
+        return axios.get(API_URL + 'gws/getStates/' + countryId, '', { headers }).then(response => {
           commit('SET_STATELIST', response.data);
           resolve(response);
         })
@@ -76,19 +72,18 @@ export default {
         return axios.delete(API_URL + 'gws/deleteState/' + id,
           '', { headers }).then(response => {
             commit('deleteStateList', state);
-  
+
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);
             resolve(response);
           })
           .catch(error => {
-            console.log(error.response.data.message);
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
             reject(error);
           });
       });
-  //  dispatch('saveToKulams')
+      //  dispatch('saveToKulams')
     },
   }
 }

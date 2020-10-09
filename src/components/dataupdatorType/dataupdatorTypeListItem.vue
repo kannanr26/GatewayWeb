@@ -4,46 +4,42 @@
   <div 
     v-if="!editing"
   >
-   {{ dataUpdator.operatorTypeName }}
+   {{ dataUpdatorType.operatorTypeName }}
     <div class="float-sm-right" >
     <button
-      @click="editDataUpdator()"
+      @click="editDataUpdatorType()"
       class="btn btn-outline-primary border-0 ml-2"
     >
      <span class="fa fa-edit"></span>
     </button>
-    <button @click="deleteDataUpdator()" class="btn btn-outline-danger border-0">
+    <button @click="deleteDataUpdatorType()" class="btn btn-outline-danger border-0">
      <span class="fa fa-trash"></span>
     </button>
 </div>
 </div>
- <v-dialog v-else
-      v-model="dialog"
-      persistent
-      max-width="600px"
-    >
-<dataUpdatorAddForm        
-        :populateWith="dataUpdator"
-        @close="editDataUpdator"
+
+<dataUpdatorTypeAddForm
+        v-else
+        :populateWith="dataUpdatorType"
+        @close="editDataUpdatorType"
       />
- </v-dialog>
     </div>
   </li>
 </template>
 
 <script>
-import dataUpdatorAddForm  from './dataupdatorAddForm.vue'
+import dataUpdatorTypeAddForm  from './dataupdatorTypeAddForm.vue'
 
 export default {
   name: 'ListItem',
   props: {
-    dataUpdator: {
+    dataUpdatorType: {
       type: Object,
       required: true
     },
     },
   components: {
-    dataUpdatorAddForm
+    dataUpdatorTypeAddForm
   },
   data () {
     return {
@@ -51,10 +47,10 @@ export default {
     }
   },
   methods: {
-    deleteDataUpdator () {
+    deleteDataUpdatorType () {
       this.$emit('delete');
     },
-    editDataUpdator () {
+    editDataUpdatorType () {
       this.$emit('edit')
       this.editing = !this.editing;
     }

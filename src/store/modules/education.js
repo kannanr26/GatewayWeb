@@ -22,7 +22,7 @@ export default {
     deleteEducationList(state, deleteEducation) {
       state.educations = state.educations.filter
         (education => ((education.educationName !== deleteEducation.educationName) &&
-        (education.id !== deleteEducation.id)));
+          (education.id !== deleteEducation.id)));
     },
     SET_EducationList: (state, data) => {
       state.educations = data;
@@ -33,15 +33,14 @@ export default {
       let id = education.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addEducation', education,
-         { headers }).then(response => {
-            console.log(response.data.success);
+          { headers }).then(response => {
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);
             if (id == 0 || id === undefined) {
               commit('addEducationList', response.data.obj);
-          }
-          resolve(response);
-        })
+            }
+            resolve(response);
+          })
           .catch(error => {
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
@@ -63,21 +62,20 @@ export default {
     deleteEducation({ commit }, education) {
       return new Promise((resolve, reject) => {
         let id = education.id;
-        return axios.delete(API_URL + 'gws/deleteEducation/' + id, 
-        '', { headers }).then(response => {
-          commit('SET_MESSAGE', response.data.message);
-          commit('SET_SUCCESS', response.data.success);
-          commit('deleteEducationList', education);
-          resolve(response);
-        })
-        .catch(error => {
-          console.log(error.response.data.message);
-          commit('SET_MESSAGE', error.response.data.message);
-          commit('SET_SUCCESS', error.response.data.success);
-          reject(error);
-        });
+        return axios.delete(API_URL + 'gws/deleteEducation/' + id,
+          '', { headers }).then(response => {
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            commit('deleteEducationList', education);
+            resolve(response);
+          })
+          .catch(error => {
+            commit('SET_MESSAGE', error.response.data.message);
+            commit('SET_SUCCESS', error.response.data.success);
+            reject(error);
+          });
       });
-  //  dispatch('saveToKulams')
+      //  dispatch('saveToKulams')
     }
   }
 }

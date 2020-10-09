@@ -10,16 +10,14 @@
 
       <input
         class="w-75 p-3 rounded border border-success justify-center"
-        placeholder="Add Pincode.." list="pinlist"
+        placeholder="Add Pincode.."
+        list="pinlist"
         v-model.trim="city.pincode"
       />
 
-          <datalist id="pinlist">
-             <option v-for="item in getPincodes" :key="item" :value="item" />
-    </datalist>
-
-
-      &nbsp;&nbsp;
+      <datalist id="pinlist">
+        <option v-for="item in getPincodes" :key="item" :value="item" />
+      </datalist>&nbsp;&nbsp;
       <button
         type="submit"
         title="save"
@@ -41,71 +39,63 @@
 
 
 <script>
-import {  mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'cityAddForm',
   props: {
     populateWith: {
       type: Object,
-      default: () => ({ empty: true })
-    }
+      default: () => ({ empty: true }),
+    },
   },
   computed: {
-    ...mapGetters(['getDistrictSelected','getPincodes'])
-  
+    ...mapGetters(['getDistrictSelected', 'getPincodes']),
   },
   data() {
     return {
       city: {
         cityName: '',
-        pincode:''
+        pincode: '',
       },
     };
   },
-mounted() {
-  console.log(' Mount City ');
-
-      this.$store
+  mounted() {
+    this.$store
       .dispatch('getPincode')
-      .then(() => {
-        console.log('Created in get pin');       
-      })
+      .then(() => {})
       .catch(() => {
         this.loading = false;
       });
-       this.loading = false;
+    this.loading = false;
   },
- 
- 
- methods: {
-    
+
+  methods: {
     submitCity() {
       this.loading = true;
-      this.city.district= this.$store.getters.getDistrictSelected;
-      this.city.state= this.$store.getters.getStateSelected;
-      this.city.country= this.$store.getters.getCountrySelected;
+      this.city.district = this.$store.getters.getDistrictSelected;
+      this.city.state = this.$store.getters.getStateSelected;
+      this.city.country = this.$store.getters.getCountrySelected;
       if (this.city.cityName !== '' && this.city.pincode !== '') {
         this.$store
-        .dispatch('addCity', this.city)
-        .then(() => {
-          this.saved();
-          if (!this.isEditing) 
-            this.clearForm();
-        })
-        .catch(() => {
-          this.isEditing = false;
-        });
+          .dispatch('addCity', this.city)
+          .then(() => {
+            this.saved();
+            if (!this.isEditing) this.clearForm();
+          })
+          .catch(() => {
+            this.isEditing = false;
+          });
 
         this.loading = false;
-        this.close()
+        this.close();
       }
     },
     clearForm() {
       this.city = {
-        cityName: ''
+        cityName: '',
       };
-//      this.isCountrySelected=false;
+      //      this.isCountrySelected=false;
     },
 
     close() {
@@ -116,15 +106,15 @@ mounted() {
       if (!this.city.empty) {
         this.populateWith.cityName = this.city.cityName;
       }
-    }
+    },
   },
   created() {
     if (!this.populateWith.empty) {
       this.city = Object.assign({}, this.populateWith);
       //this.country = this.populateWith
     }
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

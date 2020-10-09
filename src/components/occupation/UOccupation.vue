@@ -1,48 +1,43 @@
 
 <template>
-  <div class="flex flex-col mt-20 mx-4 border border-info  sm:justify-center">
-    <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">
-      Add Occupation</h1>
+  <div class="flex flex-col mt-20 mx-4 border border-info sm:justify-center">
+    <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">Add Occupation</h1>
 
-  <div class="flex flex-col mt-20 mx-4  sm:justify-center">
-    
-    <occupationAddForm submit="addOccupation" />
+    <div class="flex flex-col mt-20 mx-4 sm:justify-center">
+      <occupationAddForm submit="addOccupation" />
 
-    <ul id="occupation-list" class = "child1">
-      <list-item 
-        v-for="(occupation) in getOccupations"
-        :key="occupation.id"
-        :occupation="occupation"
-        @delete="deleteOccupation(occupation)"
-        @edit="editOccupation"
-      />
-    </ul>
-  </div>
+      <ul id="occupation-list" class="child1">
+        <list-item
+          v-for="(occupation) in getOccupations"
+          :key="occupation.id"
+          :occupation="occupation"
+          @delete="deleteOccupation(occupation)"
+          @edit="editOccupation"
+        />
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-import {  mapActions,mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 
-import occupationAddForm from './occupationAddForm.vue'
-import ListItem from './occupationListItem.vue'
+import occupationAddForm from './occupationAddForm.vue';
+import ListItem from './occupationListItem.vue';
 
 export default {
   name: 'OccupationList',
   components: {
     occupationAddForm,
-    ListItem
-  }, 
+    ListItem,
+  },
   computed: {
-    ...mapGetters(['getOccupations'])
-    
-  },mounted() {
-    console.log(' Created get Occupation');
-
+    ...mapGetters(['getOccupations']),
+  },
+  mounted() {
     this.$store
       .dispatch('getOccupations')
       .then(() => {
-        console.log('Created in get Occupation');
         this.loading = false;
       })
       .catch(() => {
@@ -50,25 +45,18 @@ export default {
       });
   },
   methods: {
-    ...mapActions(['addOccupation','deleteOccupation']),
-editOccupation(){
-}    
-}
-}
+    ...mapActions(['addOccupation', 'deleteOccupation']),
+    editOccupation() {},
+  },
+};
 </script>
 
 <style scoped>
-
-
-.child1{
+.child1 {
   border: 2px;
   width: 100%;
-  padding:10px;  
+  padding: 10px;
   max-height: 200px;
-   overflow-y: scroll;
-   
+  overflow-y: scroll;
 }
-
-
-
 </style>

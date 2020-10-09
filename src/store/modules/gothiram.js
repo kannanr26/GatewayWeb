@@ -22,7 +22,7 @@ export default {
     deleteGothiramList(state, deleteGothiram) {
       state.gothirams = state.gothirams.filter
         (gothiram => ((gothiram.gothiramName !== deleteGothiram.gothiramName) &&
-        (gothiram.id !== deleteGothiram.id)));
+          (gothiram.id !== deleteGothiram.id)));
     },
     SET_GothiramList: (state, data) => {
       state.gothirams = data;
@@ -33,15 +33,14 @@ export default {
       let id = gothiram.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addGothiram', gothiram,
-         { headers }).then(response => {
-            console.log(response.data.success);
+          { headers }).then(response => {
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);
             if (id == 0 || id === undefined) {
               commit('addGothiramList', response.data.obj);
-          }
-          resolve(response);
-        })
+            }
+            resolve(response);
+          })
           .catch(error => {
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
@@ -63,21 +62,20 @@ export default {
     deleteGothiram({ commit }, gothiram) {
       return new Promise((resolve, reject) => {
         let id = gothiram.id;
-        return axios.delete(API_URL + 'gws/deleteGothiram/' + id, 
-        '', { headers }).then(response => {
-          commit('SET_MESSAGE', response.data.message);
-          commit('SET_SUCCESS', response.data.success);
-          commit('deleteGothiramList', gothiram);
-          resolve(response);
-        })
+        return axios.delete(API_URL + 'gws/deleteGothiram/' + id,
+          '', { headers }).then(response => {
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            commit('deleteGothiramList', gothiram);
+            resolve(response);
+          })
           .catch(error => {
-             console.log(error.response.data.message);
-             commit('SET_MESSAGE', error.response.data.message);
-             commit('SET_SUCCESS', error.response.data.success);
-             reject(error);
+            commit('SET_MESSAGE', error.response.data.message);
+            commit('SET_SUCCESS', error.response.data.success);
+            reject(error);
           });
       });
-  //  dispatch('saveToKulams')
+      //  dispatch('saveToKulams')
     }
   }
 }

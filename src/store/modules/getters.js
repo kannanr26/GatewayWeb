@@ -2,16 +2,15 @@
 
 const getters = {
   currentUser(state) {
-    if(state.isAuthenticated==true){
+    if (state.isAuthenticated == true) {
       return state.operator;
-    }  else{
-      console.log('state.isAuthenticated is false');
+    } else {
       return null;
     }
-     
+
   },
-  currentUserName(state){
-  return state.currentUserName;
+  currentUserName(state) {
+    return state.currentUserName;
   },
   isAuthenticated(state) {
     return state.isAuthenticated;
@@ -22,41 +21,21 @@ const getters = {
   isSuccess(state) {
     return state.success;
   },
-  getCountrySelected(state){
-    console.log('CountrySelected'+state.selectedCountry.id);
-    
+  getCountrySelected(state) {
     return state.selectedCountry;
   },
-  getStateSelected(state){
-    console.log('StateSelected'+state.selectedState.id);
-    
+  getStateSelected(state) {
     return state.selectedState;
   },
-  getDistrictSelected(state){
-    console.log('StateSelected'+state.selectedDistrict.id);
-    
+  getDistrictSelected(state) {
     return state.selectedDistrict;
   },
-  getPincodeSelected(state){
-    console.log('selectedPincode'+state.selectedPincode);
-    
+  getPincodeSelected(state) {
     return state.selectedPincode;
   },
-  getCitySelected(state){
-    console.log('selectedCity'+state.selectedCity);
-    
+  getCitySelected(state) {
     return state.selectedCity;
   },
-  /*getKulams(state) {
-    console.log('get Kulam');
-    return state.kulams;
-  },*/
-  /*
-   getEducations(state) {
-     console.log('get Education'+state.educations);
-     return state.educations;
-   },
-   */
   showSuperAdminBoard() {
     if (this.currentUser && this.currentUser.roles) {
       return this.currentUser.roles.includes('ROLE_SUPERADMIN');

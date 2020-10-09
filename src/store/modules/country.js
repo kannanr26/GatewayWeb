@@ -22,7 +22,7 @@ export default {
     deleteCountryList(state, deleteCountry) {
       state.countrys = state.countrys.filter
         (country => ((country.countryName !== deleteCountry.countryName) &&
-        (country.id !== deleteCountry.id)));
+          (country.id !== deleteCountry.id)));
     },
     SET_CountryList: (state, data) => {
       state.countrys = data;
@@ -34,7 +34,6 @@ export default {
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addCountry', country,
           { headers }).then(response => {
-            console.log(response.data.success);
             commit('SET_MESSAGE', response.data.message);
             commit('SET_SUCCESS', response.data.success);
             if (id == 0 || id === undefined) {
@@ -71,13 +70,12 @@ export default {
             resolve(response);
           })
           .catch(error => {
-            console.log(error.response.data.message);
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
             reject(error);
           });
       });
-  //  dispatch('saveToKulams')
+      //  dispatch('saveToKulams')
     }
   }
 }

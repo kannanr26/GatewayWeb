@@ -3,13 +3,11 @@ const state = {
 };
 
 const getters = {
-  getTitle:state=>state.title
+  getTitle: state => state.title
 };
 
 const actions = {
   async addTitle({ commit }, title) {
-    //console.log(title)
-
     commit('newTitile', title);
   },
 };

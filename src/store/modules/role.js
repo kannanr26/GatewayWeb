@@ -22,7 +22,7 @@ export default {
     deleteRoleList(state, deleteRole) {
       state.roles = state.roles.filter
         (role => ((role.roleName !== deleteRole.roleName) &&
-        (role.id !== deleteRole.id)));
+          (role.id !== deleteRole.id)));
     },
     SET_RoleList: (state, data) => {
       state.roles = data;
@@ -33,15 +33,14 @@ export default {
       let id = role.id;
       return new Promise((resolve, reject) => {
         return axios.post(API_URL + 'gws/addRole', role,
-         { headers }).then(response => {
-          console.log(response.data.success);
-          commit('SET_MESSAGE', response.data.message);
-          commit('SET_SUCCESS', response.data.success);
-          if (id == 0 || id === undefined) {
-            commit('addRoleList', response.data.obj);
-          }
-          resolve(response);
-        })
+          { headers }).then(response => {
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            if (id == 0 || id === undefined) {
+              commit('addRoleList', response.data.obj);
+            }
+            resolve(response);
+          })
           .catch(error => {
             commit('SET_MESSAGE', error.response.data.message);
             commit('SET_SUCCESS', error.response.data.success);
@@ -63,21 +62,20 @@ export default {
     deleteRole({ commit }, role) {
       return new Promise((resolve, reject) => {
         let id = role.id;
-        return axios.delete(API_URL + 'gws/deleteRole/' + id, 
-        '', { headers }).then(response => {
-          commit('SET_MESSAGE', response.data.message);
-          commit('SET_SUCCESS', response.data.success);
-          commit('deleteRoleList', role);
-          resolve(response);
-        })
+        return axios.delete(API_URL + 'gws/deleteRole/' + id,
+          '', { headers }).then(response => {
+            commit('SET_MESSAGE', response.data.message);
+            commit('SET_SUCCESS', response.data.success);
+            commit('deleteRoleList', role);
+            resolve(response);
+          })
           .catch(error => {
-             console.log(error.response.data.message);
-             commit('SET_MESSAGE', error.response.data.message);
-             commit('SET_SUCCESS', error.response.data.success);
-             reject(error);
+            commit('SET_MESSAGE', error.response.data.message);
+            commit('SET_SUCCESS', error.response.data.success);
+            reject(error);
           });
       });
-  //  dispatch('saveToKulams')
+      //  dispatch('saveToKulams')
     }
   }
 }

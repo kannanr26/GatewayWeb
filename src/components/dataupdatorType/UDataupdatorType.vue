@@ -3,15 +3,15 @@
     <h1 class="text-center text-4xl font-bold my-4 mb-12 text-green-500">Add DataUpdator</h1>
 
     <div class="flex flex-col mt-20 mx-4 sm:justify-center">
-      <dataUpdatorAddForm submit="addDataUpdator" />
+      <dataUpdatorTypeAddForm submit="addDataUpdatorType" />
 
-      <ul id="dataUpdator-list" class="child1">
+      <ul id="dataUpdatorType-list" class="child1">
         <list-item
-          v-for="(dataUpdator) in getDataUpdator"
-          :key="dataUpdator.id"
-          :dataUpdator="dataUpdator"
-          @delete="deleteDataUpdator(dataUpdator)"
-          @edit="editDataUpdator"
+          v-for="(dataUpdatorType) in getDataUpdatorType"
+          :key="dataUpdatorType.id"
+          :dataUpdatorType="dataUpdatorType"
+          @delete="deleteDataUpdatorType(dataUpdatorType)"
+          @edit="editDataUpdatorType"
         />
       </ul>
     </div>
@@ -21,21 +21,21 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-import dataUpdatorAddForm from './dataupdatorAddForm.vue';
-import ListItem from './dataupdatorListItem.vue';
+import dataUpdatorTypeAddForm from './dataupdatorTypeAddForm.vue';
+import ListItem from './dataupdatorTypeListItem.vue';
 
 export default {
-  name: 'DataUpdatorList',
+  name: 'DataUpdatorTypeList',
   components: {
-    dataUpdatorAddForm,
+    dataUpdatorTypeAddForm,
     ListItem,
   },
   computed: {
-    ...mapGetters(['getDataUpdator']),
+    ...mapGetters(['getDataUpdatorType']),
   },
   mounted() {
     this.$store
-      .dispatch('getDataUpdators')
+      .dispatch('getDataUpdatorTypes')
       .then(() => {
         this.loading = false;
       })
@@ -44,8 +44,8 @@ export default {
       });
   },
   methods: {
-    ...mapActions(['addDataUpdator', 'deleteDataUpdator']),
-    editDataUpdator() {},
+    ...mapActions(['addDataUpdatorType', 'deleteDataUpdatorType']),
+    editDataUpdatorType() {},
   },
 };
 </script>
