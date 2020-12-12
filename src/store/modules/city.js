@@ -90,6 +90,7 @@ export default {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getCitysByPincode/' + pincode, '', { headers }).then(response => {
           commit('SET_CITYLIST', response.data);
+          console.log(response.data);
           resolve(response);
         })
           .catch(error => {

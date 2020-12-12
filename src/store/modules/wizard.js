@@ -15,6 +15,7 @@ export default {
   },
   mutations: {
     SET_FAMILY(state, family) {
+      console.log('Set Family');
       state.family = family;
     },
     deletePersonList(state, deletePerson) {
@@ -74,6 +75,11 @@ export default {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getFamilyWithRegistrationNumber/' + registrationNumber, '', { headers }).then(response => {
           commit('SET_FAMILY', response.data);
+          console.log(' getFamilyWithRegistrationNumber: '+response.data);
+          var reg_number= response.data.registrationNumber;
+          if(reg_number===null || reg_number==0){
+            response.data.registrationNumber=registrationNumber;
+          }
           resolve(response);
         })
           .catch(error => {

@@ -7,8 +7,8 @@ import { DropdownPlugin, TablePlugin } from 'bootstrap-vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-// import Vuetify from 'vuetify'
-import vuetify from '@/plugins/vuetify' // path to vuetify export
+ //import vuetify from 'vuetify'
+//import vuetify from '@/plugins/vuetify' // path to vuetify export
 
 
 import VeeValidate from 'vee-validate';
@@ -39,7 +39,7 @@ Vue.use(TablePlugin)
 // Vue.use(vuetify);
 //Vue.use(VueWizard);
 new Vue({
-  vuetify,
+ // vuetify,
   router,
   store,
  // vuetify: new Vuetify(),

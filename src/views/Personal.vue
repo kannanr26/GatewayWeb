@@ -10,8 +10,8 @@
         <label for="registration" class="col-sm-2 col-form-label">Registration:</label>
         <div class="col-sm-6">
           <input
-            type="text"
-            class="form-control"
+            type="text" @blur="selectedFamily"
+            class="form-control"  
             placeholder="Registration..."
             v-model.trim="familyDetails.registrationNumber"
           />
@@ -140,74 +140,74 @@
             </div>
           </div>
 
+
+          <!-- Pincode  -->
+          <div class="form-group row">
+
+
+      <input type="text"
+                class="form-control"
+                placeholder="Pincode..."
+                v-model.trim="familyDetails.address.Pincode"            
+               list="pinlist"  @blur="pincodeSelected()" />
+
+      <datalist id="pinlist">
+        <option v-for="item in getPincodes" :key="item" :value="item" />
+      </datalist>
+          </div>
+
+
           <div class="form-group row">
             <label for="addressCountry" class="col-sm-4 col-form-label">Country:</label>
             <div class="col-sm-6">
-              <select class="browser-default custom-select">
-                <option selected>Select Country...</option>
-                <option
-                  v-for="item in familyDetails.countries"
-                  :value="item.countryName"
-                  :key="item.countryName"
-                >{{ item.countryName }}</option>
-              </select>
+             
+          <input type="text"
+                class="form-control"
+                placeholder="Country..."
+                v-model.trim="familyDetails.selectedCountry"  />
             </div>
           </div>
 
           <div class="form-group row">
             <label for="addressState" class="col-sm-4 col-form-label">State:</label>
             <div class="col-sm-6">
-              <select class="browser-default custom-select">
-                <option selected>Select State...</option>
-                <option
-                  v-for="item in states"
-                  :value="item.stateName"
-                  :key="item.stateName"
-                >{{ item.stateName }}</option>
-              </select>
+  
+                <input type="text"
+                class="form-control"
+                
+                placeholder="State..."
+                v-model.trim="familyDetails.selectedState"  /> 
+       
             </div>
           </div>
 
           <div class="form-group row">
             <label for="addressDistrict" class="col-sm-4 col-form-label">District:</label>
             <div class="col-sm-6">
-              <select class="browser-default custom-select">
-                <option selected>Select District...</option>
-                <option
-                  v-for="item in districts"
-                  :value="item.districtName"
-                  :key="item.districtName"
-                >{{ item.districtName }}</option>
-              </select>
+              <input type="text"
+                class="form-control"
+                placeholder="District..."
+                v-model.trim="familyDetails.selectedDistrict"   /> 
+
+
             </div>
           </div>
 
           <div class="form-group row">
             <label for="addressCity" class="col-sm-4 col-form-label">City:</label>
             <div class="col-sm-6">
-              <select class="browser-default custom-select">
+              <select class="browser-default custom-select" @select="citySelected">
+                v-model.trim="familyDetails.selectedCity"
                 <option selected>Select City...</option>
                 <option
                   v-for="item in cities"
                   :value="item.cityName"
                   :key="item.cityName"
-                >{{ item.cityName }}</option>
-              </select>
+                >{{ item.cityName }}</option> 
+                </select>
             </div>
           </div>
 
-          <!-- Pincode  -->
-          <div class="form-group row">
-            <label for="pincode" class="col-sm-4 col-form-label">Pincode:</label>
-            <div class="col-sm-6">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Pincode..."
-                v-model.trim="familyDetails.address.Pincode"
-              />
-            </div>
-          </div>
 
           <!-- Landmark  -->
           <div class="form-group row">
@@ -231,7 +231,7 @@
           v-model.trim="address.Mobile">
        </div>
   </div>
-
+-->
   <!-- Google Location  
   <div class="form-group row">
      <label for="googleLocation" class="col-sm-4 col-form-label">Google Location:</label>
@@ -482,7 +482,7 @@
 </template>
 
 <script>
-//x import {  mapActions } from 'vuex'
+ import {  mapGetters } from 'vuex'
 
 export default {
   name: 'Personal',
@@ -490,26 +490,73 @@ export default {
     return {
       currentTab: 0, // Current tab is set to be the first tab (0)
       totalTab: 3, // set this input dynamically
-      familyDetails: '',
-      states: '',
-      districts: '',
-      cities: '',
+      familyDetails:{
+        //registrationNumber:'',
+      },
+      selectedCountry:'',
+      selectedStates: '',
+      selectedDistrict: '',
+      selectedCity:'',
+      //selected_City:'',
+      cities: [],
+      loading:false,
     };
   },
-
+ computed: {
+    ...mapGetters(['getFamilyDetails','getPincodes']),
+  
+  },
   mounted() {
-    this.$store
-      .dispatch('getinitializeWizard')
-      .then((data) => {
-        this.loading = false;
-        this.familyDetails = data;
-      })
+    this.loading=true;
+     this.$store
+      .dispatch('getPincode')
+      .then(() => {})
       .catch(() => {
         this.loading = false;
       });
+    this.loading = false;
   },
 
   methods: {
+
+     pincodeSelected: function () {
+        console.log(" Pin ::");
+      this.loading = true;
+      this.cities=[];
+      this.$store
+        .dispatch('getCityByPincode', this.familyDetails.address.Pincode)
+        .then((response) => {
+          console.log("State: length",response.data.length);
+            var cityData=response.data[0];
+           //this.cities.push(response.data);
+           this.cities = response.data;
+            /*console.log(" Response data:"+response.data);
+            console.log(" Response data:"+response.data[0].id);
+            console.log(this.cities[0].id);*/
+
+            this.familyDetails.selectedCountry=cityData.country.countryName;
+            this.familyDetails.selectedState=cityData.state.stateName;
+            this.familyDetails.selectedDistrict=cityData.district.districtName;
+            //console.log("before one:"+this.familyDetails.selectedCountry+" "+this.familyDetails.selectedState+" " +this.familyDetails.selectedDistrict);
+             
+            //this.selected_City=this.cities[0];   
+            //console.log("City length:"+this.cities.length);
+          //  console.log("City 2"+  this.selected_City.cityName+"  "+this.selected_City.country.countryName);
+                    
+          /*if(response.data.length==1){
+            this.familyDetails.selectedCity= cityData;
+            console.log("State1:"+this.familyDetails.selectedCity.cityName);
+          }else{
+            this.familyDetails.selectedCity= cityData.cityName;
+             console.log("State2:",+this.familyDetails.selectedCity.cityName);
+          
+          }*/
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+      this.loading = false;
+    },
     handlePersonal() {
       if (this.currentTab === this.totalTab) {
         console.log('handlePersonal ::2');
@@ -527,6 +574,19 @@ export default {
         this.loading = false;
         //  this.close()
       }
+    },
+      selectedFamily: function () {
+      this.loading = true;
+      console.log('select with reg_num')
+      this.$store
+        .dispatch('getFamilyWithRegistrationNumber', this.familyDetails.registrationNumber).then(response => {
+        
+          this.familyDetails=response.data;
+          console.log(response.data);
+        })
+        .catch(() => {});
+      this.loading = false;
+      
     },
 
     nextPrev(n) {

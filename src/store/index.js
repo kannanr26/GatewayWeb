@@ -26,6 +26,7 @@ import deity from './modules/deity';
 import states from './modules/states';
 import district from './modules/district';
 import city from './modules/city';
+import wizard from './modules/wizard';
 
 
 
@@ -58,7 +59,8 @@ export default new Vuex.Store({
     deity,
     city,
     district,
-    dataupdatorType
+    dataupdatorType,
+    wizard
 
 
   }
