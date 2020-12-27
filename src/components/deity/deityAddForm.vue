@@ -58,7 +58,7 @@ export default {
     },
     submitDeity() {
       this.loading = true;
-      this.deity.cityId = this.$store.getters.getCitySelected.id;
+      this.deity.city = this.$store.getters.getCitySelected;
       if (this.deity.deityName !== '') {
         this.$store
           .dispatch('addDeity', this.deity)

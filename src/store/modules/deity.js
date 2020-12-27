@@ -51,6 +51,7 @@ export default {
     async getDeityByCity({ commit }, id) {
       return new Promise((resolve, reject) => {
         return axios.get(API_URL + 'gws/getDeitysByCity/' + id, '', { headers }).then(response => {
+        //  console.log(response.data);
           commit('SET_DeityList', response.data);
           resolve(response);
         })

@@ -109,6 +109,7 @@
                 type="text"
                 class="form-control"
                 placeholder="Door Number..."
+                v-validate="'required'"
                 v-model.trim="familyDetails.address.houseNumber"
               />
             </div>
@@ -116,12 +117,13 @@
 
           <!-- Number  -->
           <div class="form-group row">
-            <label for="address1" class="col-sm-4 col-form-label">Street Name :</label>
+            <label for="address1" class="col-sm-4 col-form-label">Street Name 1:</label>
             <div class="col-sm-6">
               <input
                 type="text"
                 class="form-control"
                 placeholder="Street Name 1..."
+                v-validate="'required'"
                 v-model.trim="familyDetails.address.streetName"
               />
             </div>
@@ -135,6 +137,7 @@
                 type="text"
                 class="form-control"
                 placeholder="Street Name 2..."
+                v-validate="'required'"
                 v-model.trim="familyDetails.address.streetName1"
               />
             </div>
@@ -142,12 +145,14 @@
 
 
           <!-- Pincode  -->
+
           <div class="form-group row">
-
-
+            <label for="addressCountry" class="col-sm-4 col-form-label">Pincode:</label>
+            <div class="col-sm-6">
       <input type="text"
                 class="form-control"
-                placeholder="Pincode..."
+                placeholder="Select Pincode..."
+                v-validate="'required'"
                 v-model.trim="familyDetails.address.Pincode"            
                list="pinlist"  @blur="pincodeSelected()" />
 
@@ -155,28 +160,42 @@
         <option v-for="item in getPincodes" :key="item" :value="item" />
       </datalist>
           </div>
+          </div>
 
+          <div class="form-group row">
+            <label for="addressCity" class="col-sm-4 col-form-label">City:</label>
+            <div class="col-sm-6">
+              <select class="browser-default custom-select" v-on:change="citySelected()"
+              v-model.trim="familyDetails.selectedCity">
+                <option selected>Select City...</option>
+                <option
+                  v-for="item in cities"
+                  :value="item"
+                  :key="item.cityName"
+                >{{ item.cityName }}</option> 
+                </select>
+            </div>
+          </div>
 
           <div class="form-group row">
             <label for="addressCountry" class="col-sm-4 col-form-label">Country:</label>
             <div class="col-sm-6">
              
-          <input type="text"
+          <input type="text" readonly
                 class="form-control"
                 placeholder="Country..."
-                v-model.trim="familyDetails.selectedCountry"  />
+                v-model.trim="selectedCountry"  />
             </div>
           </div>
 
           <div class="form-group row">
             <label for="addressState" class="col-sm-4 col-form-label">State:</label>
             <div class="col-sm-6">
-  
-                <input type="text"
+                <input type="text" readonly
                 class="form-control"
-                
                 placeholder="State..."
-                v-model.trim="familyDetails.selectedState"  /> 
+                v-validate="'required'"
+                v-model.trim="selectedState"  /> 
        
             </div>
           </div>
@@ -184,30 +203,15 @@
           <div class="form-group row">
             <label for="addressDistrict" class="col-sm-4 col-form-label">District:</label>
             <div class="col-sm-6">
-              <input type="text"
+              <input type="text" readonly
                 class="form-control"
                 placeholder="District..."
-                v-model.trim="familyDetails.selectedDistrict"   /> 
+                v-validate="'required'"
+                v-model.trim="selectedDistrict"   /> 
 
 
             </div>
           </div>
-
-          <div class="form-group row">
-            <label for="addressCity" class="col-sm-4 col-form-label">City:</label>
-            <div class="col-sm-6">
-              <select class="browser-default custom-select" @select="citySelected">
-                v-model.trim="familyDetails.selectedCity"
-                <option selected>Select City...</option>
-                <option
-                  v-for="item in cities"
-                  :value="item.cityName"
-                  :key="item.cityName"
-                >{{ item.cityName }}</option> 
-                </select>
-            </div>
-          </div>
-
 
           <!-- Landmark  -->
           <div class="form-group row">
@@ -217,7 +221,8 @@
                 type="text"
                 class="form-control"
                 placeholder="Landmark..."
-                v-model.trim="familyDetails.address.Landmark"
+                v-validate="'required'"
+                v-model.trim="familyDetails.address.landmark"
               />
             </div>
           </div>
@@ -245,16 +250,17 @@
 
         <!-- Column 2  -->
         <div class="flex-child">
-          <br />
+          <!--<br />-->
 
           <div class="form-group row">
             <label for="addressCaste" class="col-sm-4 col-form-label">Caste:</label>
             <div class="col-sm-6">
-              <select class="browser-default custom-select">
+              <select class="browser-default custom-select" v-on:change="casteSelected()" 
+              v-model.trim="familyDetails.selectedCaste" v-validate="'required'">
                 <option selected>Select Caste...</option>
                 <option
                   v-for="item in familyDetails.castes"
-                  :value="item.casteName"
+                  :value="item"
                   :key="item.casteName"
                 >{{ item.casteName }}</option>
               </select>
@@ -264,11 +270,12 @@
           <div class="form-group row">
             <label for="addressKulam" class="col-sm-4 col-form-label">Kulam:</label>
             <div class="col-sm-6">
-              <select class="browser-default custom-select">
+              <select class="browser-default custom-select" v-on:change="kulamSelected()" 
+              v-model.trim="familyDetails.selectedKulams" v-validate="'required'">
                 <option selected>Select Kulam...</option>
                 <option
                   v-for="item in familyDetails.kulams"
-                  :value="item.kulamName"
+                  :value="item"
                   :key="item.kulamName"
                 >{{ item.kulamName }}</option>
               </select>
@@ -278,11 +285,12 @@
           <div class="form-group row">
             <label for="addressGothiram" class="col-sm-4 col-form-label">Gothiram:</label>
             <div class="col-sm-6">
-              <select class="browser-default custom-select">
+              <select class="browser-default custom-select" v-on:change="gothiramSelected()" 
+              v-model.trim="familyDetails.selectedGothiram" v-validate="'required'">
                 <option selected>Select Gothiram...</option>
                 <option
                   v-for="item in familyDetails.gothirams"
-                  :value="item.gothiramName"
+                  :value="item"
                   :key="item.gothiramName"
                 >{{ item.gothiramName }}</option>
               </select>
@@ -292,29 +300,43 @@
           <div class="form-group row">
             <label for="addressDeity" class="col-sm-4 col-form-label">Deity:</label>
             <div class="col-sm-6">
-              <select class="browser-default custom-select">
+           <!--   <select class="browser-default custom-select" v-on:change="deitySelected()" 
+              v-model.trim="familyDetails.selectedDeity" v-validate="'required'">
                 <option selected>Select Deity...</option>
                 <option
                   v-for="item in familyDetails.deitys"
-                  :value="item.deityName"
+                  :value="item"
                   :key="item.deityName"
                 >
-                  {{ item.deityName }}+
-                  {{ item.deityLocation }}
+                  {{ item.city.pincode }}
+            
                 </option>
-              </select>
+              </select>-->
+
+
+               <input type="text"
+                class="form-control"
+                placeholder="Select Deity..."
+                v-validate="'required'"
+                 v-model.trim="familyDetails.selectedDeity"        
+               list="deitylist" />
+
+      <datalist id="deitylist">
+        <option v-for="item in familyDetails.deitys" :key="item" :value="item.deityName + item.city.cityName" />
+      </datalist>
             </div>
           </div>
 
-          <!-- Description  -->
-          <div class="form-group">
-            <label for="description">Description</label>
-            <div class="col-lg-16">
-              <textarea
-                id="description"
+          <!-- Description  -->"
+          <div class="form-group row">
+            <label for="description" class="col-sm-4 col-form-label">Description:</label>
+            <div class="col-sm-6">
+              <textarea  v-model.trim="familyDetails.desc"
+                   id="description"
                 class="form-control"
-                rows="10"
+                rows="3"
                 placeholder="Description..."
+                v-validate="'required'"
               ></textarea>
             </div>
           </div>
@@ -520,42 +542,42 @@ export default {
   methods: {
 
      pincodeSelected: function () {
-        console.log(" Pin ::");
       this.loading = true;
       this.cities=[];
       this.$store
         .dispatch('getCityByPincode', this.familyDetails.address.Pincode)
         .then((response) => {
-          console.log("State: length",response.data.length);
-            var cityData=response.data[0];
-           //this.cities.push(response.data);
-           this.cities = response.data;
-            /*console.log(" Response data:"+response.data);
-            console.log(" Response data:"+response.data[0].id);
-            console.log(this.cities[0].id);*/
-
-            this.familyDetails.selectedCountry=cityData.country.countryName;
-            this.familyDetails.selectedState=cityData.state.stateName;
-            this.familyDetails.selectedDistrict=cityData.district.districtName;
-            //console.log("before one:"+this.familyDetails.selectedCountry+" "+this.familyDetails.selectedState+" " +this.familyDetails.selectedDistrict);
-             
-            //this.selected_City=this.cities[0];   
-            //console.log("City length:"+this.cities.length);
-          //  console.log("City 2"+  this.selected_City.cityName+"  "+this.selected_City.country.countryName);
-                    
-          /*if(response.data.length==1){
-            this.familyDetails.selectedCity= cityData;
-            console.log("State1:"+this.familyDetails.selectedCity.cityName);
-          }else{
-            this.familyDetails.selectedCity= cityData.cityName;
-             console.log("State2:",+this.familyDetails.selectedCity.cityName);
           
-          }*/
+            var cityData=response.data[0];
+            this.cities = response.data; 
+            this.selectedCountry=cityData.country.countryName;
+            this.selectedState=cityData.state.stateName;
+            this.selectedDistrict=cityData.district.districtName;
+
+            console.log("City:",response.data+"Country: "+this.selectedCountry);
         })
         .catch(() => {
           this.loading = false;
         });
       this.loading = false;
+    },
+    citySelected: function () {
+        console.log(" City ::"+this.familyDetails.selectedCity.id);
+         this.familyDetails.address.city= this.familyDetails.selectedCity;
+
+
+    },
+    casteSelected: function () {
+        console.log(" Caste ::"+this.familyDetails.selectedCaste.id);
+    },
+    kulamSelected: function () {
+        console.log(" Kulam ::"+ this.familyDetails.selectedKulams.id);
+    },
+    gothiramSelected: function () {
+        console.log(" Gothiram ::"+ this.familyDetails.selectedGothiram.id);
+    },
+    deitySelected: function () {
+        console.log(" Deity ::"+this.familyDetails.selectedDeity.id);
     },
     handlePersonal() {
       if (this.currentTab === this.totalTab) {
@@ -593,10 +615,20 @@ export default {
       // Exit the function if any field in the current tab is invalid:
       // if (n == 1 && !validateForm()) return false;
 
-      // Increase or decrease the current tab by 1:
+      // Increase or decrease the current tab by 1
+       this.$validator.validateAll().then((isValid) => {
+        if (!isValid) {
+          this.loading = false;
+          return;
+        }
+      });
       this.currentTab = this.currentTab + n;
-      if (this.currentTab === this.totalTab) this.currentTab = 0;
+      if (this.currentTab === this.totalTab) 
+        {
+          this.currentTab = 0;
+        }
       console.log('Testing next prev button');
+      console.log(this.familyDetails);
     },
   },
 };
